@@ -3,7 +3,7 @@
 #include <math.h>
 RoboClaw roboclaw(&Serial, 10000);
 HoloMove hm(&roboclaw);
-int dir = 0;
+float dir = 0.0;
 float speed = 255.0;
 float a,b,c,d;
 
@@ -19,6 +19,6 @@ void setup() {
 }
 
 void loop() {
-  hm.move(dir/10.0, speed, 0, &a, &b, &c, &d);
-  dir = (dir + 5) % 3600;
+  hm.move(dir, speed, 0, &a, &b, &c, &d);
+  dir = fmod(dir + 0.5, 360);
 }
