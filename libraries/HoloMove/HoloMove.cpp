@@ -3,12 +3,14 @@
 #include "RoboClaw.h"
 
 
-HoloMove::HoloMove(const RoboClaw* rb) : _rb(rb){
+HoloMove::HoloMove(const RoboClaw* rb, HardwareSerial &ser) : _rb(rb), _ser(ser){
 
 }
 
-void HoloMove::move(float direction, float speed, float rotation, float *a, float *b, float *c, float *d){
+void HoloMove::move(float direction, float speed, float rotation, float *a, float *b, float *c, float *d)
+{
 
+    _ser.print("move: ");
     float radians = 71 * direction / 4068;
     // Please refer to README.txt for a full explanation of the formulas used.
     if (speed > 0)
@@ -47,5 +49,7 @@ void HoloMove::move(float direction, float speed, float rotation, float *a, floa
     _rb->ForwardBackwardM1(0x81, (uint8_t) map(*c, -255, 255, 0, 127));
     _rb->ForwardBackwardM2(0x81, (uint8_t) map(*d, -255, 255, 0, 127));
     _rb->ForwardBackwardM2(0x80, (uint8_t) map(*b, -255, 255, 0, 127));
+
+    _ser.println(*a);
 
 }
