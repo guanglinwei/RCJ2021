@@ -1,0 +1,1200 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "A simple RCJ Soccer game simulated using Webots."
+  ]
+  title "RCJ Soccer Sim"
+  optimalThreadCount 8
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.9825837659545353 -0.11101604206870257 -0.14901201725365254 5.301083554970701
+  position 0.11717198417501745 1.7846425713511895 1.0831531136089545
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF SOCCER_FIELD Solid {
+  children [
+    DEF GROUND Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/soccer-256.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Plane {
+        size 1.5 1.5
+      }
+    }
+    DEF BLUE_GOAL_GROUND Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/soccer-256.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.95 0 0.75
+            0.75 0 0.75
+            0.75 0 -0.75
+            0.95 0 -0.75
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            0 0
+            0 0
+            0 0
+          ]
+        }
+        ccw FALSE
+        coordIndex [
+          0, 1, 2, 3
+        ]
+        texCoordIndex [
+          0, 1, 2, 3
+        ]
+      }
+    }
+    DEF YELLOW_GOAL_GROUND Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/soccer-256.jpg"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -0.95 0 0.75
+            -0.75 0 0.75
+            -0.75 0 -0.75
+            -0.95 0 -0.75
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            0 0
+            0 0
+            0 0
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3
+        ]
+        texCoordIndex [
+          0, 1, 2, 3
+        ]
+      }
+    }
+    DEF NORTH_WALL Shape {
+      appearance DEF WALL_APPEARANCE PBRAppearance {
+        baseColor 0.388235 0.388235 0.388235
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.76 0 0.66
+            0.76 0 0.21
+            0.75 0 0.21
+            0.75 0 0.59
+            0.69 0 0.65
+            -0.69 0 0.65
+            -0.75 0 0.59
+            -0.75 0 0.21
+            -0.76 0 0.21
+            -0.76 0 0.65
+            -0.76 0 0.66
+            0.76 0.05 0.66
+            0.76 0.05 0.21
+            0.75 0.05 0.21
+            0.75 0.05 0.59
+            0.69 0.05 0.65
+            -0.69 0.05 0.65
+            -0.75 0.05 0.59
+            -0.75 0.05 0.21
+            -0.76 0.05 0.21
+            -0.76 0.05 0.65
+            -0.76 0.05 0.66
+          ]
+        }
+        coordIndex [
+          0, 10, 9, -1, 9, 8, 7, -1, 9, 7, 6, -1, 2, 1, 0, -1, 3, 2, 0, -1, 9, 6, 5, -1, 4, 3, 0, -1, 0, 9, 5, -1, 0, 5, 4, -1, 11, 12, 13, -1, 11, 13, 14, -1, 20, 21, 11, -1, 18, 19, 20, -1, 17, 18, 20, -1, 11, 14, 15, -1, 16, 17, 20, -1, 11, 15, 16, -1, 11, 16, 20, -1, 0, 1, 12, 11, -1, 1, 2, 13, 12, -1, 2, 3, 14, 13, -1, 3, 4, 15, 14, -1, 4, 5, 16, 15, -1, 5, 6, 17, 16, -1, 6, 7, 18, 17, -1, 7, 8, 19, 18, -1, 8, 9, 20, 19, -1, 9, 10, 21, 20, -1, 10, 0, 11, 21, -1
+        ]
+      }
+    }
+    DEF SOUTH_WALL Shape {
+      appearance USE WALL_APPEARANCE
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.76 0 -0.66
+            -0.76 0 -0.66
+            -0.76 0 -0.65
+            -0.76 0 -0.21
+            -0.75 0 -0.21
+            -0.75 0 -0.59
+            -0.69 0 -0.65
+            0.69 0 -0.65
+            0.75 0 -0.59
+            0.75 0 -0.21
+            0.76 0 -0.21
+            0.76 0.05 -0.66
+            -0.76 0.05 -0.66
+            -0.76 0.05 -0.65
+            -0.76 0.05 -0.21
+            -0.75 0.05 -0.21
+            -0.75 0.05 -0.59
+            -0.69 0.05 -0.65
+            0.69 0.05 -0.65
+            0.75 0.05 -0.59
+            0.75 0.05 -0.21
+            0.76 0.05 -0.21
+          ]
+        }
+        coordIndex [
+          0, 10, 9, -1, 0, 9, 8, -1, 2, 1, 0, -1, 4, 3, 2, -1, 5, 4, 2, -1, 0, 8, 7, -1, 6, 5, 2, -1, 0, 7, 6, -1, 0, 6, 2, -1, 11, 12, 13, -1, 13, 14, 15, -1, 13, 15, 16, -1, 20, 21, 11, -1, 19, 20, 11, -1, 13, 16, 17, -1, 18, 19, 11, -1, 11, 13, 17, -1, 11, 17, 18, -1, 0, 1, 12, 11, -1, 1, 2, 13, 12, -1, 2, 3, 14, 13, -1, 3, 4, 15, 14, -1, 4, 5, 16, 15, -1, 5, 6, 17, 16, -1, 6, 7, 18, 17, -1, 7, 8, 19, 18, -1, 8, 9, 20, 19, -1, 9, 10, 21, 20, -1, 10, 0, 11, 21, -1
+        ]
+      }
+    }
+    DEF BLUE_GOAL Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.86 0 0.21
+            0.86 0 -0.21
+            0.75 0 -0.21
+            0.75 0 -0.2
+            0.85 0 -0.2
+            0.85 0 0.2
+            0.75 0 0.2
+            0.75 0 0.21
+            0.86 0 0.21
+            0.86 0.12 0.21
+            0.86 0.12 -0.21
+            0.75 0.12 -0.21
+            0.75 0.12 -0.2
+            0.85 0.12 -0.2
+            0.85 0.12 0.2
+            0.75 0.12 0.2
+            0.75 0.12 0.21
+            0.86 0.12 0.21
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, -1, 0, 1, 10, 9, -1, 1, 2, 11, 10, -1, 2, 3, 12, 11, -1, 3, 4, 13, 12, -1, 4, 5, 14, 13, -1, 5, 6, 15, 14, -1, 6, 7, 16, 15, -1, 7, 8, 17, 16, -1
+        ]
+      }
+    }
+    DEF YELLOW_GOAL Shape {
+      appearance PBRAppearance {
+        baseColor 1 1 0
+        roughness 1
+        metalness 0
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -0.86 0 0.21
+            -0.75 0 0.21
+            -0.75 0 0.2
+            -0.85 0 0.2
+            -0.85 0 -0.2
+            -0.75 0 -0.2
+            -0.75 0 -0.21
+            -0.86 0 -0.21
+            -0.86 0 0.21
+            -0.86 0.12 0.21
+            -0.75 0.12 0.21
+            -0.75 0.12 0.2
+            -0.85 0.12 0.2
+            -0.85 0.12 -0.2
+            -0.75 0.12 -0.2
+            -0.75 0.12 -0.21
+            -0.86 0.12 -0.21
+            -0.86 0.12 0.21
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, -1, 0, 1, 10, 9, -1, 1, 2, 11, 10, -1, 2, 3, 12, 11, -1, 3, 4, 13, 12, -1, 4, 5, 14, 13, -1, 5, 6, 15, 14, -1, 6, 7, 16, 15, -1, 7, 8, 17, 16, -1
+        ]
+      }
+    }
+  ]
+  name "soccer field"
+  boundingObject Group {
+    children [
+      USE GROUND
+      DEF NOTH_BBOX Transform {
+        translation 0 0.0251 -0.655
+        children [
+          Box {
+            size 1.5 0.05 0.01
+          }
+        ]
+      }
+      DEF SOUTH_BBOX Transform {
+        translation 0 0.0251 0.655
+        children [
+          Box {
+            size 1.5 0.05 0.01
+          }
+        ]
+      }
+      DEF NW_BBOX Transform {
+        translation -0.755 0.0251 -0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF NE_BBOX Transform {
+        translation 0.755 0.0251 -0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF SW_BBOX Transform {
+        translation -0.755 0.0251 0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF SE_BBOX Transform {
+        translation 0.755 0.0251 0.43
+        children [
+          Box {
+            size 0.01 0.05 0.435
+          }
+        ]
+      }
+      DEF NWC_BBOX Transform {
+        translation 0.725 0.0251 0.62
+        rotation 0 1 0 -0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF NEC_BBOX Transform {
+        translation -0.725 0.0251 0.62
+        rotation 0 1 0 0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF SWC_BBOX Transform {
+        translation 0.725 0.0251 -0.62
+        rotation 0 1 0 0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF SEC_BBOX Transform {
+        translation -0.725 0.0251 -0.62
+        rotation 0 1 0 -0.7853
+        children [
+          Box {
+            size 0.01 0.05 0.09
+          }
+        ]
+      }
+      DEF YG_BBOX Transform {
+        translation -0.855 0.061 0
+        children [
+          Box {
+            size 0.01 0.12 0.42
+          }
+        ]
+      }
+      DEF BG_BBOX Transform {
+        translation 0.855 0.061 0
+        children [
+          Box {
+            size 0.01 0.12 0.42
+          }
+        ]
+      }
+      DEF BGS_BBOX Transform {
+        translation 0.8 0.061 0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+      DEF BGN_BBOX Transform {
+        translation 0.8 0.061 -0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+      DEF YGS_BBOX Transform {
+        translation -0.8 0.061 0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+      DEF YGN_BBOX Transform {
+        translation -0.8 0.061 -0.205
+        children [
+          Box {
+            size 0.1 0.12 0.01
+          }
+        ]
+      }
+    ]
+  }
+  locked TRUE
+}
+DEF BALL SoccerBall {
+  hidden linearVelocity_0 0.011692673170873425 3.045162455735744e-05 0.07384258033663102
+  hidden angularVelocity_0 3.5163133493633794 0.4937370089535763 -0.5567939605177821
+  translation -0.025572874352622312 0.02091762400012464 0.10554530512448665
+  rotation 0.3605526720692506 0.8800787200270302 -0.30897122393405435 -2.872752440785924
+  radius 0.021
+  mass 0.05
+}
+DEF B1 Robot {
+  translation -0.09338390275849401 0.03748636160556873 0.12178248021386663
+  rotation -0.00044863320901372027 0.9999995158710585 0.0008757773073118665 1.604823268685204
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1391.1029969484593
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation -1 0 0 3.2372562454088496
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              DEF WHEEL_SHAPE Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            USE WHEEL_SHAPE
+          ]
+        }
+        physics DEF WHEEL_PHYSICS Physics {
+          density -1
+          mass 0.005
+        }
+        linearVelocity 0.002018477972829836 0.00035724352969595505 0.03278367117611827
+        angularVelocity -0.17034127802135438 -0.03647868776970155 -4.981500094471281
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1272.3629363678663
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation 1 0 0 3.6855583175897975
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.02
+              }
+            }
+          ]
+        }
+        physics USE WHEEL_PHYSICS
+        linearVelocity -0.00014608440985690579 0.000782100967031582 0.0323375937308187
+        angularVelocity -0.16990800418917762 -0.026358942993934622 -4.98150995080675
+      }
+    }
+    DEF BLUE_ROBOT_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/blue.png"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    Receiver {
+    }
+  ]
+  name "B1"
+  boundingObject USE BLUE_ROBOT_SHAPE
+  physics DEF ROBOT_PHYSICS Physics {
+    density -1
+    mass 0.2
+  }
+  controller "rcj_soccer_player_b1"
+  linearVelocity 0.0006514173094529632 0.000509794735159119 0.03253727778216074
+  angularVelocity -0.002741017390823402 -0.023760511804579946 0.015701127531693948
+}
+DEF B2 Robot {
+  translation 0.04313889897201909 0.03776938693522765 0.09538838718084133
+  rotation 0.005192127258514238 0.999965086302574 0.006547365150773636 -1.375719244895883
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1727.504960109597
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation -1 0 0 6.127299671968818
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              DEF WHEEL_SHAPE Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            USE WHEEL_SHAPE
+          ]
+        }
+        physics DEF WHEEL_PHYSICS Physics {
+          density -1
+          mass 0.005
+        }
+        linearVelocity -0.0013801384040709244 -0.0013679538062238723 0.0389256690727372
+        angularVelocity 1.8955671127871627 -0.15471553143785738 9.832272357846485
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -2009.231855376716
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation -1 0 0 0.8613889207515621
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.02
+              }
+            }
+          ]
+        }
+        physics USE WHEEL_PHYSICS
+        linearVelocity 0.012866959543148874 0.0019212838881631298 0.03739478179273136
+        angularVelocity 1.8956837409897809 -0.15464386338906744 9.83224912684559
+      }
+    }
+    DEF BLUE_ROBOT_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/blue.png"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    Receiver {
+    }
+  ]
+  name "B2"
+  boundingObject USE BLUE_ROBOT_SHAPE
+  physics USE ROBOT_PHYSICS
+  controller "rcj_soccer_player_b2"
+  linearVelocity 0.0044845415268113765 -0.0016483779158750122 0.03702016828841959
+  angularVelocity -0.06232618278555922 -0.11050004927755307 0.025899811736109314
+}
+DEF B3 Robot {
+  translation -0.01900734890768257 0.03735188554036823 0.1705254850816725
+  rotation -0.7797569287360118 -0.0007104823799351606 0.6260819653232075 3.13991607633658
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1010.3009785373616
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation 1 0 0 5.518214388627793
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              DEF WHEEL_SHAPE Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            USE WHEEL_SHAPE
+          ]
+        }
+        physics DEF WHEEL_PHYSICS Physics {
+          density -1
+          mass 0.005
+        }
+        linearVelocity -6.629614987565071e-05 -0.0002716868833019309 0.03458045624454052
+        angularVelocity 1.064110193877678 0.012535064670345084 -4.880518135607355
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1290.8412194451323
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation -0.9999999999999999 0 0 2.9688998338625057
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.02
+              }
+            }
+          ]
+        }
+        physics USE WHEEL_PHYSICS
+        linearVelocity -7.60027343273983e-05 0.0011892234017677231 0.034568330380731184
+        angularVelocity 1.0641102298296488 0.012534989113701768 -4.880518127909506
+      }
+    }
+    DEF BLUE_ROBOT_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/blue.png"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    Receiver {
+    }
+  ]
+  name "B3"
+  boundingObject USE BLUE_ROBOT_SHAPE
+  physics USE ROBOT_PHYSICS
+  controller "rcj_soccer_player_b3"
+  linearVelocity -4.846829117644653e-05 0.0005163320456183679 0.034859421379569044
+  angularVelocity -0.016569905531543774 -8.742681561211207e-05 0.0012819363282562217
+}
+DEF Y1 Robot {
+  translation 0.0819585782519772 0.03752707317467472 0.003611199016342756
+  rotation 0.003564432000460024 0.9999914157192821 0.00211265526286637 -0.9168230284637685
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1259.3347135938711
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation 1 0 0 3.224537157953834
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              DEF WHEEL_SHAPE Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            USE WHEEL_SHAPE
+          ]
+        }
+        physics DEF WHEEL_PHYSICS Physics {
+          density -1
+          mass 0.005
+        }
+        linearVelocity -0.046187705069898076 0.000433634110471294 0.06528108668460665
+        angularVelocity 3.14200794823313 -0.7611046359716673 3.884378519942987
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1341.2260286085218
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation -1 0 0 2.8495731279097063
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.02
+              }
+            }
+          ]
+        }
+        physics USE WHEEL_PHYSICS
+        linearVelocity 0.007366813574698162 0.0002945851506244053 0.02238968151310663
+        angularVelocity 3.142013455246852 -0.761091539681177 3.8843738610788066
+      }
+    }
+    DEF YELLOW_ROBOT_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/yellow.png"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    Receiver {
+    }
+  ]
+  name "Y1"
+  boundingObject USE YELLOW_ROBOT_SHAPE
+  physics USE ROBOT_PHYSICS
+  controller "rcj_soccer_player_y1"
+  linearVelocity -0.01931510879942072 0.00029142656534999166 0.04384423854940782
+  angularVelocity -0.002799809786158125 -0.7616843495637835 -0.0028150595180109483
+}
+DEF Y2 Robot {
+  translation -0.03849956582085256 0.03753273417643736 0.04506878086413612
+  rotation -0.06538244584166165 0.9978521874724553 -0.004018424093882082 0.028975222141980363
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1359.5282038677979
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation 0.9999999999999999 0 0 2.887062517007177
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              DEF WHEEL_SHAPE Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            USE WHEEL_SHAPE
+          ]
+        }
+        physics DEF WHEEL_PHYSICS Physics {
+          density -1
+          mass 0.005
+        }
+        linearVelocity 0.0032421677237424833 -0.0001305404270005267 0.035388289096309
+        angularVelocity 5.0030559475143335 -0.02161746557077678 -0.16251607211934083
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1423.4878149049111
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation 1 0 0 4.013989482324603
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.02
+              }
+            }
+          ]
+        }
+        physics USE WHEEL_PHYSICS
+        linearVelocity 0.0035291077861348743 3.529500457686327e-05 0.03319702752457399
+        angularVelocity 5.003055955816966 -0.02161757164265953 -0.16251628498845977
+      }
+    }
+    DEF YELLOW_ROBOT_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/yellow.png"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    Receiver {
+    }
+  ]
+  name "Y2"
+  boundingObject USE YELLOW_ROBOT_SHAPE
+  physics USE ROBOT_PHYSICS
+  controller "rcj_soccer_player_y2"
+  linearVelocity 0.0034253192649129605 -5.539494844473297e-05 0.034395426329596385
+  angularVelocity 0.005617221837892366 -0.024285746202899073 -0.00204281340399107
+}
+DEF Y3 Robot {
+  translation -0.014546116815322752 0.037556874833299586 -0.03050432325114032
+  rotation -0.13848496398244964 0.9902544349457257 0.014767153452891332 0.02585161285749357
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -2741.6496673723905
+        axis -1 0 0
+        anchor 0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+          maxVelocity 100
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.045 -0.0176 0
+        rotation 0.9999999999999999 0 0 2.7077584420907623
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              DEF WHEEL_SHAPE Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "right wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            USE WHEEL_SHAPE
+          ]
+        }
+        physics DEF WHEEL_PHYSICS Physics {
+          density -1
+          mass 0.005
+        }
+        linearVelocity 0.0025736378360015585 5.6293350976532056e-05 0.03604483324710259
+        angularVelocity 4.999601315683621 -0.026068332280886217 -0.14435891629346606
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1086.6537622026347
+        axis -1 0 0
+        anchor -0.045 -0.0176 0
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+          maxVelocity 100
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.045 -0.0176 0
+        rotation -1 0 0 6.094427246613399
+        children [
+          Transform {
+            rotation 0 0 1 1.57
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.02
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.01
+                radius 0.02
+              }
+            }
+          ]
+        }
+        physics USE WHEEL_PHYSICS
+        linearVelocity 0.0028789511781681133 -0.00010048427113632916 0.03325867372406707
+        angularVelocity 4.999601343687314 -0.026062914330179147 -0.14435758558280906
+      }
+    }
+    DEF YELLOW_ROBOT_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "soccer/yellow.png"
+          ]
+        }
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.075 0.075 0.075
+      }
+    }
+    Receiver {
+    }
+  ]
+  name "Y3"
+  boundingObject USE YELLOW_ROBOT_SHAPE
+  physics USE ROBOT_PHYSICS
+  controller "rcj_soccer_player_y3"
+  linearVelocity 0.002700679571617699 -2.3644831993535968e-05 0.034686480119509325
+  angularVelocity 0.001716307852181707 -0.03110230390901867 0.0015854392780717784
+}
+Robot {
+  children [
+    Emitter {
+      range 100
+      baudRate 115200
+    }
+  ]
+  controller "rcj_soccer_referee_supervisor"
+  supervisor TRUE
+}
