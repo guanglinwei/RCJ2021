@@ -14,7 +14,16 @@ def get_direction(ball_angle: float) -> int:
 
 # (x, y)
 class Vector2:
+    """
+    A vector with an X and Y coordinate.
+
+    Parameters:
+        x (float, default 0): X component
+        y (float, default 0): Y component
+        fromDict ({'x', 'y'}, default None): A dict object that create a Vector2 from.
+    """
     def __init__(self, x=0, y=0, fromDict=None):
+        
         if fromDict is not None:
             self.x = fromDict['x']
             self.y = fromDict['y']
@@ -24,9 +33,19 @@ class Vector2:
         self.y = y
     
     def getMagnitude(self):
+        """
+        Get the length of a vector.
+
+        Returns: float
+        """
         return math.sqrt(self.x * self.x + self.y * self.y)
 
     def getNormalized(self):
+        """
+        Get a vector with the same direction but a magnitude of 1.
+
+        Returns: Vector2
+        """
         mag = self.getMagnitude()
         return Vector2(self.x / mag, self.y / mag)
 
@@ -43,6 +62,14 @@ class Vector2:
         return self.y < p2.y or (inclusive and self.y == p2.y)
 
     def distFrom(self, p2):
+        """
+        Returns the distance to another point.
+
+        Parameters:
+            p2 (Vector2): The other point.
+
+        Returns: float
+        """
         dx = p2.x - self.x
         dy = p2.y - self.y
         return math.sqrt(dx * dx + dy * dy)
