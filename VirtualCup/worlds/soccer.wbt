@@ -1,4 +1,4 @@
-#VRML_SIM R2020b utf8
+#VRML_SIM R2021a utf8
 WorldInfo {
   info [
     "A simple RCJ Soccer game simulated using Webots."
@@ -8,8 +8,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.7514920402341333 -0.6392670342257186 -0.16308700873151558 5.42412
-  position 1.25037 1.41585 1.7555
+  orientation 0.1604954967590655 -0.9807648117728127 -0.1110926618112106 4.732739633362181
+  position 3.9988893291865333 0.9322636891210101 0.43458859660775806
 }
 TexturedBackground {
 }
@@ -408,7 +408,7 @@ DEF B1 Robot {
       ]
       endPoint Solid {
         translation 0.045 -0.0176 0
-        rotation 1 0 0 0.526885
+        rotation 1 0 0 0.5268849999999996
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -454,7 +454,7 @@ DEF B1 Robot {
       ]
       endPoint Solid {
         translation -0.045 -0.0176 0
-        rotation 1 0 0 0.526054
+        rotation 1 0 0 0.5260539999999999
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -535,7 +535,7 @@ DEF B2 Robot {
       ]
       endPoint Solid {
         translation 0.045 -0.0176 0
-        rotation 1 0 0 0.526885
+        rotation 1 0 0 0.5268849999999996
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -581,7 +581,7 @@ DEF B2 Robot {
       ]
       endPoint Solid {
         translation -0.045 -0.0176 0
-        rotation 1 0 0 0.526054
+        rotation 1 0 0 0.5260539999999999
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -659,7 +659,7 @@ DEF B3 Robot {
       ]
       endPoint Solid {
         translation 0.045 -0.0176 0
-        rotation 1 0 0 0.526885
+        rotation 1 0 0 0.5268849999999996
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -705,7 +705,7 @@ DEF B3 Robot {
       ]
       endPoint Solid {
         translation -0.045 -0.0176 0
-        rotation 1 0 0 0.526054
+        rotation 1 0 0 0.5260539999999999
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -783,7 +783,7 @@ DEF Y1 Robot {
       ]
       endPoint Solid {
         translation 0.045 -0.0176 0
-        rotation 1 0 0 0.526885
+        rotation 1 0 0 0.5268849999999996
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -829,7 +829,7 @@ DEF Y1 Robot {
       ]
       endPoint Solid {
         translation -0.045 -0.0176 0
-        rotation 1 0 0 0.526054
+        rotation 1 0 0 0.5260539999999999
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -907,7 +907,7 @@ DEF Y2 Robot {
       ]
       endPoint Solid {
         translation 0.045 -0.0176 0
-        rotation 1 0 0 0.526885
+        rotation 1 0 0 0.5268849999999996
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -953,7 +953,7 @@ DEF Y2 Robot {
       ]
       endPoint Solid {
         translation -0.045 -0.0176 0
-        rotation 1 0 0 0.526054
+        rotation 1 0 0 0.5260539999999999
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -1031,7 +1031,7 @@ DEF Y3 Robot {
       ]
       endPoint Solid {
         translation 0.045 -0.0176 0
-        rotation 1 0 0 0.526885
+        rotation 1 0 0 0.5268849999999996
         children [
           Transform {
             rotation 0 0 1 1.57
@@ -1077,7 +1077,7 @@ DEF Y3 Robot {
       ]
       endPoint Solid {
         translation -0.045 -0.0176 0
-        rotation 1 0 0 0.526054
+        rotation 1 0 0 0.5260539999999999
         children [
           Transform {
             rotation 0 0 1 1.57

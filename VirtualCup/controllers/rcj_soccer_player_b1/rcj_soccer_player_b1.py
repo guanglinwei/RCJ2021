@@ -39,7 +39,7 @@ class MyRobot(RCJSoccerRobot):
                    targetPos["y"]=-0.6
                    
                 #print(enemyAngle)
-                print("Tpos: ", targetPos)
+                # print("Tpos: ", targetPos)
              
                 # Get the position of the ball
                 
@@ -97,8 +97,8 @@ class MyRobot(RCJSoccerRobot):
         else:
             if ball_pos["y"] < 0:
                 angle = 360 - self.ballGoalAngle(ball_pos)
-                print("0",angle)
-                print("Ball0", ball_pos)
+                # print("0",angle)
+                # print("Ball0", ball_pos)
                 x = ball_pos["x"] + .1*sin(radians(angle))
                 y = ball_pos["y"] + .1*cos(radians(angle))
                 return {"x": x, "y": y, "orientation": 0}
@@ -106,8 +106,8 @@ class MyRobot(RCJSoccerRobot):
             elif ball_pos["y"] > 0:
                 
                 angle = abs(self.ballGoalAngle(ball_pos))
-                print("1",angle)
-                print("Ball1", ball_pos)
+                # print("1",angle)
+                # print("Ball1", ball_pos)
                 x = ball_pos["x"] + .1*sin(radians(angle))
                 y = ball_pos["y"] - .1*cos(radians(angle))
                 return {"x": x, "y": y, "orientation": 0}
@@ -134,8 +134,8 @@ class MyRobot(RCJSoccerRobot):
                 right_speed = -10
 
         # Set the speed to motors
-        self.left_motor.setVelocity(left_speed)
-        self.right_motor.setVelocity(right_speed)
+        # self.left_motor.setVelocity(left_speed)
+        # self.right_motor.setVelocity(right_speed)
         
         
 my_robot = MyRobot()
