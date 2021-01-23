@@ -92,18 +92,6 @@ class MyRobot(RCJSoccerRobot):
                     self.goto(targetPos,self.robot_pos)
                 # If the robot has the ball right in front of it, go forward,
                 # rotate otherwise
-<<<<<<< HEAD
-                if direction == 0:
-                    left_speed = -5
-                    right_speed = -5
-                else:
-                    left_speed = direction * 4
-                    right_speed = direction * -4
-
-                # Set the speed to motors
-                self.left_motor.setVelocity(6)
-                self.right_motor.setVelocity(10)
-=======
     
     
                  
@@ -129,7 +117,6 @@ class MyRobot(RCJSoccerRobot):
             return "B"
             
     def enemyGoalPos(self):
->>>>>>> d21f09123fc5d5a9b5a40988435ed8408befa041
 
         if self.enemyGoal() == "B":        
             return {"x": 0.75, "y": 0, "orientation": 0}
