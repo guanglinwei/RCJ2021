@@ -2,7 +2,7 @@
 #include <RoboClaw.h>
 #include <math.h>
 RoboClaw roboclaw(&Serial, 10000);
-HoloMove hm(&roboclaw);
+HoloMove hm(&roboclaw, Serial);
 float dir = 0.0;
 float speed = 255.0;
 float a,b,c,d;
@@ -10,7 +10,7 @@ float a,b,c,d;
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9800);
   roboclaw.begin(38400);  
 
 //  hm.move(0, speed, 0, &a, &b, &c, &d);

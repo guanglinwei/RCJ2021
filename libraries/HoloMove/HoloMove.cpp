@@ -3,7 +3,7 @@
 #include "RoboClaw.h"
 
 
-HoloMove::HoloMove(const RoboClaw* rb, HardwareSerial &ser) : _rb(rb), _ser(ser){
+HoloMove::HoloMove(RoboClaw* rb, HardwareSerial &ser) : _rb(rb), _ser(ser){
 
 }
 
