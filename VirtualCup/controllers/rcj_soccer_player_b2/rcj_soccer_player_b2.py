@@ -23,7 +23,7 @@ class MyRobot(RCJSoccerRobot):
 
         # Compute the speed for motors
         direction = utils.get_direction(ball_angle)
-        print(robot_pos["orientation"])
+        #print(robot_pos["orientation"])
 
         # If the robot has the ball right in front of it, go forward,
         # rotate otherwise
@@ -35,8 +35,8 @@ class MyRobot(RCJSoccerRobot):
             right_speed = direction * -4
 
         # Set the speed to motors
-        self.left_motor.setVelocity(left_speed)
-        self.right_motor.setVelocity(right_speed)
+        #self.left_motor.setVelocity(left_speed)
+        #self.right_motor.setVelocity(right_speed)
 
     # move in front of enemy, try to move ball out of the way. 
     def steal(self, data):
