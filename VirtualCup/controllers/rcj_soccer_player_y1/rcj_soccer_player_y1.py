@@ -22,7 +22,7 @@ class MyRobot(RCJSoccerRobot):
         global degDirection
         self.ball = 0
         self.stop = False
-        
+
         self.isPrinting = False
 
         while self.robot.step(TIME_STEP) != -1:
@@ -39,20 +39,20 @@ class MyRobot(RCJSoccerRobot):
 
                 # Get the position of our robot
                 self.robot_pos = data[self.name]
-                
+
                 ball_pos = data['ball']
-                
+
                 if self.ball == 0:
                     self.ball = ball_pos
-                
+
                 #Posprint
                 self.myprint(self.robot_pos)
-                
+
                 enemyAngle, friendAngle = self.get_angles(self.enemyGoalPos(), self.robot_pos)
-                
+
                 futureBall = self.futureBallPos(ball_pos)
-                
-                
+
+
                 targetPos = self.targetPos(futureBall,gap)
 
                 if targetPos["x"] > 0.9:
@@ -71,11 +71,11 @@ class MyRobot(RCJSoccerRobot):
                 #print("Tpos: ", targetPos)
 
                 # Get the position of the ball
-                
-                
-                
-               
-                
+
+
+
+
+
                 # Get angle between the robot and the ball
                 # and between the robot and the north
                 ball_angle, robot_angle = self.get_angles(ball_pos, self.robot_pos)
@@ -83,16 +83,16 @@ class MyRobot(RCJSoccerRobot):
                 #print("Robot B: " + str(robot_angle))
 
                 # Compute the speed for motors
-                
+
 
 
                 targetPos = self.goalieTarget(ball_pos)
                 self.goto(targetPos, self.robot_pos)
-                
-                
-                
+
+
+
                 self.ball = ball_pos
-                
+
                 if self.stop:
                     self.left_motor.setVelocity(0)
                     self.right_motor.setVelocity(0)
@@ -114,15 +114,15 @@ class MyRobot(RCJSoccerRobot):
 
     def myGoal(self):
         return self.name[0]
-    
+
     def enemyGoal(self):
         if self.name[0] == "B":
             return "Y"
         else:
             return "B"
-    
-    
-    
+
+
+
     def enemyGoalPos(self):
 
         if self.enemyGoal() == "B":
@@ -132,21 +132,21 @@ class MyRobot(RCJSoccerRobot):
 
 
     def futureBallPos(self, ball_pos: dict):
-             
+
         k = 10
         #New - old
         dx = ball_pos["x"] - self.ball["x"]
         dy = ball_pos["x"] - self.ball["x"]
-        
+
 
         futurePos = {"x": ball_pos["x"] + k*dx, "y": ball_pos["y"] + k*dy}
-        
+
         return futurePos
-    
-    
-    
+
+
+
     def targetPos(self, ball_pos: dict, gap):
-        
+
         x = 0
         y = 0
         if self.enemyGoal() == "B":
@@ -224,15 +224,15 @@ class MyRobot(RCJSoccerRobot):
 
 
     def approxAngle(self, angle, angle2, mojo):
-    
+
         ang1 = abs(angle-angle2)
         ang2 = 360 - ang1
-        
+
         if ang1 > ang2:
             realang = ang2
         else:
             realang = ang1
-    
+
         return realang <= mojo
 
 
@@ -314,30 +314,30 @@ class MyRobot(RCJSoccerRobot):
             return newTarget, False
 
         return targetPos, False
-        
-    
+
+
     def goalieTarget(self, ball_pos):
         #self.robot_pos
         ball_pos["orientation"] = 0
-        
-        
-        
+
+
+
         if self.myGoal() == "Y":
             goalx = -0.62
         else:
             goalx = 0.62
-            
+
         distToBall = abs(goalx - ball_pos["x"])
         targy = ball_pos["y"]
         targx = goalx
-        
-        
+
+
         angle, nothing = self.get_angles(self.ball, ball_pos)
-        
+
         if angle < 0:
             angle = 270 + (90 - abs(angle))
-        
-        
+
+
         if angle > 350 or angle < 10 or (angle < 190 and angle > 170):
             targy = ball_pos["y"]
             targx = goalx
@@ -347,28 +347,33 @@ class MyRobot(RCJSoccerRobot):
             targy = ball_pos["y"] + y
             targx = goalx
             self.myprint("Intelligent Goalie")
-        
+
         if targy > 0.22:
             targy = 0.22
         elif targy < -0.22:
             targy = -0.22
-        
-        
-        
-        target = {"x": targx, "y": targy, "orientation": 0} 
+
+
+
+        target = {"x": targx, "y": targy, "orientation": 0}
         self.myprint(target)
         return target
-            
-            
-            
-    
-    
-    
-    
+
+
+
+
+
+
+
 
     def myprint(self, text):
         if self.isPrinting:
             print(self.name, ": ", text)
+
+        # Set the speed to motors
+        # self.left_motor.setVelocity(left_speed)
+        # self.right_motor.setVelocity(right_speed)
+
 
 my_robot = MyRobot()
 my_robot.run()
