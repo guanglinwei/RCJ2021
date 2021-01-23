@@ -1,16 +1,27 @@
 import math
-def get_direction(ball_angle: float) -> int:
+def get_direction(ball_angle: float, tolerance=15) -> int:
     """Get direction to navigate robot to face the ball
 
     Args:
         ball_angle (float): Angle between the ball and the robot
+        tolerance (float): Will return 0 if angle is 0 += tolerance
 
     Returns:
         int: 0 = forward, -1 = right, 1 = left
     """
-    if ball_angle >= 345 or ball_angle <= 15:
+    if ball_angle >= 360 - tolerance or ball_angle <= tolerance:
         return 0
     return -1 if ball_angle < 180 else 1
+
+def clamp(val, lower, upper):
+    return max(lower, min(val, upper))
+
+def modP(x, m):
+    """
+    modulo without negatives
+    """
+
+    return (x % m + m) % m
 
 # (x, y)
 class Vector2:
@@ -94,6 +105,9 @@ class Vector2:
     
     def __truediv__(self, m: float):
         return Vector2(self.x / m, self.y / m)
+
+    def todict(self):
+        return {'x': self.x, 'y': self.y}
 
 
 ZERO = Vector2(0, 0)

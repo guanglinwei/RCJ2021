@@ -36,8 +36,8 @@ class MyRobot(RCJSoccerRobot):
                     right_speed = direction * -4
 
                 # Set the speed to motors
-                #self.left_motor.setVelocity(left_speed)
-                #self.right_motor.setVelocity(right_speed)
+                self.left_motor.setVelocity(6)
+                self.right_motor.setVelocity(10)
 
 
 my_robot = MyRobot()
