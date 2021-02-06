@@ -10,16 +10,10 @@ import random
 
 # You can also import scripts that you put into the folder with controller
 from rcj_soccer_robot import RCJSoccerRobot, TIME_STEP
-<<<<<<< HEAD
-global isPrinting 
-isPrinting = False
-testing = True
-=======
 
 
 
 
->>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
 
 class MyRobot(RCJSoccerRobot):
     def run(self):
@@ -29,7 +23,7 @@ class MyRobot(RCJSoccerRobot):
         self.ball = 0
         self.stop = False
         
-        self.isPrinting = True
+        self.isPrinting = False
 
         while self.robot.step(TIME_STEP) != -1:
 
@@ -37,11 +31,6 @@ class MyRobot(RCJSoccerRobot):
 
 
             if self.is_new_data():
-                if testing:
-                    self.left_motor.setVelocity(7)
-                    self.right_motor.setVelocity(10)
-                    return
-
                 data = self.get_new_data()
                 degDirection = degrees(data[self.name]["orientation"])
                 if degDirection<0:
@@ -94,33 +83,13 @@ class MyRobot(RCJSoccerRobot):
                 #print("Robot B: " + str(robot_angle))
 
                 # Compute the speed for motors
-                goalAngle, nothing = self.get_angles(self.enemyGoalPos(), self.robot_pos)
+                
 
-                targetPos, isBackward = self.avoid(data,targetPos)
 
-                if self.isStuckOnWall(data):
-                    self.goBackwards(10,True)
-                elif isBackward:
-                    self.goBackwards(8)
-                    self.myprint("Going Backwards")
-                    
-                elif get_distance(self.robot_pos,targetPos) <=0.1:
-                    if abs(goalAngle-ball_angle) <= 20:
-
-                        self.goto(self.enemyGoalPos(),self.robot_pos)
-                        self.myprint("Going to Goal")
-                    else:
-                        direction = get_direction(goalAngle)
-                        self.rotate(direction)
-                        self.myprint("Turning to goal")
-
-                else:
-
-                    #self.goto(self.targetPos(ball_pos),robot_pos)
-                    self.myprint("Going to target")
-                    self.goto(targetPos,self.robot_pos)
-                # If the robot has the ball right in front of it, go forward,
-                # rotate otherwise
+                targetPos = self.goalieTarget(ball_pos)
+                self.goto(targetPos, self.robot_pos)
+                
+                
                 
                 self.ball = ball_pos
                 
@@ -227,9 +196,9 @@ class MyRobot(RCJSoccerRobot):
         else:
             if direction == -1:
                 left_speed = -10
-                right_speed = -3
+                right_speed = 10
             else:
-                left_speed = -3
+                left_speed = 10
                 right_speed = -10
 
         # Set the speed to motors
@@ -240,7 +209,7 @@ class MyRobot(RCJSoccerRobot):
     def goBackwards(self, curve, reallyBackward = False):
         if reallyBackward:
             self.left_motor.setVelocity(curve)
-            self.right_motor.setVelocity(-1*curve)
+            self.right_motor.setVelocity(curve)
             return
 
         rightS = 10
@@ -354,9 +323,9 @@ class MyRobot(RCJSoccerRobot):
         
         
         if self.myGoal() == "Y":
-            goalx = -0.7
+            goalx = -0.62
         else:
-            goalx = 0.7
+            goalx = 0.62
             
         distToBall = abs(goalx - ball_pos["x"])
         targy = ball_pos["y"]
@@ -372,23 +341,30 @@ class MyRobot(RCJSoccerRobot):
         if angle > 350 or angle < 10 or (angle < 190 and angle > 170):
             targy = ball_pos["y"]
             targx = goalx
+            self.myprint("Dumb")
         else:
             y = distToBall * tan(angle)
             targy = ball_pos["y"] + y
             targx = goalx
+            self.myprint("Intelligent Goalie")
         
-        if targy > 0.16:
-            targy = 0.16
-        elif targy < -0.16:
-            targy = -0.16
+        if targy > 0.22:
+            targy = 0.22
+        elif targy < -0.22:
+            targy = -0.22
         
         
         
         target = {"x": targx, "y": targy, "orientation": 0} 
         self.myprint(target)
         return target
+            
+            
+            
     
-           
+    
+    
+    
 
     def myprint(self, text):
         if self.isPrinting:
