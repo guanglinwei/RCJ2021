@@ -11,7 +11,7 @@ import random
 # You can also import scripts that you put into the folder with controller
 from rcj_soccer_robot import RCJSoccerRobot, TIME_STEP
 global isPrinting 
-isPrinting = True
+isPrinting = False
 
 class MyRobot(RCJSoccerRobot):
     def run(self):
@@ -123,55 +123,6 @@ class MyRobot(RCJSoccerRobot):
         else:
             return {"x": -0.75, "y": 0, "orientation": 0}
             
-<<<<<<< HEAD
-    def targetPos(self, ball_pos: dict):
-        if self.enemyGoal() == "B":
-            if ball_pos["y"] < 0:
-                angle = 360 - self.ballGoalAngle(ball_pos)
-                x = ball_pos["x"] - .1*sin(radians(angle))
-                y = ball_pos["y"] + .1*cos(radians(angle)) 
-                return {"x": x, "y": y, "orientation": 0}
-                
-            elif ball_pos["y"] > 0:
-                angle = abs(self.ballGoalAngle(ball_pos))
-                x = ball_pos["x"] - .1*sin(radians(angle))
-                y = ball_pos["y"] - .1*cos(radians(angle))
-                return {"x": x, "y": y, "orientation": 0}
-                
-            else:
-                return {"x": ball_pos["x"]-.1,"y": 0}
-        else:
-            if ball_pos["y"] < 0:
-                angle = 360 - self.ballGoalAngle(ball_pos)
-                # print("0",angle)
-                # print("Ball0", ball_pos)
-                x = ball_pos["x"] + .1*sin(radians(angle))
-                y = ball_pos["y"] + .1*cos(radians(angle))
-                return {"x": x, "y": y, "orientation": 0}
-                
-            elif ball_pos["y"] > 0:
-                
-                angle = abs(self.ballGoalAngle(ball_pos))
-                # print("1",angle)
-                # print("Ball1", ball_pos)
-                x = ball_pos["x"] + .1*sin(radians(angle))
-                y = ball_pos["y"] - .1*cos(radians(angle))
-                return {"x": x, "y": y, "orientation": 0}
-                
-            else:
-                return {"x": ball_pos["x"]-.1,"y": 0}
-            
-    def ballGoalAngle(self,ball_pos):
-        angle, nothing=self.get_angles(ball_pos, self.enemyGoalPos())
-        return angle
-            
-    def goto(self, coords,robot_pos):
-        goAngle, nothing = self.get_angles(coords, robot_pos)
-        direction = utils.get_direction(goAngle)
-        if direction == 0:
-            left_speed = -4
-            right_speed = -5
-=======
             
     def targetPos(self, ball_pos: dict, gap):
         x = 0
@@ -220,7 +171,6 @@ class MyRobot(RCJSoccerRobot):
         if direction == 0:
             left_speed = -10
             right_speed = -10
->>>>>>> d21f09123fc5d5a9b5a40988435ed8408befa041
         else:
             if direction == -1:
                 left_speed = -10
@@ -233,8 +183,6 @@ class MyRobot(RCJSoccerRobot):
         self.left_motor.setVelocity(left_speed)
         self.right_motor.setVelocity(right_speed)
         
-<<<<<<< HEAD
-=======
     
     def goBackwards(self, curve, reallyBackward = False):
         if reallyBackward:
@@ -337,7 +285,6 @@ class MyRobot(RCJSoccerRobot):
 def myprint(text):
     if isPrinting:
         print(text)            
->>>>>>> d21f09123fc5d5a9b5a40988435ed8408befa041
         
 my_robot = MyRobot()
 my_robot.run()

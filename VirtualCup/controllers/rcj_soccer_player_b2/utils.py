@@ -23,6 +23,12 @@ def modP(x, m):
 
     return (x % m + m) % m
 
+# def modN(x, m):
+#     """
+#     modulo with negatives
+#     """
+#     return (x % m) if x > 0 else m - (x % m)
+
 # (x, y)
 class Vector2:
     """
@@ -105,6 +111,9 @@ class Vector2:
     
     def __truediv__(self, m: float):
         return Vector2(self.x / m, self.y / m)
+    
+    def __iter__(self):
+        return iter([self.x, self.y])
 
     def todict(self):
         return {'x': self.x, 'y': self.y}
@@ -114,3 +123,53 @@ ZERO = Vector2(0, 0)
 UP = Vector2(0, 1)
 RIGHT = Vector2(1, 0)
 ONE = Vector2(1, 1)
+BLUE_GOAL = Vector2() #TODO
+YELLOW_GOAL = Vector2()
+
+# https://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
+def ccw(A,B,C):
+    return (C.y-A.y) * (B.x-A.x) > (B.y-A.y) * (C.x-A.x)
+
+# Return true if line segments AB and CD intersect
+def intersect(A,B,C,D):
+    return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
+
+do_print = False
+def cPrint(*args):
+    if do_print:
+        print(**args)
+# class QueuedAction:
+#     # func: function to call
+#     # delay: call after how many ticks
+#     def __init__(self, func, delay, repeat=False):
+#         self.count = 0
+#         self.delay = delay
+#         self.func = func
+#         self.repeat = repeat
+#         self.next = None
+#         self.prev = None
+
+#     def update(self, ticks):
+#         if self.delay == -1:
+#             return False
+
+#         self.count += ticks
+#         if self.count > self.delay:
+#             if func is not None:
+#                 func()
+#             if repeat:
+#                 self.count = 0
+#             else:
+#                 remove_queued_action(self)
+
+
+# QUEUED_ACTIONS = []
+# def add_queued_action(action):
+#     QUEUED_ACTIONS.append(action)
+
+# def update_queued():
+#     for q in QUEUED_ACTIONS:
+#         q.update(1)
+
+# def remove_queued_action(action):
+#     QUEUED_ACTIONS.remove(action)

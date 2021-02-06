@@ -11,7 +11,7 @@ import random
 # You can also import scripts that you put into the folder with controller
 from rcj_soccer_robot import RCJSoccerRobot, TIME_STEP
 global isPrinting
-isPrinting = True
+isPrinting = False
 
 class MyRobot(RCJSoccerRobot):
     def run(self):
