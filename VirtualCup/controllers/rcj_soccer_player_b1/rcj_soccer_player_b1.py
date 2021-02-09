@@ -10,10 +10,15 @@ import random
 import time
 # You can also import scripts that you put into the folder with controller
 from rcj_soccer_robot import RCJSoccerRobot, TIME_STEP
+<<<<<<< HEAD
+global isPrinting
+isPrinting = False
+=======
 
 
 
 
+>>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
 
 class MyRobot(RCJSoccerRobot):
     def run(self):

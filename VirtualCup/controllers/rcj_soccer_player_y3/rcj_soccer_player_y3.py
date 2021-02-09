@@ -10,10 +10,15 @@ import random
 
 # You can also import scripts that you put into the folder with controller
 from rcj_soccer_robot import RCJSoccerRobot, TIME_STEP
+<<<<<<< HEAD
+global isPrinting 
+isPrinting = False
+=======
 
 
 
 
+>>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
 
 class MyRobot(RCJSoccerRobot):
     def run(self):
@@ -149,6 +154,10 @@ class MyRobot(RCJSoccerRobot):
             return {"x": 0.75, "y": 0, "orientation": 0}
         else:
             return {"x": -0.75, "y": 0, "orientation": 0}
+<<<<<<< HEAD
+            
+            
+=======
 
 
     def futureBallPos(self, ball_pos: dict):
@@ -164,6 +173,7 @@ class MyRobot(RCJSoccerRobot):
         return futurePos
 
 
+>>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
     def targetPos(self, ball_pos: dict, gap):
 
         x = 0
@@ -212,7 +222,10 @@ class MyRobot(RCJSoccerRobot):
         if direction == 0:
             left_speed = -10
             right_speed = -10
+<<<<<<< HEAD
+=======
 
+>>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
         else:
             if direction == -1:
                 left_speed = -10
@@ -224,8 +237,13 @@ class MyRobot(RCJSoccerRobot):
         # Set the speed to motors
         self.left_motor.setVelocity(left_speed)
         self.right_motor.setVelocity(right_speed)
+<<<<<<< HEAD
+        
+    
+=======
 
 
+>>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
     def goBackwards(self, curve, reallyBackward = False):
         if reallyBackward:
             self.left_motor.setVelocity(curve)
@@ -334,6 +352,13 @@ class MyRobot(RCJSoccerRobot):
             return newTarget, False
 
         return targetPos, False
+<<<<<<< HEAD
+            
+def myprint(text):
+    if isPrinting:
+        print(text)            
+        
+=======
 
 
     def goalieTarget(self, ball_pos):
@@ -384,5 +409,6 @@ class MyRobot(RCJSoccerRobot):
         if self.isPrinting:
             print(self.name, ": ", text)
 
+>>>>>>> 753b5340fc180cf4d35c39cf3750d722f32d0720
 my_robot = MyRobot()
 my_robot.run()

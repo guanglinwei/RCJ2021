@@ -79,6 +79,9 @@ class RCJSoccerRobot:
         """
         return self.receiver.getQueueLength() > 0
 
+    def get_angles_v2(self, ball_pos, robot_pos, orientation):
+        return self.get_angles(ball_pos.todict(), dict(robot_pos.todict(), **{'orientation': orientation}))
+
     def get_angles(self, ball_pos: dict, robot_pos: dict) -> Tuple[float, float]:
         """Get angles in degrees.
 
