@@ -7,10 +7,10 @@ HoloMove::HoloMove(RoboClaw* rb, HardwareSerial &ser) : _rb(rb), _ser(ser){
 
 }
 
-void HoloMove::move(float direction, float speed, float rotation, float *a, float *b, float *c, float *d)
+void HoloMove::move(float direction, float speed, float rotation, float *fl, float *fr, float *bl, float *br)
 {
 
-    _ser.print("move: ");
+    // _ser.print("move: ");
     float radians = 71 * direction / 4068;
     // Please refer to README.txt for a full explanation of the formulas used.
     if (speed > 0)
@@ -31,25 +31,25 @@ void HoloMove::move(float direction, float speed, float rotation, float *a, floa
         rearLeftOutput *= speed / maxValue;
         rearRightOutput *= speed / maxValue;
 
-        *a = frontRightOutput;
-        *b = rearRightOutput;
-        *c = rearLeftOutput;
-        *d = frontLeftOutput;
+        *fr = frontRightOutput;
+        *br = rearRightOutput;
+        *bl = rearLeftOutput;
+        *fl = frontLeftOutput;
 
     }
 
     else {
-        *a = 0;
-        *b = 0;
-        *c = 0;
-        *d = 0;
+        *fr = 0;
+        *br = 0;
+        *bl = 0;
+        *fl = 0;
     }
 
-    _rb->ForwardBackwardM1(0x80, (uint8_t) map(*a, -255, 255, 0, 127));
-    _rb->ForwardBackwardM1(0x81, (uint8_t) map(*c, -255, 255, 0, 127));
-    _rb->ForwardBackwardM2(0x81, (uint8_t) map(*d, -255, 255, 0, 127));
-    _rb->ForwardBackwardM2(0x80, (uint8_t) map(*b, -255, 255, 0, 127));
+    _rb->ForwardBackwardM1(0x80, (uint8_t) map(*fr, -255, 255, 0, 127));
+    _rb->ForwardBackwardM1(0x81, (uint8_t) map(*br, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x81, (uint8_t) map(*bl, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x80, (uint8_t) map(*fl, -255, 255, 0, 127));
 
-    _ser.println(*a);
+    // _ser.println(*fr);
 
 }
