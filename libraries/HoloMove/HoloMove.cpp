@@ -1,4 +1,4 @@
-#include "Arduino.h"
+	#include "Arduino.h"
 #include "HoloMove.h"
 #include "RoboClaw.h"
 
@@ -46,9 +46,9 @@ void HoloMove::move(float direction, float speed, float rotation, float *a, floa
     }
 
     _rb->ForwardBackwardM1(0x80, (uint8_t) map(*a, -255, 255, 0, 127));
-    _rb->ForwardBackwardM1(0x81, (uint8_t) map(*c, -255, 255, 0, 127));
-    _rb->ForwardBackwardM2(0x81, (uint8_t) map(*d, -255, 255, 0, 127));
-    _rb->ForwardBackwardM2(0x80, (uint8_t) map(*b, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x81, (uint8_t) map(*c, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x80, (uint8_t) map(*d, -255, 255, 0, 127));
+    _rb->ForwardBackwardM1(0x81, (uint8_t) map(*b, -255, 255, 0, 127));
 
     _ser.println(*a);
 

@@ -29,6 +29,7 @@ class MyRobot(RCJSoccerRobot):
 
         # Compute the speed for motors
         direction = utils.get_direction(ball_angle)
+        #print(robot_pos["orientation"])
 
         # If the robot has the ball right in front of it, go forward,
         # rotate otherwise
@@ -45,7 +46,7 @@ class MyRobot(RCJSoccerRobot):
 
 
     def in_goal_zone(self, tolerance):
-        #print("goal", self.position.x, self.allied_goal_x)
+        # cPrint(self.position.x, self.allied_goal_x)
         return abs(self.position.x - self.allied_goal_x) < tolerance and self.position.y < .3 and self.position.y > -.3
 
     # exit state
@@ -60,12 +61,13 @@ class MyRobot(RCJSoccerRobot):
             return self.setState("block")
         if self.faceForwards():
             self.angle_was_out = False
-            self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position + RIGHT))
-            #print(self.left_speed, self.right_speed)
+            self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position - RIGHT))
+            cPrint(self.left_speed, self.right_speed)
         
     # goalie
     # if the ball is moving towards the goal but there is no enemy close, just block
     def block(self, data):
+        self.exit_count = 0
         # return self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position + ONE))
         # return self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position + UP + ONE * .4))
         # return self.moveToGoal()
@@ -73,7 +75,7 @@ class MyRobot(RCJSoccerRobot):
         if self.block_counter > 200:
             self.block_counter = 0
 
-            closest = self.get_closest_blue(data)
+            closest = self.get_closest_yellow(data)
             if (self.position - closest).getMagnitude() < .5:
                 return
             if self.in_goal_zone(0.1):
@@ -83,20 +85,20 @@ class MyRobot(RCJSoccerRobot):
 
         ball = Vector2(fromDict=data['ball'])
         ball_dist = (self.position - ball).getMagnitude()
-        # print(self.position, " | ", ball_dist)
+        # cPrint(self.position, " | ", ball_dist)
         goal_tolerance = .045 if ball_dist < 0.1 else 0.03
-        # print(self.position)
+        # cPrint(self.position)
         if not self.in_goal_zone(goal_tolerance):
-            # print("not in goal")
+            # cPrint("not in goal")
             # if self.in_goal_zone(0.08):
-                # print("close")
+                # cPrint("close")
                 # return self.setSpeeds(*self.simpleMoveTowards(self.allied_goal_x, ball.y, 2.5, 1))
             return self.moveToGoal(True)
 
         # get ball if close
         if ball_dist < 0.015 and abs(self.position.y - ball.y) < 0.01:
             # if already facing forwards get the ball
-            #print("close")
+            cPrint("close")
             if self.faceForwards():
                 return self.setState("defend")
 
@@ -104,12 +106,11 @@ class MyRobot(RCJSoccerRobot):
         #TODO: make sure this is parallel to goal
         
         if not self.radiansWithin(0, 0.4):
-            # print("not parallel")
-            dpos = UP * math.copysign(1, ball.x - self.position.x )
-            self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position + dpos))
+            # cPrint("not parallel")
+            self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position + UP))
             return
 
-        # print("aa")
+        # cPrint("aa")
 
         # close enough to correct x
         if abs(self.position.y - ball.y) < 0.004:
@@ -118,7 +119,7 @@ class MyRobot(RCJSoccerRobot):
         # going too far from goal x
         # if self.position.y < -.3 or self.position.y > .3:
         #     return
-        # print(*self.simpleMoveTowards(.635, ball.y, 2))
+        # cPrint(*self.simpleMoveTowards(.635, ball.y, 2))
         self.setSpeeds(*self.simpleMoveTowards(self.allied_goal_x, ball.y, 2))
 
     # returns whether already facing forwards
@@ -127,14 +128,14 @@ class MyRobot(RCJSoccerRobot):
         #   pi
 
         if not self.radiansWithin(math.pi / 2, 0.2):
-            self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position - RIGHT))
+            self.setSpeeds(*self.getBestSpeedsTowardsPosition(self.position + RIGHT))
             return False
 
         return True
 
     def radUtil(self, angle, threshold):
         PI = math.pi
-        #print("test", angle, self.orientation)
+        cPrint("test", angle, self.orientation)
         return 2 * PI - abs(self.orientation - angle) % (2 * PI) < threshold or abs(self.orientation - angle) % (2 * PI) < threshold
     
     def radiansWithin(self, angle, threshold):
@@ -144,15 +145,15 @@ class MyRobot(RCJSoccerRobot):
         # return a1 < threshold or 
         # a = modP(self.orientation, math.pi)
         # if a
-        # print("angle", a, "within", angle)
+        # cPrint("angle", a, "within", angle)
         # return a < threshold or a > math.pi - threshold
 
     # steal ball if enemy is close and ball is also
     def defend(self, data):
         # get the closest yellow robot
-        target = self.get_closest_blue(data)
+        target = self.get_closest_yellow(data)
         ball = Vector2(fromDict=data['ball'])
-        #print("def")
+        cPrint("def")
 
         if(ball - self.position).getMagnitude() > 0.15:
             return self.setState("block")
@@ -163,12 +164,12 @@ class MyRobot(RCJSoccerRobot):
         # move to ball
         self.directMoveTowards(ball)
 
-    def get_closest_blue(self, data):
-        return Vector2(fromDict=sorted([data['B1'], data['B2'], data['B3']], key=lambda d: (Vector2(fromDict=d) - self.position).getMagnitude())[0])
+    def get_closest_yellow(self, data):
+        return Vector2(fromDict=sorted([data['Y1'], data['Y2'], data['Y3']], key=lambda d: (Vector2(fromDict=d) - self.position).getMagnitude())[0])
 
 
     def moveToGoal(self, center=False):
-        #print("move to goal")
+        cPrint("move to goal")
         target = Vector2(self.allied_goal_x, 0 if center else clamp(self.position.y, -.3, .3))
         # move towards goal
         angle = modP(self.get_angles_v2(target, self.position, self.orientation)[0] - 180, 360)
@@ -183,10 +184,10 @@ class MyRobot(RCJSoccerRobot):
         # TODO: if directly in front of target, move forwards to steal.
         # TODO: if backwards, move backwards instead of rotating
         # who to stop
-        target = Vector2(fromDict=data['B3'])
+        target = Vector2(fromDict=data['Y3'])
         ball = Vector2(fromDict=data['ball'])
 
-        # print(self.setSpeeds(*self.getBestSpeeds(330, 29, True)))
+        # cPrint(self.setSpeeds(*self.getBestSpeeds(330, 29, True)))
         # return
         # line from target to ball
         # target_dir = (target['y'] - ball['y']) / (target['x'] - ball['x'])
@@ -196,7 +197,7 @@ class MyRobot(RCJSoccerRobot):
 
 
 
-        #print(target, ball, target_pos)
+        #cPrint(target, ball, target_pos)
 
         # if the enemy is moving towards us take the ball
         if intersect(target, target + target_dir * 1.7, self.position - RIGHT * 0.03, self.position + RIGHT * 0.03) or intersect(target, target + target_dir * 1.7, self.position - UP * 0.03, self.position + UP * 0.03):
@@ -209,7 +210,7 @@ class MyRobot(RCJSoccerRobot):
             self.driftTowards(ball)
             return
 
-        #print(target_pos, self.position, ball, ball_dist.getMagnitude())
+        cPrint(target_pos, self.position, ball, ball_dist.getMagnitude())
         # if very close to ball, move to it
         if ball_dist.getMagnitude() < 0.11:
             return self.attemptMoveTowards(ball + target_dir * 0.1)
@@ -235,7 +236,7 @@ class MyRobot(RCJSoccerRobot):
 
     def getDirBothSides(self, angle, tolerance=15):
         flipped = angle > 90 and angle < 270
-        # print(flipped)
+        # cPrint(flipped)
         new_angle = modP(angle + 180, 360) if flipped else angle
         return get_direction(new_angle, tolerance) 
 
@@ -291,10 +292,10 @@ class MyRobot(RCJSoccerRobot):
             return 0
 
         tolerance = max(10, - target_dist * 10 + 25) # placeholder
-        # print(tolerance)
+        # cPrint(tolerance)
         angle = modP(self.get_angles_v2(targetPos, self.position, self.orientation)[0] - 180, 360)
         acceptable_direction = self.getDirBothSides(angle, 80)
-        #print(angle, self.angle_was_out)
+        cPrint(angle, self.angle_was_out)
 
         # if the angle was outside of tolerance try to rotate to 0
         if self.angle_was_out:
@@ -303,7 +304,7 @@ class MyRobot(RCJSoccerRobot):
         # if turned too far from ball rotate around quickly 
         acceptable_tolerance = 80
         if acceptable_direction != 0:
-            self.setSpeeds(*self.getBestSpeedsTowardsPosition(ball, acceptable_tolerance))
+            self.setSpeeds(*self.getBestSpeedsTowardsPosition(targetPos, acceptable_tolerance))
             return
         # if acceptable_tolerance < angle < 360 - acceptable_tolerance:
         #     # self.left_speed = direction * 10
@@ -311,18 +312,18 @@ class MyRobot(RCJSoccerRobot):
         #     self.setSpeeds(*self.getBestSpeeds(angle, acceptable_tolerance))
         #     return direction
 
-        # print(target_dist, direction)
+        # cPrint(target_dist, direction)
 
         self.left_speed, self.right_speed = self.getBestSpeeds(angle, tolerance, target_dist > .9)
-        # print(self.left_speed, self.right_speed, target_dist)
-        # print("best", self.left_speed, self.right_speed)
+        # cPrint(self.left_speed, self.right_speed, target_dist)
+        # cPrint("best", self.left_speed, self.right_speed)
 
         # return direction
 
-    def simpleMoveTowards(self, x, y, r=1, tolerance=5):
+    def simpleMoveTowards(self, x, y, r=1, tolerance=4):
         angle = modP(self.get_angles_v2(Vector2(x, y), self.position, self.orientation)[0] - 180, 360)
         d = self.getDirBothSides(angle, tolerance)
-        # print("move", angle, d)
+        # cPrint("move", angle, d)
         flipped = angle > 90 and angle < 270
 
         if d == 0:
@@ -356,7 +357,7 @@ class MyRobot(RCJSoccerRobot):
         self.block_counter = 0
         self.block_counter_reset = False
 
-        self.allied_goal_x = -0.665
+        self.allied_goal_x = 0.658
 
         while self.robot.step(TIME_STEP) != -1:
             if self.is_new_data():
@@ -367,7 +368,7 @@ class MyRobot(RCJSoccerRobot):
 
                 self.left_speed = 0
                 self.right_speed = 0
-                #print(self.state, self.left_speed, self.right_speed)
+                cPrint(self.state)
                 # self.setSpeeds(*self.getBestSpeeds(270))
                 self.update[self.state](data)
 
