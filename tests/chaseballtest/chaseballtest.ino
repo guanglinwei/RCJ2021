@@ -43,7 +43,7 @@ double dist = 0;
 int maxTempCount = 8;
 int tempCount = 0;
 
-ILI9163C_color_18_t defaultColor;
+ILI9163C_color_18_t defaultColor, RED, GREEN, BLUE, WHITE;
 
 StateMachine stateMachine;
 // Pixy2I2C pixy;
@@ -51,6 +51,9 @@ Pixy2 pixy;
 RoboClaw roboClaw(&Serial2, 10000);
 HoloMove holoMove(&roboClaw);
 KWH018ST01_4WSPI displayTFT;
+
+wind_info_t xyWind, angWind, motorWind;
+
 
 
 void setup() {
@@ -87,7 +90,38 @@ void setupColors()
   defaultColor.g = 0x00;
   defaultColor.b = 0x00;
 
+  RED.r = 0xFF;
+  RED.g = 0x00;
+  RED.b = 0x00;
+
+  GREEN.r = 0x00;
+  GREEN.g = 0xFF;
+  GREEN.b = 0x00;
+
+  BLUE.r = 0x00;
+  BLUE.g = 0x00;
+  BLUE.b = 0xFF;
+
+  WHITE.r = 0xFF;
+  WHITE.g = 0xFF;
+  WHITE.b = 0xFF;
+
   displayTFT.setCurrentWindowColorSequence((color_t)&defaultColor);
+
+  displayTFT.setWindowDefaults(&xyWind);
+  xyWind.xMin = 0;
+  xyWind.yMin = 0;
+  xyWind.xMax = 32;
+  xyWind.yMax = 16;
+  xyWind.cursorX = 0;
+  xyWind.cursorY = 0;
+  xyWind.xReset = 0;
+  xyWind.yReset = 0;
+  xyWind.currentSequenceData = WHITE;
+
+  displayTFT.setWindowDefaults(&angWind);
+
+  displayTFT.setWindowDefaults(&motorWind);
 
   displayTFT.line(16, 16, 46, 46);
 }
@@ -100,6 +134,17 @@ template<typename... Args> void printAtOrigin(int x, int y, const char* format, 
 {
   // if(clear) displayTFT.clearDisplay();
   displayTFT.setTextCursor(x, y);
+  sprintf(stringToPrint, format, args...);
+  displayTFT.println(stringToPrint);
+
+}
+
+template<typename... Args> void printInWindow(wind_info_t* wind, const char* format, Args... args)
+{
+  // if(clear) displayTFT.clearDisplay();
+  displayTFT.pCurrentWindow = wind;
+  // displayTFT.setTextCursor(x, y);
+  displayTFT.resetTextCursor(wind);
   sprintf(stringToPrint, format, args...);
   displayTFT.println(stringToPrint);
 
@@ -156,7 +201,10 @@ void chaseLoop()
   holoMove.move(ang, speed, 0, &a, &b, &c, &d);
 
   clear();
-  printAtOrigin(0, 0, "moving to (%d, %d)", ballx, bally);
-  printAtOrigin(0, 10, "at angle %d", (int)ang);
-  printAtOrigin(0, 20, "%d | %d | %d | %d", (int)a, (int)b, (int)c, (int)d);
+  // printAtOrigin(0, 0, "moving to (%d, %d)", ballx, bally);
+  xyWind.clear();
+  // displayTFT.pCurrentWindow = &xyWind;
+  printInWindow(xyWind, "%d, %d", ballx, bally)
+  // printAtOrigin(0, 10, "at angle %d", (int)ang);
+  // printAtOrigin(0, 20, "%d | %d | %d | %d", (int)a, (int)b, (int)c, (int)d);
 }
