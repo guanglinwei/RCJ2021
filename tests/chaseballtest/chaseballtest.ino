@@ -1,7 +1,9 @@
+
+
 #include <StateMachine.h>
 #include <RoboClaw.h>
 #include "HoloMove.h"
-#include "HyperDisplay_KWH018ST01_4WSPI.h" // Click here to get the library: http://librarymanager/All#SparkFun_HyperDisplay_KWH018ST01_4WSPI
+#include <HyperDisplay_KWH018ST01_4WSPI.h>// Click here to get the library: http://librarymanager/All#SparkFun_HyperDisplay_KWH018ST01_4WSPI
 #include "math.h"
 // #include <Pixy2I2C.h>
 #include <Pixy2.h>
@@ -9,7 +11,7 @@
 #include <stdarg.h>
 
 
-#define TFT_PWM_PIN 2         // Pin definitions
+#define TFT_PWM_PIN 13         // Pin definitions
 #define TFT_CS_PIN 45
 #define TFT_DC_PIN 44
 #define JOY_X_PIN 0
@@ -35,8 +37,8 @@ boolean isYellow = false;
 int test = 0;
 boolean monitorColors = false;
 int ballx, bally,tempx, tempy = 0;
-double ang = 0; // angle towards ball. up is 0, increases CCW
-float speed = 255.0;
+double ang = 0.0; // angle towards ball. up is 0, increases CCW
+float speed = 120.0;
 float a,b,c,d; // motor speed for a-d
 double dist = 0;
 
@@ -49,7 +51,7 @@ StateMachine stateMachine;
 // Pixy2I2C pixy;
 Pixy2 pixy;
 RoboClaw roboClaw(&Serial2, 10000);
-HoloMove holoMove(&roboClaw);
+HoloMove holoMove(&roboClaw, Serial);
 KWH018ST01_4WSPI displayTFT;
 
 wind_info_t xyWind, angWind, motorWind;
@@ -168,17 +170,20 @@ double getAngle(int x, int y)
 
 void getDataFromCamera()
 {
-  ang++;
-  if(ang >= 360) ang = 0;
-  return;
+  
   pixy.ccc.getBlocks();
 
   if (pixy.ccc.numBlocks){
     for(int i = 0; i < pixy.ccc.numBlocks; i++){
+      Serial.println(pixy.ccc.blocks[i].m_signature);
       if(pixy.ccc.blocks[i].m_signature == 1){
         ballx = pixy.ccc.blocks[i].m_x;
         bally = pixy.ccc.blocks[i].m_y;
         ang = getAngle(ballx, bally);
+        ang = ang+180;
+        if(ang>360) {
+          ang = ang - 360;
+        }
       }
     }
   }

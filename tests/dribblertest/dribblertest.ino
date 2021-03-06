@@ -9,7 +9,7 @@ float val = 0.0;
 Adafruit_VCNL4010 vcnl;
 unsigned long mytime;
 int delaytime = 1000;
-int d;
+unsigned long d;
 bool running;
 void setup() {
   Serial.begin(9600);
@@ -40,7 +40,7 @@ void dribble() {
       else {
         d = millis();
       
-    }
+      }
   }
   else {
     if(running) {
@@ -52,7 +52,7 @@ void dribble() {
 }
 void start() {
   running = true;
-  ESC.write(50);
+  ESC.write(40);
 }
 void stoprunning() {
   running = false;

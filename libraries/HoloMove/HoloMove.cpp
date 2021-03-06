@@ -26,15 +26,15 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
             if (abs(values[z]) > maxValue) maxValue = abs(values[z]);
         }
 
-        frontLeftOutput *= speed / maxValue;
+        frontLeftOutput *=  speed / maxValue;
         frontRightOutput *= speed / maxValue;
         rearLeftOutput *= speed / maxValue;
         rearRightOutput *= speed / maxValue;
 
-        *fr = frontRightOutput;
-        *br = rearRightOutput;
-        *bl = rearLeftOutput;
-        *fl = frontLeftOutput;
+        *fr = -1 * frontRightOutput;
+        *br = -1 *rearRightOutput;
+        *bl = -1 *rearLeftOutput;
+        *fl = -1 *frontLeftOutput;
 
     }
 
