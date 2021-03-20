@@ -1,7 +1,7 @@
 
 
-#include <StateMachine.h>
 #include <RoboClaw.h>
+#include <StateMachine.h>
 #include "HoloMove.h"
 #include <HyperDisplay_KWH018ST01_4WSPI.h>// Click here to get the library: http://librarymanager/All#SparkFun_HyperDisplay_KWH018ST01_4WSPI
 #include "math.h"
@@ -209,7 +209,7 @@ void chaseLoop()
   // printAtOrigin(0, 0, "moving to (%d, %d)", ballx, bally);
   xyWind.clear();
   // displayTFT.pCurrentWindow = &xyWind;
-  printInWindow(xyWind, "%d, %d", ballx, bally)
+  printInWindow(*xyWind, "%d, %d", ballx, bally)
   // printAtOrigin(0, 10, "at angle %d", (int)ang);
   // printAtOrigin(0, 20, "%d | %d | %d | %d", (int)a, (int)b, (int)c, (int)d);
 }

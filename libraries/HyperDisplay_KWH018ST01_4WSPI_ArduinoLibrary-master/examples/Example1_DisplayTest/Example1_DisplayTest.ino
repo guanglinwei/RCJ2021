@@ -27,9 +27,9 @@ This software is open source. Use it how you like, just don't hurt people.
 
 #define SERIAL_PORT Serial    // Allows users to easily change target serial port (e.g. SAMD21's SerialUSB)
 
-#define PWM_PIN 13             // Pin definitions
-#define CS_PIN 45
-#define DC_PIN 44
+#define PWM_PIN 3             // Pin definitions
+#define CS_PIN 5
+#define DC_PIN 6
 #define SPI_PORT SPI
 #define SPI_SPEED 32000000        // Requests host uC to use the fastest possible SPI speed up to 32 MHz
 
@@ -50,8 +50,6 @@ void setup() {
 
   myTFT.setTextCursor(0,0);            // Sets the cursor relative to the current window, however the current (default) window is equivalent to the whole display. (0,0) is the upper left corner and (myTFT.xExt-1, myTFT.yExt-1) is the lower right
   myTFT.setCurrentWindowColorSequence((color_t)&defaultColor);
-
-  SERIAL_PORT.println("begin");
 
   uint16_t hue = HSV_HUE_MIN;
   while(hue <= HSV_HUE_MAX){

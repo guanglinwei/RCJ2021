@@ -1,5 +1,7 @@
 {
     "board": "arduino:avr:mega",
     "configuration": "cpu=atmega2560",
-    "sketch": "tests\\dribblertest\\dribblertest.ino"
+    "sketch": "tests\\displaycontrollertest\\displaycontrollertest.ino",
+    "aa": "tests\\displayTest\\displayTest\\displayTest.ino",
+    "port": "COM8"
 }
