@@ -15,7 +15,7 @@ typedef void (*Action)();
     displaycontroller.begin(...)
 
     To log values:
-    displayController.switchToLogWindow(labels: string[]);
+    displayController.switchToLogWindow(labels: string[], count: labels.length);
     displayController.updateLogValue(index, str);
 
     To update screen:
@@ -29,14 +29,29 @@ class DisplayController
         void begin(uint8_t DC_PIN, uint8_t CS_PIN, uint8_t PWM_PIN, SPIClass SPI_PORT, uint32_t SPI_SPEED);
         DisplayController &createWindows(int cols, int rows);
         DisplayController &addOnClickToWindow(int index, Action onClick);
+
+        void switchToMenuWindow();
+        void switchToMenuWindow(char **labels, int count);
         // window with data
         void switchToLogWindow();
-        void switchToLogWindow(char **dataLabels);
+        void switchToLogWindow(char **dataLabels, int count);
         void updateLogValue(int index, char *value);
 
         void printInWindow(wind_info_t *wind, char *text, int reset = 0);
         void printInWindowAtPosition(wind_info_t *wind, char *text, int x, int y);
         void printInCurrentWindowAtPosition(char *text, int x, int y);
+        
+        enum JoystickInputType {
+            IN_CLICK,
+            IN_UP,
+            IN_RIGHT,
+            IN_DOWN,
+            IN_LEFT,
+            IN_NONE
+        } joystickInput;
+        int onJoystickInput(JoystickInputType inputType);
+        int handleJoystickAxis(int x, int y);
+        int handleJoystickInputUtil(JoystickInputType inputType);
 
         void updateDisplay();
 
@@ -46,8 +61,9 @@ class DisplayController
         // ILI9163C_color_18_t **screenMem;
 
         struct Window {
-            wind_info_t *pWind;
-            Action onClick;
+            wind_info_t wind;
+            Action onClick = nullptr;
+            char *data = nullptr;
         };
 
         struct DataWindow {
@@ -72,12 +88,14 @@ class DisplayController
 
         // wind_info_t *windows;
         //menu
-        Window *windows;
+        Window *menuWindows;
+        int menuLabelCount;
         // log window
         // "dataLabel"   |  dataWindow
         // "Compass"     |  123deg
         DataWindow *dataWindows;
         char **dataLabels;
+        int dataLabelCount;
         wind_info_t labelsWindow;
         int dataSeparatorX = XMAX / 2;
 
@@ -85,13 +103,16 @@ class DisplayController
         int MAX_DATA_WINDOWS = 4;
 
         // void createWindows()
-        int current_window_count;
-        // number of cols of windows
-        int window_cols;
+        int currentWindowCount;
+        // number of cols/rows of windows
+        int menuCols;
+        int menuRows;
 
-        int current_selected_window;
-        int last_selected_window;
-        int just_switched_window;
+        // selected menu window
+        int currentSelectedWindow;
+        int lastSelectedWindow;
+
+        int justSwitchedWindow;
 
         ILI9163C_color_18_t defaultColor;
         ILI9163C_color_18_t RED;
@@ -104,11 +125,13 @@ class DisplayController
         static const int XMAX = 128;
         static const int YMAX = 160;
 
+        // TODO: remove
         Point cursorPos = Point();
         Point lastCursorPos = Point();
         int showCursor;
-        int onJoystickClicked();
 
+
+        JoystickInputType lastJoystickInput = IN_NONE;
 
 };
 
