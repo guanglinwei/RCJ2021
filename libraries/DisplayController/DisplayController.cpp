@@ -115,7 +115,7 @@ DisplayController& DisplayController::createWindows(int cols, int rows) {
             w.xMin = (int)(dX * c);
             w.yMin = (int)(dY * r);
             w.yMax = (int)(dY * r + dY - 1);
-            // pointers don't work???
+            
             menuWindows[r * cols + c].wind = w;
             menuWindows[r * cols + c].data = nullptr;
             menuWindows[r * cols + c].onClick = nullptr;
@@ -125,7 +125,7 @@ DisplayController& DisplayController::createWindows(int cols, int rows) {
     return *this;
 }
 
-DisplayController& DisplayController::addOnClickToWindow(int index, Action onClick) {
+DisplayController& DisplayController::setOnClickForWindow(int index, Action onClick) {
     menuWindows[index].onClick = onClick;
     return *this;
 }
@@ -177,7 +177,7 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
     //     }
     // }
 
-    if(displayState != Menu) return;
+    if(displayState != Menu) return 0;
 
     switch(inputType) {
         case IN_CLICK:

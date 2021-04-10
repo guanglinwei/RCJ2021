@@ -36,7 +36,7 @@ void setup() {
     // myDisplay.updateLogValue(0, "aaa");
     myDisplay.updateDisplay();
 
-    myDisplay.addOnClickToWindow(2, &testprint);
+    myDisplay.setOnClickForWindow(2, &testprint);
     // myTFT.line(1, 1, 9, 9, 3);
     
 }
