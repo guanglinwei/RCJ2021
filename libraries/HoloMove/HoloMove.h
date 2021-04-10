@@ -7,6 +7,11 @@
 class HoloMove
 {
 	public:
+		/**
+		 * The constructor for HoloMove.
+		 * @param rb pointer to RoboClaw object.
+		 * @param ser reference to Arduino Serial.
+		 */ 
 		HoloMove(RoboClaw* rb, HardwareSerial &ser);
 		/**
 		 * Move the robot using 4 omniwheels.
