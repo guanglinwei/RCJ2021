@@ -1,0 +1,57 @@
+\hypertarget{class_holo_move}{}\doxysection{Holo\+Move Class Reference}
+\label{class_holo_move}\index{HoloMove@{HoloMove}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_holo_move_ac46dba9fc5da5df9a11ba59dba8e9090}{Holo\+Move}} (Robo\+Claw $\ast$rb, Hardware\+Serial \&ser)
+\item 
+void \mbox{\hyperlink{class_holo_move_add77053a38965a008cdece3cea20915f}{move}} (float direction, float speed=1, float rotation=0, float $\ast$a=0, float $\ast$b=0, float $\ast$c=0, float $\ast$d=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_holo_move_ac46dba9fc5da5df9a11ba59dba8e9090}\label{class_holo_move_ac46dba9fc5da5df9a11ba59dba8e9090}} 
+\index{HoloMove@{HoloMove}!HoloMove@{HoloMove}}
+\index{HoloMove@{HoloMove}!HoloMove@{HoloMove}}
+\doxysubsubsection{\texorpdfstring{HoloMove()}{HoloMove()}}
+{\footnotesize\ttfamily Holo\+Move\+::\+Holo\+Move (\begin{DoxyParamCaption}\item[{Robo\+Claw $\ast$}]{rb,  }\item[{Hardware\+Serial \&}]{ser }\end{DoxyParamCaption})}
+
+The constructor for \mbox{\hyperlink{class_holo_move}{Holo\+Move}}. 
+\begin{DoxyParams}{Parameters}
+{\em rb} & pointer to Robo\+Claw object. \\
+\hline
+{\em ser} & reference to Arduino Serial. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_holo_move_add77053a38965a008cdece3cea20915f}\label{class_holo_move_add77053a38965a008cdece3cea20915f}} 
+\index{HoloMove@{HoloMove}!move@{move}}
+\index{move@{move}!HoloMove@{HoloMove}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Holo\+Move\+::move (\begin{DoxyParamCaption}\item[{float}]{direction,  }\item[{float}]{speed = {\ttfamily 1},  }\item[{float}]{rotation = {\ttfamily 0},  }\item[{float $\ast$}]{a = {\ttfamily 0},  }\item[{float $\ast$}]{b = {\ttfamily 0},  }\item[{float $\ast$}]{c = {\ttfamily 0},  }\item[{float $\ast$}]{d = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Move the robot using 4 omniwheels. 
+\begin{DoxyParams}{Parameters}
+{\em direction} & the angle to move in degrees (0-\/360). 90 is left, 270 is right. \\
+\hline
+{\em speed} & the speed of the motors (0-\/255). \\
+\hline
+{\em rotation} & the offset for the speed of each motor. Positive values rotate the robot clockwise, the opposite for negative values. \\
+\hline
+{\em a} & pointer that will contain the speed for motor A. \\
+\hline
+{\em b} & pointer that will contain the speed for motor B. \\
+\hline
+{\em c} & pointer that will contain the speed for motor C. \\
+\hline
+{\em d} & pointer that will contain the speed for motor D. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+libraries/\+Holo\+Move/Holo\+Move.\+h\item 
+libraries/\+Holo\+Move/Holo\+Move.\+cpp\end{DoxyCompactItemize}
