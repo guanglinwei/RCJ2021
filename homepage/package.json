@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "parcel build index.html --out-dir ../public/",
+    "build": "parcel build index.html --out-dir ../public/ --public-url http://https://guanglinwei.github.io/RCJ2021/",
     "dev": "parcel index.html --open",
     "start": "npm run build && parcel ../public/index.html --open",
     "test": "echo \"Error: no test specified\" && exit 1"

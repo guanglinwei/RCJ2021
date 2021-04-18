@@ -10,7 +10,10 @@ const Homepage = (
         </Jumbotron>
         <Row>
             <p>content</p>
-            <a href="html/">Docs</a>
+            <br/>
+            <p>
+                <a href="html/">Docs</a>
+            </p>
         </Row>
     </Container>
 </main>
