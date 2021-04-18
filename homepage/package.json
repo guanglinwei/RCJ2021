@@ -1,0 +1,29 @@
+{
+  "name": "rcj2021",
+  "version": "1.0.0",
+  "description": "Spongebot Robocup Junior Soccer 2021",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "parcel build index.html --out-dir ../public/",
+    "dev": "parcel index.html --open",
+    "start": "npm run build && parcel ../public/index.html --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guanglinwei/RCJ2021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guanglinwei/RCJ2021/issues"
+  },
+  "homepage": "https://github.com/guanglinwei/RCJ2021#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
