@@ -34,12 +34,57 @@ class DisplayController
         void begin(uint8_t DC_PIN, uint8_t CS_PIN, uint8_t PWM_PIN, SPIClass SPI_PORT, uint32_t SPI_SPEED);
 
         /**
+         * The Sparkfun TFT
+         */ 
+        KWH018ST01_4WSPI myTFT;
+
+
+        /** @defgroup colors Public Color Variables
+         * Defines colors in RGB format
+         * @{
+         */
+        
+        /** @brief 0, 0, 0 */
+        ILI9163C_color_18_t defaultColor;
+
+        /** @brief 255, 0, 0 */
+        ILI9163C_color_18_t RED;
+
+        /** @brief 0, 255, 0 */
+        ILI9163C_color_18_t GREEN;
+
+        /** @brief 0, 0, 255 */
+        ILI9163C_color_18_t BLUE;
+
+        /** @brief 0, 0, 0 */
+        ILI9163C_color_18_t BLACK;
+
+        /** @brief 255, 255, 255 */
+        ILI9163C_color_18_t WHITE;
+
+        /** @brief  255, 255, 0 */
+        ILI9163C_color_18_t YELLOW;
+
+        /** @brief 255, 128, 0 */
+        ILI9163C_color_18_t ORANGE;
+
+        /** @brief 160, 160, 160 */
+        ILI9163C_color_18_t LIGHT_GRAY;
+
+        /** @brief 64, 64, 64 */
+        ILI9163C_color_18_t DARK_GRAY;
+        
+        /** @} */
+
+
+        /**
          * Creates windows on the menu screen.
          * @param cols the number of columns.
          * @param rows the number of rows.
          * @return *this
          */
         DisplayController &createWindows(int cols, int rows);
+
         /**
          * Set the function to be called when a menu window is clicked.
          * @param index the index of the window.
@@ -48,11 +93,13 @@ class DisplayController
          */
         DisplayController &setOnClickForWindow(int index, Action onClick);
 
+
         /**
          * Switch the display state to Menu.
          * @see DisplayState
          */
         void switchToMenuWindow();
+
         /**
          * Switch the display state to Menu and labels the menu windows.
          * @param labels the text labels as a pointer to a char pointer.
@@ -60,12 +107,14 @@ class DisplayController
          * @see DisplayState
          */
         void switchToMenuWindow(char **labels, int count);
+
         
         /**
          * Switch the display state to Log.
          * @see DisplayState
          */
         void switchToLogWindow();
+
         /**
          * Switch the display state to Log and labels each of the data.
          * @param dataLabels the text labels as a pointer to a char pointer.
@@ -73,12 +122,24 @@ class DisplayController
          * @see DisplayState
          */
         void switchToLogWindow(char **dataLabels, int count);
+
         /**
          * Change the value of a data point on the log window.
          * @param index the index of the data point.
          * @param value the value of the data.
          */
         void updateLogValue(int index, char *value);
+
+        /** Switch the display state to Custom.
+         */
+        void switchToCustomWindow(); 
+
+        /**
+         * Switch the display state to Custom.
+         * @param loop the function to be called everytime updateDisplay is called in the Custom state.
+         */
+        void switchToCustomWindow(Action loop); 
+
 
         /**
          * Print some text in a certain window.
@@ -87,6 +148,7 @@ class DisplayController
          * @param reset false (0) or true (1). If true, reset the text cursor.
          */
         void printInWindow(wind_info_t *wind, char *text, int reset = 0);
+
          /**
          * Print some text in a certain window at a position.
          * @param wind a pointer to the window to print in.
@@ -95,6 +157,7 @@ class DisplayController
          * @param y the y-coordinate to print at.
          */
         void printInWindowAtPosition(wind_info_t *wind, char *text, int x, int y);
+
          /**
          * Print some text in the currently selected window.
          * @param text the text to print.
@@ -102,6 +165,7 @@ class DisplayController
          * @param y the y-coordinate to print at.
          */
         void printInCurrentWindowAtPosition(char *text, int x, int y);
+
         
         /**
          * An enum.
@@ -115,6 +179,7 @@ class DisplayController
             IN_LEFT,
             IN_NONE
         } joystickInput;
+
         /**
          * Change the selected window or perform the selected action dictated by an input.
          * @param inputType the joystick input.
@@ -122,6 +187,15 @@ class DisplayController
          * @return 1 if the input successfully performed an action, 0 otherwise.
          */
         int onJoystickInput(JoystickInputType inputType);
+
+        /**
+         * Returns whether or not any joystick input was made.
+         * @param x the joystick x value.
+         * @param y the joystick y value.
+         * @return 1 if any input was made, 0 otherwise.
+         */
+        int hadNewJoystickInput(int x, int y);
+
         /**
          * Handle a joystick input given the x and y readings.
          * @param x the joystick x value.
@@ -130,6 +204,7 @@ class DisplayController
          * @see handleJoystickInputUtil()
          */
         int handleJoystickAxis(int x, int y);
+
         /**
          * A helper function that only performs if the joystick input changed.
          * @param inputType the joystick input.
@@ -137,13 +212,18 @@ class DisplayController
          */
         int handleJoystickInputUtil(JoystickInputType inputType);
 
+
         /**
          * Update the display to match the current state. Usually called every frame.
          */ 
         void updateDisplay();
 
+        /**
+         * Clear the screen.
+         */ 
+        void clearDisplay();
+
     private:
-        KWH018ST01_4WSPI myTFT;
         HardwareSerial *_serial;
         // ILI9163C_color_18_t **screenMem;
 
@@ -170,7 +250,8 @@ class DisplayController
 
         enum DisplayState { 
             Menu, /**< Displays a grid of windows with labels. When highlighting a window and clicking the joystick, call the function assigned to that window. */
-            Log /**< View and debug values. Used to validate sensor inputs and check logging. */
+            Log, /**< View and debug values. Used to validate sensor inputs and check logging. */
+            Custom /**< Blank state that the user can customize */
         } displayState;
 
         Window *menuWindows;
@@ -192,18 +273,13 @@ class DisplayController
         int menuCols;
         int menuRows;
 
+        Action customLoopOnUpdateDisplay;
+
         // selected menu window
         int currentSelectedWindow;
         int lastSelectedWindow;
 
         int justSwitchedWindow;
-
-        ILI9163C_color_18_t defaultColor;
-        ILI9163C_color_18_t RED;
-        ILI9163C_color_18_t GREEN;
-        ILI9163C_color_18_t BLUE;
-        ILI9163C_color_18_t WHITE;
-        ILI9163C_color_18_t ORANGE;
 
         int isWithinBounds(int x, int y, wind_info_t wind);
         static const int XMAX = 128;

@@ -8,6 +8,7 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
 
     menuWindows = new Window[MAX_MENU_WINDOWS];
     dataWindows = new DataWindow[MAX_DATA_WINDOWS];
+    hotbarWindows = new Window[4];
 
     // menuWindows = new wind_info_t[9];
     // currentWindowCount = 0;
@@ -20,8 +21,12 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
     RED = myTFT.rgbTo18b(255, 0, 0);
     GREEN = myTFT.rgbTo18b(0, 255, 0);
     BLUE = myTFT.rgbTo18b(0, 0, 255);
+    BLACK = myTFT.rgbTo18b(0, 0, 0);
     WHITE = myTFT.rgbTo18b(255, 255, 255);
+    YELLOW = myTFT.rgbTo18b(255, 255, 0);
     ORANGE = myTFT.rgbTo18b(255, 128, 0);
+    LIGHT_GRAY = myTFT.rgbTo18b(160, 160, 160);
+    DARK_GRAY = myTFT.rgbTo18b(64, 64, 64);
     defaultColor = myTFT.rgbTo18b(0, 0, 0);
 
     // menu windows
@@ -41,7 +46,6 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
         DataWindow d;
         // "Compass"  |  123deg
         //    w             wd
-        // wind_info_t w;
         wind_info_t wd;
 
         // myTFT.setWindowDefaults(&w);
@@ -136,6 +140,27 @@ int DisplayController::isWithinBounds(int x, int y, wind_info_t wind) {
     return 1;
 }
 
+int DisplayController::hadNewJoystickInput(int x, int y) {
+    JoystickInputType jType = IN_NONE;
+    if(x < 100){
+        jType = IN_DOWN;
+    }
+    else if(x > 500) {
+        jType = IN_UP;
+    }
+    else if(y < 100) {
+        jType = IN_RIGHT;
+    }
+    else if(y > 500) {
+        jType = IN_LEFT;
+    }
+    
+    if(jType == lastJoystickInput) return 0;
+
+    // lastJoystickInput = jType;
+    return jType == IN_NONE ? 0 : 1;
+}
+
 int DisplayController::handleJoystickAxis(int x, int y) {
     // if(p != 0) {
     //     handleJoystickInputUtil(IN_CLICK);
@@ -177,52 +202,58 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
     //     }
     // }
 
-    if(displayState != Menu) return 0;
+    switch(displayState) {
+        case MENU:
+            switch(inputType) {
+                case IN_CLICK:
+                    if(currentSelectedWindow < currentWindowCount && menuWindows[currentSelectedWindow].onClick != nullptr) {
+                        // call the onClick method
+                        (*(menuWindows[currentSelectedWindow].onClick))();
+                        return 1;
+                    }
 
-    switch(inputType) {
-        case IN_CLICK:
-            if(currentSelectedWindow < currentWindowCount && menuWindows[currentSelectedWindow].onClick != nullptr) {
-                // call the onClick method
-                (*(menuWindows[currentSelectedWindow].onClick))();
-                return 1;
+                    return 0;
+
+                case IN_DOWN:
+                    if(currentSelectedWindow + menuCols < currentWindowCount) {
+                        currentSelectedWindow += menuCols;
+                    }
+                    return 1;
+                
+                case IN_UP:
+                    if(currentSelectedWindow - menuCols >= 0) {
+                        currentSelectedWindow -= menuCols;
+                    }
+                    return 1;
+
+                case IN_RIGHT:
+                    if((currentSelectedWindow + 1) % menuCols != 0) {
+                        currentSelectedWindow++;
+                    }
+                    return 1;
+
+                case IN_LEFT:
+                    if((currentSelectedWindow - 1 + menuCols) % menuCols != menuCols - 1) {
+                        currentSelectedWindow--;
+                    }
+                    return 1;
+                
+                default:
+                    return 0;
             }
-
-            return 0;
-
-        case IN_DOWN:
-            if(currentSelectedWindow + menuCols < currentWindowCount) {
-                currentSelectedWindow += menuCols;
-                // updateDisplay();
-            }
-            return 1;
+            break;
         
-        case IN_UP:
-            if(currentSelectedWindow - menuCols >= 0) {
-                currentSelectedWindow -= menuCols;
-                // updateDisplay();
+        case LOG:
+            switch(inputType) {
+                case IN_CLICK:
+                    switchToMenuWindow();
+                    return 1;
+                default:
+                    return 0;
             }
-            return 1;
-
-        case IN_RIGHT:
-        
-            // if(currentSelectedWindow + 1 < currentWindowCount) {
-            if((currentSelectedWindow + 1) % menuCols != 0) {
-                currentSelectedWindow++;
-                // updateDisplay();
-            }
-            return 1;
-
-        case IN_LEFT:
-            // if(currentSelectedWindow - 1 >= 0) {
-            if((currentSelectedWindow - 1 + menuCols) % menuCols != menuCols - 1) {
-                currentSelectedWindow--;
-                // updateDisplay();
-            }
-            return 1;
-        
-        default:
-            return 0;
+            break;
     }
+    return 0;
 }
 
 
@@ -261,6 +292,18 @@ void DisplayController::switchToLogWindow(char **labels, int count) {
 void DisplayController::updateLogValue(int index, char *value) {
     dataWindows[index].isDirty = 1;
     dataWindows[index].data = value;
+}
+
+void DisplayController::switchToCustomWindow() {
+    displayState = Custom;
+    justSwitchedWindow = 1;
+    customLoopOnUpdateDisplay = nullptr;
+}
+
+void DisplayController::switchToCustomWindow(Action loop) {
+    displayState = Custom;
+    justSwitchedWindow = 1;
+    customLoopOnUpdateDisplay = loop;
 }
 
 
@@ -374,6 +417,14 @@ void DisplayController::updateDisplay() {
                 }
             }
 
-        break;
+            break;
+
+        case Custom:
+            customLoopOnUpdateDisplay();
+            break;
     }
+}
+
+DisplayController::clearDisplay() {
+    myTFT.clearDisplay();
 }

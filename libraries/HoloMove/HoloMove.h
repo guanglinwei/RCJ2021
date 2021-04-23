@@ -24,6 +24,8 @@ class HoloMove
 		 * @param d pointer that will contain the speed for motor D. 
 		 */ 
 		void move(float direction, float speed = 1, float rotation = 0, float *a = 0, float *b = 0, float *c = 0, float *d = 0);
+
+		void stop();
 	private:
 		RoboClaw* _rb;
 		HardwareSerial &_ser;
