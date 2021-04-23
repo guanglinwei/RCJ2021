@@ -265,8 +265,11 @@ class DisplayController
         wind_info_t labelsWindow;
         int dataSeparatorX = XMAX / 2;
 
+        Window *hotbarWindows;
+
         int MAX_MENU_WINDOWS = 9;
         int MAX_DATA_WINDOWS = 4;
+        int MAX_HOTBAR_WINDOWS = 4;
 
         int currentWindowCount;
         // number of cols/rows of windows

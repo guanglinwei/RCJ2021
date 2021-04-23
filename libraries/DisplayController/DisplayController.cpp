@@ -1,5 +1,6 @@
 #include "DisplayController.h"
 
+// TODO: labels for hotbar, reset lastselectedwindow and stuff
 //window types:
 // display data
 // or menus
@@ -8,7 +9,7 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
 
     menuWindows = new Window[MAX_MENU_WINDOWS];
     dataWindows = new DataWindow[MAX_DATA_WINDOWS];
-    hotbarWindows = new Window[4];
+    hotbarWindows = new Window[MAX_HOTBAR_WINDOWS];
 
     // menuWindows = new wind_info_t[9];
     // currentWindowCount = 0;
@@ -59,6 +60,20 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
         d.wind = wd;
         d.isDirty = 1;
         dataWindows[i] = d;
+    }
+
+    int dX = XMAX * 1.0 / MAX_HOTBAR_WINDOWS;
+    for(int i = 0; i < MAX_HOTBAR_WINDOWS; i++) {
+        Window wind;
+        wind_info_t pw;
+        myTFT.setWindowDefaults(&pw);
+
+        pw.xMin = (int)(dX * i);
+        pw.xMax = (int)(dX * i + dX - 1);
+        pw.yMin = 160;
+        pw.yMax = 179;
+        wind.wind = pw;
+        hotbarWindows[i] = wind;
     }
 
     myTFT.setWindowDefaults(&labelsWindow);
@@ -203,7 +218,7 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
     // }
 
     switch(displayState) {
-        case MENU:
+        case Menu:
             switch(inputType) {
                 case IN_CLICK:
                     if(currentSelectedWindow < currentWindowCount && menuWindows[currentSelectedWindow].onClick != nullptr) {
@@ -212,42 +227,81 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
                         return 1;
                     }
 
-                    return 0;
-
                 case IN_DOWN:
                     if(currentSelectedWindow + menuCols < currentWindowCount) {
                         currentSelectedWindow += menuCols;
+                        return 1;
                     }
-                    return 1;
                 
                 case IN_UP:
                     if(currentSelectedWindow - menuCols >= 0) {
                         currentSelectedWindow -= menuCols;
+                        return 1;
                     }
-                    return 1;
 
                 case IN_RIGHT:
                     if((currentSelectedWindow + 1) % menuCols != 0) {
                         currentSelectedWindow++;
+                        return 1;
                     }
-                    return 1;
 
                 case IN_LEFT:
                     if((currentSelectedWindow - 1 + menuCols) % menuCols != menuCols - 1) {
                         currentSelectedWindow--;
+                        return 1;
                     }
-                    return 1;
                 
                 default:
                     return 0;
             }
             break;
         
-        case LOG:
+        case Log:
             switch(inputType) {
                 case IN_CLICK:
                     switchToMenuWindow();
                     return 1;
+                default:
+                    return 0;
+            }
+            break;
+
+        case Custom:
+            switch(inputType) {
+                case IN_CLICK:
+                    if(currentSelectedWindow < MAX_HOTBAR_WINDOWS && hotbarWindows[currentSelectedWindow].onClick != nullptr) {
+                        // call the onClick method
+                        (*(hotbarWindows[currentSelectedWindow].onClick))();
+                        return 1;
+                    }
+
+                    return 0;
+
+                // case IN_DOWN:
+                //     if(currentSelectedWindow + menuCols < currentWindowCount) {
+                //         currentSelectedWindow += menuCols;
+                //         return 1;
+                //     }
+                //     return 1;
+                
+                // case IN_UP:
+                //     if(currentSelectedWindow - menuCols >= 0) {
+                //         currentSelectedWindow -= menuCols;
+                //         return 1;
+                //     }
+
+                case IN_RIGHT:
+                    if((currentSelectedWindow + 1) % MAX_HOTBAR_WINDOWS != 0) {
+                        currentSelectedWindow++;
+                        return 1;
+                    }
+
+                case IN_LEFT:
+                    if((currentSelectedWindow - 1 + MAX_HOTBAR_WINDOWS) % MAX_HOTBAR_WINDOWS != MAX_HOTBAR_WINDOWS - 1) {
+                        currentSelectedWindow--;
+                        return 1;
+                    }
+                
                 default:
                     return 0;
             }
@@ -262,6 +316,8 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
 void DisplayController::switchToMenuWindow() {
     displayState = Menu;
     justSwitchedWindow = 1;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 // count = labels.length
@@ -280,6 +336,8 @@ void DisplayController::switchToMenuWindow(char **labels, int count) {
 void DisplayController::switchToLogWindow() {
     displayState = Log;
     justSwitchedWindow = 1;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 // count = labels.length
@@ -298,12 +356,16 @@ void DisplayController::switchToCustomWindow() {
     displayState = Custom;
     justSwitchedWindow = 1;
     customLoopOnUpdateDisplay = nullptr;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 void DisplayController::switchToCustomWindow(Action loop) {
     displayState = Custom;
     justSwitchedWindow = 1;
     customLoopOnUpdateDisplay = loop;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 
@@ -421,6 +483,43 @@ void DisplayController::updateDisplay() {
 
         case Custom:
             customLoopOnUpdateDisplay();
+            if(justSwitchedWindow) {
+                justSwitchedWindow = 0;
+                for(int i = 0; i < MAX_HOTBAR_WINDOWS; i++) {
+                    myTFT.pCurrentWindow = &(hotbarWindows[i].wind);
+                    int x = myTFT.pCurrentWindow->xMax - myTFT.pCurrentWindow->xMin;
+                    int y = myTFT.pCurrentWindow->yMax - myTFT.pCurrentWindow->yMin;
+
+                    // red window if selected
+                    myTFT.setCurrentWindowColorSequence(i == currentSelectedWindow ? ((color_t)&RED) : ((color_t)&WHITE));
+                    myTFT.rectangle(0, 0, x, y);
+                    printInCurrentWindowAtPosition("placeholder", 1, 1);
+                }
+            }
+
+            if(currentSelectedWindow != lastSelectedWindow) {
+                // make the last window white
+                myTFT.pCurrentWindow = &(hotbarWindows[lastSelectedWindow].wind);
+                myTFT.fillWindow((color_t)&defaultColor);
+                myTFT.setCurrentWindowColorSequence((color_t)&WHITE);
+
+                int x = myTFT.pCurrentWindow->xMax - myTFT.pCurrentWindow->xMin;
+                int y = myTFT.pCurrentWindow->yMax - myTFT.pCurrentWindow->yMin;
+                myTFT.rectangle(0, 0, x, y);
+                printInCurrentWindowAtPosition("placeholder", 1, 1);
+
+                // make the current window red
+                myTFT.pCurrentWindow = &(hotbarWindows[currentSelectedWindow].wind);
+                myTFT.fillWindow((color_t)&defaultColor);
+                myTFT.setCurrentWindowColorSequence((color_t)&RED);
+
+                x = myTFT.pCurrentWindow->xMax - myTFT.pCurrentWindow->xMin;
+                y = myTFT.pCurrentWindow->yMax - myTFT.pCurrentWindow->yMin;
+                myTFT.rectangle(0, 0, x, y);
+                printInCurrentWindowAtPosition("placeholder", 1, 1);
+            }
+
+            lastSelectedWindow = currentSelectedWindow;
             break;
     }
 }
