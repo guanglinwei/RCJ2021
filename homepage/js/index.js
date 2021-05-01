@@ -31,7 +31,7 @@ const components = {
                     const p = v.trim() // remove leading/trailing whitespace
                         .match(/"[^"]*"|[^,]+/g) // split by commas except inside quotes. Ex: a, "b1, b2", c => ["a", ""b1, b2"", "c"]
                         .map(s => s.replace("\"", "")); // remove quotes
-                    
+                
                     return {
                         src: imagesDir[p[0]] || "",
                         width: p[1] || 128,

@@ -13,4 +13,4 @@ rcjnew2, 300, 300, New robot 2
 Text
 
 ## Documentation
-[Docs](RCJ2021/html/)
+[Docs](/RCJ2021/html/)
