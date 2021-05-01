@@ -87,6 +87,17 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+.highlight-black {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: azure;
+}
+
+.carousel .carousel-caption {
+  position: relative;
+  left: 0; 
+  right: 0;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

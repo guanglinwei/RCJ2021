@@ -27,6 +27,7 @@ Pixy2 pixy;
 // camera viewer
 int ballX, ballY, lastBallX, lastBallY = 0;
 double ang = 0.0; // angle towards ball. up is 0, increases CCW
+int ballSeen = 0;
 
 
 int robotCanMove = 0;
@@ -46,30 +47,47 @@ void allowRobotMove() {
 
 double getAngle(int x, int y)
 {
-  //0, 0 is top left
-  return fmod(fmod(-atan2(x - HALF_CAM_W, y - HALF_CAM_H) * RAD_TO_DEG, 360) + 360 , 360);
+    //0, 0 is top left
+//   return fmod(fmod(-atan2(x - HALF_CAM_W, y - HALF_CAM_H) * RAD_TO_DEG, 360) + 360 , 360);
+    // test
+    Serial.print("get "); Serial.print(x); Serial.print(" "); Serial.println(y);
+    return fmod(fmod(-atan2(x, y) * RAD_TO_DEG, 360) + 360 , 360);
 }
 
 void getDataFromCamera()
 {
+    // lastBallX = ballX < 0 ? lastBallX : ballX;
+    // lastBallY = ballY < 0 ? lastBallY : ballY;
     lastBallX = ballX;
     lastBallY = ballY;
 
+    Serial.println("getting blocks");
     pixy.ccc.getBlocks();
+    Serial.println("got blocks");
 
     if(!pixy.ccc.numBlocks) {
-        ballX = -1;
-        ballY = -1;
+        ballSeen = 0;
+        Serial.println("none\n");
         return;
     }
 
     for(int i = 0; i < pixy.ccc.numBlocks; i++){
-        Serial.println(pixy.ccc.blocks[i].m_signature);
+        // Serial.println(pixy.ccc.blocks[i].m_signature);
         // if ball
         if(pixy.ccc.blocks[i].m_signature == 1){
-            ballX = pixy.ccc.blocks[i].m_x;
-            ballY = pixy.ccc.blocks[i].m_y;
-            ang = getAngle(ballX, ballX);
+            ballSeen = 1;
+            ballX = pixy.ccc.blocks[i].m_x - HALF_CAM_W;
+            ballY = pixy.ccc.blocks[i].m_y - HALF_CAM_H;
+
+            // if the blob is not on the mirror, ignore it
+            if(abs(ballX) - 12 > HALF_CAM_H || ballX * ballX + ballY * ballY - 12 > HALF_CAM_H * HALF_CAM_H) {
+                ballSeen = 0;
+                Serial.println("not on mirror\n");
+                return;
+            }
+            // Serial.print(ballX); Serial.print(" | "); Serial.println(ballY);
+
+            ang = getAngle(ballX, ballY);
             ang += 180;
             if(ang > 360) {
                 ang -= 360;
@@ -79,25 +97,48 @@ void getDataFromCamera()
     }
 }
 
+// int mapCameraCoordinateToScreen(int from) {
+//     return map(from, 0, )
+// }
+
 void cameraViewerLoop() {
+    Serial.println("camera viewer loop");
     getDataFromCamera();
 
-    if(lastBallX != -1) {
-        myDisplay.pixel(lastBallX, lastBallY, myDisplay.defaultColor);
-    }
+    int r = 50;
 
-    if(ballX != -1) {
-        myDisplay.pixel(ballX, ballY, myDisplay.ORANGE);
+    // erase the last position of the ball
+    // int displayLastBallX = map(lastBallY, 0, CAM_H, 64-54, 64+54);
+    // int displayLastBallY = map(lastBallX, HALF_CAM_W - HALF_CAM_H, HALF_CAM_W + HALF_CAM_H, 54-54, 54+54);
+    
+    // test 
+    int displayLastBallX = map(lastBallY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
+    int displayLastBallY = map(lastBallX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
+    myDisplay.myTFT.pixel(displayLastBallX, displayLastBallY, (color_t)&myDisplay.defaultColor);
+
+    // draw the ball as an orange pixel if it is seen
+    // otherwise draw a light gray pixel at where it last was
+    // int displayBallX = map(ballY, 0, CAM_H, 64-54, 64+54);
+    // int displayBallY = map(ballX, HALF_CAM_W - HALF_CAM_H, HALF_CAM_W + HALF_CAM_H, 54-r, 54+r);
+
+    // test
+    int displayBallX = map(ballY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
+    int displayBallY = map(ballX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
+
+    if(ballSeen) {
+        myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.ORANGE);
     }
     else {
-        myDisplay.pixel(ballX, ballY, myDisplay.LIGHT_GRAY);
+        myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.LIGHT_GRAY);
     }
 }
 
 void switchToCameraViewer() {
+    allowRobotMove();
     myDisplay.clearDisplay();
-    myDisplay.myTFT.circle(64, 70, 54, false, myDisplay.WHITE);
-    myDisplay.switchToCustomWindow();
+    Serial.println("switch to camera view");
+    myDisplay.switchToCustomWindow(&cameraViewerLoop);
+    myDisplay.myTFT.circle(64, 54, 54, false, (color_t)&myDisplay.DARK_GRAY);
 }
 
 void setup() {
@@ -149,22 +190,27 @@ void loop() {
     else {
         myDisplay.handleJoystickAxis(rawJoyX, rawJoyY);
     }
+    // Serial.print("joystick | ");
 
+    Serial.println("update display | ");
     myDisplay.updateDisplay();
+
     if(!robotCanMove) hm.stop();
 
     // holo move test
     if(robotCanMove) {
         if(hadNewJ) {
             robotCanMove = 0;
+            Serial.println("stop");
             hm.stop();
             return;
         }
 
-        getDataFromCamera();
-        if(ballx == -1) return;
+        // getDataFromCamera();
+        if(!ballSeen) return;
         Serial.println(ang);
         hm.move(ang, 100);
     }
-    delay(100);
+    Serial.println("---\n");
+    delay(300);
 }

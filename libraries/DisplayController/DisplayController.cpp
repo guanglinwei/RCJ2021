@@ -70,8 +70,8 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
 
         pw.xMin = (int)(dX * i);
         pw.xMax = (int)(dX * i + dX - 1);
-        pw.yMin = 160;
-        pw.yMax = 179;
+        pw.yMin = 130;
+        pw.yMax = 159;
         wind.wind = pw;
         hotbarWindows[i] = wind;
     }
@@ -269,7 +269,15 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
         case Custom:
             switch(inputType) {
                 case IN_CLICK:
+                    // the first item is ALWAYS go back
+                    if(currentSelectedWindow == 0) {
+                        clearDisplay();
+                        switchToMenuWindow();
+                        return;
+                    }
+
                     if(currentSelectedWindow < MAX_HOTBAR_WINDOWS && hotbarWindows[currentSelectedWindow].onClick != nullptr) {
+                        
                         // call the onClick method
                         (*(hotbarWindows[currentSelectedWindow].onClick))();
                         return 1;
@@ -353,6 +361,7 @@ void DisplayController::updateLogValue(int index, char *value) {
 }
 
 void DisplayController::switchToCustomWindow() {
+    myTFT.pCurrentWindow = &hyperdisplayDefaultWindow;
     displayState = Custom;
     justSwitchedWindow = 1;
     customLoopOnUpdateDisplay = nullptr;
@@ -361,6 +370,7 @@ void DisplayController::switchToCustomWindow() {
 }
 
 void DisplayController::switchToCustomWindow(Action loop) {
+    myTFT.pCurrentWindow = &hyperdisplayDefaultWindow;
     displayState = Custom;
     justSwitchedWindow = 1;
     customLoopOnUpdateDisplay = loop;
@@ -471,7 +481,6 @@ void DisplayController::updateDisplay() {
                     
                     if(dataWindows[i].data != nullptr) {
                         // _serial->println(dataWindows[i].data);
-                        _serial->println(dataWindows[i].wind.yMin);
                         myTFT.setCurrentWindowColorSequence((color_t)&RED);
                         // printInCurrentWindowAtPosition(dataWindows[i].data, dataSeparatorX + 3, dataWindows[i].wind.yMin); //i * YMAX * 1.0 / MAX_DATA_WINDOWS
                         printInCurrentWindowAtPosition(dataWindows[i].data, 0, 0);
@@ -482,7 +491,9 @@ void DisplayController::updateDisplay() {
             break;
 
         case Custom:
-            customLoopOnUpdateDisplay();
+            myTFT.pCurrentWindow = &hyperdisplayDefaultWindow;
+            if(customLoopOnUpdateDisplay != nullptr) customLoopOnUpdateDisplay();
+
             if(justSwitchedWindow) {
                 justSwitchedWindow = 0;
                 for(int i = 0; i < MAX_HOTBAR_WINDOWS; i++) {
@@ -498,6 +509,7 @@ void DisplayController::updateDisplay() {
             }
 
             if(currentSelectedWindow != lastSelectedWindow) {
+            // if(1){
                 // make the last window white
                 myTFT.pCurrentWindow = &(hotbarWindows[lastSelectedWindow].wind);
                 myTFT.fillWindow((color_t)&defaultColor);
@@ -520,10 +532,11 @@ void DisplayController::updateDisplay() {
             }
 
             lastSelectedWindow = currentSelectedWindow;
+
             break;
     }
 }
 
-DisplayController::clearDisplay() {
+void DisplayController::clearDisplay() {
     myTFT.clearDisplay();
 }
