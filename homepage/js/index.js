@@ -8,7 +8,7 @@ import { Container, Row, Col, Jumbotron, Carousel } from "react-bootstrap";
 // Look into https://github.com/remarkjs/remark-directive
 
 import imagesDir from "../img/*.jpg";
-// console.log(imagesDir); 
+// console.log(imagesDir);
 
 // import markdown from "./index.md";
 const markdown = readFileSync(__dirname + "/index.md", "utf-8");
