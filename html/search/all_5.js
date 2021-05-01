@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['move_7',['move',['../class_holo_move.html#add77053a38965a008cdece3cea20915f',1,'HoloMove']]]
+  ['joystickinputtype_13',['JoystickInputType',['../class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363',1,'DisplayController']]]
 ];

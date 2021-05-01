@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['onjoystickinput_8',['onJoystickInput',['../class_display_controller.html#a9c3c7ae8d670ee7d432aa9d5a039b1f6',1,'DisplayController']]]
+  ['light_5fgray_14',['LIGHT_GRAY',['../group__colors.html#gacad75e5c9725812ee7a337a720f6bfb8',1,'DisplayController']]]
 ];
