@@ -6,9 +6,9 @@ name: Doxygen Action
 # events but only for the master branch
 on:
   push:
-    branches: [ main ]
+    branches: [ guang417 ]
   pull_request:
-    branches: [ main ]
+    branches: [ guang417 ]
 
 
   
@@ -36,5 +36,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./html
-        destination_dir: ./html
+        publish_dir: ./dist

@@ -37,3 +37,8 @@ latex/
 *.exe
 *.out
 *.app
+
+# Node
+node_modules/
+homepage/dist/
+.cache/

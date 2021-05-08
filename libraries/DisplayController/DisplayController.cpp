@@ -1,5 +1,6 @@
 #include "DisplayController.h"
 
+// TODO: labels for hotbar, reset lastselectedwindow and stuff
 //window types:
 // display data
 // or menus
@@ -8,6 +9,7 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
 
     menuWindows = new Window[MAX_MENU_WINDOWS];
     dataWindows = new DataWindow[MAX_DATA_WINDOWS];
+    hotbarWindows = new Window[MAX_HOTBAR_WINDOWS];
 
     // menuWindows = new wind_info_t[9];
     // currentWindowCount = 0;
@@ -20,8 +22,12 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
     RED = myTFT.rgbTo18b(255, 0, 0);
     GREEN = myTFT.rgbTo18b(0, 255, 0);
     BLUE = myTFT.rgbTo18b(0, 0, 255);
+    BLACK = myTFT.rgbTo18b(0, 0, 0);
     WHITE = myTFT.rgbTo18b(255, 255, 255);
+    YELLOW = myTFT.rgbTo18b(255, 255, 0);
     ORANGE = myTFT.rgbTo18b(255, 128, 0);
+    LIGHT_GRAY = myTFT.rgbTo18b(160, 160, 160);
+    DARK_GRAY = myTFT.rgbTo18b(64, 64, 64);
     defaultColor = myTFT.rgbTo18b(0, 0, 0);
 
     // menu windows
@@ -41,7 +47,6 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
         DataWindow d;
         // "Compass"  |  123deg
         //    w             wd
-        // wind_info_t w;
         wind_info_t wd;
 
         // myTFT.setWindowDefaults(&w);
@@ -55,6 +60,20 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
         d.wind = wd;
         d.isDirty = 1;
         dataWindows[i] = d;
+    }
+
+    int dX = XMAX * 1.0 / MAX_HOTBAR_WINDOWS;
+    for(int i = 0; i < MAX_HOTBAR_WINDOWS; i++) {
+        Window wind;
+        wind_info_t pw;
+        myTFT.setWindowDefaults(&pw);
+
+        pw.xMin = (int)(dX * i);
+        pw.xMax = (int)(dX * i + dX - 1);
+        pw.yMin = 130;
+        pw.yMax = 159;
+        wind.wind = pw;
+        hotbarWindows[i] = wind;
     }
 
     myTFT.setWindowDefaults(&labelsWindow);
@@ -136,6 +155,27 @@ int DisplayController::isWithinBounds(int x, int y, wind_info_t wind) {
     return 1;
 }
 
+int DisplayController::hadNewJoystickInput(int x, int y) {
+    JoystickInputType jType = IN_NONE;
+    if(x < 100){
+        jType = IN_DOWN;
+    }
+    else if(x > 500) {
+        jType = IN_UP;
+    }
+    else if(y < 100) {
+        jType = IN_RIGHT;
+    }
+    else if(y > 500) {
+        jType = IN_LEFT;
+    }
+    
+    if(jType == lastJoystickInput) return 0;
+
+    // lastJoystickInput = jType;
+    return jType == IN_NONE ? 0 : 1;
+}
+
 int DisplayController::handleJoystickAxis(int x, int y) {
     // if(p != 0) {
     //     handleJoystickInputUtil(IN_CLICK);
@@ -177,52 +217,105 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
     //     }
     // }
 
-    if(displayState != Menu) return 0;
+    switch(displayState) {
+        case Menu:
+            switch(inputType) {
+                case IN_CLICK:
+                    if(currentSelectedWindow < currentWindowCount && menuWindows[currentSelectedWindow].onClick != nullptr) {
+                        // call the onClick method
+                        (*(menuWindows[currentSelectedWindow].onClick))();
+                        return 1;
+                    }
 
-    switch(inputType) {
-        case IN_CLICK:
-            if(currentSelectedWindow < currentWindowCount && menuWindows[currentSelectedWindow].onClick != nullptr) {
-                // call the onClick method
-                (*(menuWindows[currentSelectedWindow].onClick))();
-                return 1;
+                case IN_DOWN:
+                    if(currentSelectedWindow + menuCols < currentWindowCount) {
+                        currentSelectedWindow += menuCols;
+                        return 1;
+                    }
+                
+                case IN_UP:
+                    if(currentSelectedWindow - menuCols >= 0) {
+                        currentSelectedWindow -= menuCols;
+                        return 1;
+                    }
+
+                case IN_RIGHT:
+                    if((currentSelectedWindow + 1) % menuCols != 0) {
+                        currentSelectedWindow++;
+                        return 1;
+                    }
+
+                case IN_LEFT:
+                    if((currentSelectedWindow - 1 + menuCols) % menuCols != menuCols - 1) {
+                        currentSelectedWindow--;
+                        return 1;
+                    }
+                
+                default:
+                    return 0;
             }
-
-            return 0;
-
-        case IN_DOWN:
-            if(currentSelectedWindow + menuCols < currentWindowCount) {
-                currentSelectedWindow += menuCols;
-                // updateDisplay();
-            }
-            return 1;
+            break;
         
-        case IN_UP:
-            if(currentSelectedWindow - menuCols >= 0) {
-                currentSelectedWindow -= menuCols;
-                // updateDisplay();
+        case Log:
+            switch(inputType) {
+                case IN_CLICK:
+                    switchToMenuWindow();
+                    return 1;
+                default:
+                    return 0;
             }
-            return 1;
+            break;
 
-        case IN_RIGHT:
-        
-            // if(currentSelectedWindow + 1 < currentWindowCount) {
-            if((currentSelectedWindow + 1) % menuCols != 0) {
-                currentSelectedWindow++;
-                // updateDisplay();
-            }
-            return 1;
+        case Custom:
+            switch(inputType) {
+                case IN_CLICK:
+                    // the first item is ALWAYS go back
+                    if(currentSelectedWindow == 0) {
+                        clearDisplay();
+                        switchToMenuWindow();
+                        return;
+                    }
 
-        case IN_LEFT:
-            // if(currentSelectedWindow - 1 >= 0) {
-            if((currentSelectedWindow - 1 + menuCols) % menuCols != menuCols - 1) {
-                currentSelectedWindow--;
-                // updateDisplay();
+                    if(currentSelectedWindow < MAX_HOTBAR_WINDOWS && hotbarWindows[currentSelectedWindow].onClick != nullptr) {
+                        
+                        // call the onClick method
+                        (*(hotbarWindows[currentSelectedWindow].onClick))();
+                        return 1;
+                    }
+
+                    return 0;
+
+                // case IN_DOWN:
+                //     if(currentSelectedWindow + menuCols < currentWindowCount) {
+                //         currentSelectedWindow += menuCols;
+                //         return 1;
+                //     }
+                //     return 1;
+                
+                // case IN_UP:
+                //     if(currentSelectedWindow - menuCols >= 0) {
+                //         currentSelectedWindow -= menuCols;
+                //         return 1;
+                //     }
+
+                case IN_RIGHT:
+                    if((currentSelectedWindow + 1) % MAX_HOTBAR_WINDOWS != 0) {
+                        currentSelectedWindow++;
+                        return 1;
+                    }
+
+                case IN_LEFT:
+                    if((currentSelectedWindow - 1 + MAX_HOTBAR_WINDOWS) % MAX_HOTBAR_WINDOWS != MAX_HOTBAR_WINDOWS - 1) {
+                        currentSelectedWindow--;
+                        return 1;
+                    }
+                
+                default:
+                    return 0;
             }
-            return 1;
-        
-        default:
-            return 0;
+            break;
     }
+    return 0;
 }
 
 
@@ -231,6 +324,8 @@ int DisplayController::onJoystickInput(JoystickInputType inputType) {
 void DisplayController::switchToMenuWindow() {
     displayState = Menu;
     justSwitchedWindow = 1;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 // count = labels.length
@@ -249,6 +344,8 @@ void DisplayController::switchToMenuWindow(char **labels, int count) {
 void DisplayController::switchToLogWindow() {
     displayState = Log;
     justSwitchedWindow = 1;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 // count = labels.length
@@ -261,6 +358,24 @@ void DisplayController::switchToLogWindow(char **labels, int count) {
 void DisplayController::updateLogValue(int index, char *value) {
     dataWindows[index].isDirty = 1;
     dataWindows[index].data = value;
+}
+
+void DisplayController::switchToCustomWindow() {
+    myTFT.pCurrentWindow = &hyperdisplayDefaultWindow;
+    displayState = Custom;
+    justSwitchedWindow = 1;
+    customLoopOnUpdateDisplay = nullptr;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
+}
+
+void DisplayController::switchToCustomWindow(Action loop) {
+    myTFT.pCurrentWindow = &hyperdisplayDefaultWindow;
+    displayState = Custom;
+    justSwitchedWindow = 1;
+    customLoopOnUpdateDisplay = loop;
+    lastSelectedWindow = 0;
+    currentSelectedWindow = 0;
 }
 
 
@@ -366,7 +481,6 @@ void DisplayController::updateDisplay() {
                     
                     if(dataWindows[i].data != nullptr) {
                         // _serial->println(dataWindows[i].data);
-                        _serial->println(dataWindows[i].wind.yMin);
                         myTFT.setCurrentWindowColorSequence((color_t)&RED);
                         // printInCurrentWindowAtPosition(dataWindows[i].data, dataSeparatorX + 3, dataWindows[i].wind.yMin); //i * YMAX * 1.0 / MAX_DATA_WINDOWS
                         printInCurrentWindowAtPosition(dataWindows[i].data, 0, 0);
@@ -374,6 +488,55 @@ void DisplayController::updateDisplay() {
                 }
             }
 
-        break;
+            break;
+
+        case Custom:
+            myTFT.pCurrentWindow = &hyperdisplayDefaultWindow;
+            if(customLoopOnUpdateDisplay != nullptr) customLoopOnUpdateDisplay();
+
+            if(justSwitchedWindow) {
+                justSwitchedWindow = 0;
+                for(int i = 0; i < MAX_HOTBAR_WINDOWS; i++) {
+                    myTFT.pCurrentWindow = &(hotbarWindows[i].wind);
+                    int x = myTFT.pCurrentWindow->xMax - myTFT.pCurrentWindow->xMin;
+                    int y = myTFT.pCurrentWindow->yMax - myTFT.pCurrentWindow->yMin;
+
+                    // red window if selected
+                    myTFT.setCurrentWindowColorSequence(i == currentSelectedWindow ? ((color_t)&RED) : ((color_t)&WHITE));
+                    myTFT.rectangle(0, 0, x, y);
+                    printInCurrentWindowAtPosition("placeholder", 1, 1);
+                }
+            }
+
+            if(currentSelectedWindow != lastSelectedWindow) {
+            // if(1){
+                // make the last window white
+                myTFT.pCurrentWindow = &(hotbarWindows[lastSelectedWindow].wind);
+                myTFT.fillWindow((color_t)&defaultColor);
+                myTFT.setCurrentWindowColorSequence((color_t)&WHITE);
+
+                int x = myTFT.pCurrentWindow->xMax - myTFT.pCurrentWindow->xMin;
+                int y = myTFT.pCurrentWindow->yMax - myTFT.pCurrentWindow->yMin;
+                myTFT.rectangle(0, 0, x, y);
+                printInCurrentWindowAtPosition("placeholder", 1, 1);
+
+                // make the current window red
+                myTFT.pCurrentWindow = &(hotbarWindows[currentSelectedWindow].wind);
+                myTFT.fillWindow((color_t)&defaultColor);
+                myTFT.setCurrentWindowColorSequence((color_t)&RED);
+
+                x = myTFT.pCurrentWindow->xMax - myTFT.pCurrentWindow->xMin;
+                y = myTFT.pCurrentWindow->yMax - myTFT.pCurrentWindow->yMin;
+                myTFT.rectangle(0, 0, x, y);
+                printInCurrentWindowAtPosition("placeholder", 1, 1);
+            }
+
+            lastSelectedWindow = currentSelectedWindow;
+
+            break;
     }
+}
+
+void DisplayController::clearDisplay() {
+    myTFT.clearDisplay();
 }
