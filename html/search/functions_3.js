@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['detected_534',['detected',['../class_adafruit___i2_c_device.html#ac7492b543fe4c0bb0d94a7bf1915cb2a',1,'Adafruit_I2CDevice']]],
-  ['displaycontroller_535',['DisplayController',['../class_display_controller.html#a4f3e6bb4eaeb37a481d43a8bbbda0e0b',1,'DisplayController']]]
+  ['getpreviousstate_49',['GetPreviousState',['../class_state_machine.html#a672b604d021cfbb70d2de1948e2b3b33',1,'StateMachine']]],
+  ['getstate_50',['GetState',['../class_state_machine.html#a440f7a16258bbb7f22f815626f66424e',1,'StateMachine']]]
 ];

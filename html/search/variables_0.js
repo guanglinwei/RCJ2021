@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['acceleration_627',['acceleration',['../structsensors__event__t.html#a91a4325f468d3155e6921358a6f61baa',1,'sensors_event_t']]]
+  ['black_74',['BLACK',['../group__colors.html#ga37ce525685f2b0f27a0dc20ce6b3f9c3',1,'DisplayController']]],
+  ['blue_75',['BLUE',['../group__colors.html#ga7d4bf6000bbccbf4be3112f77f4bd344',1,'DisplayController']]]
 ];

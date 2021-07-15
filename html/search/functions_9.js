@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['loop_564',['loop',['../class_my_test.html#af08fb4f744ca2f38dafdcdbb0624147c',1,'MyTest::loop()'],['../class_test.html#a62a1398282c8ef41e33e8f35d165f4b0',1,'Test::loop()'],['../class_test_once.html#a602e32762fb5bf103bb1371a3dc12eed',1,'TestOnce::loop()']]]
+  ['updatedisplay_72',['updateDisplay',['../class_display_controller.html#adc0749b003610f506df8ee96cb94045e',1,'DisplayController']]],
+  ['updatelogvalue_73',['updateLogValue',['../class_display_controller.html#af266616e0ddb553730bdd16a31aea48b',1,'DisplayController']]]
 ];
