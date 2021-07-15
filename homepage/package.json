@@ -33,6 +33,6 @@
     "remark-gfm": "^1.0.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.5"
   }
 }
