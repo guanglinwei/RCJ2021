@@ -33,6 +33,11 @@
     "remark-gfm": "^1.0.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-static-files-copy": "^2.6.0"
+  },
+  "staticFiles": {
+    "staticPath": "img",
+    "watcherGlob": "**"
   }
 }

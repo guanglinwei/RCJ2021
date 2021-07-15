@@ -18,11 +18,11 @@ Options properties:
 - Add images
 ```gallery
 {"type": "table", "width": 3, "height": 3}
-imageName1, 480, 360, The first image
-imageName2, 1920, 1080, Second image
+imageName1.jpg, 480, 360, The first image
+imageName2.png, 1920, 1080, Second image
 ```
 In each line, provide the following:
-- the name of the image **WITHOUT** a file extension
+- the name of the image
 - width  *(optional)*
 - height  *(optional)*
 - alt text/label. You can include quotes around the alt text if you need commas. (Ex: "This, text, has commas")  *(optional)*

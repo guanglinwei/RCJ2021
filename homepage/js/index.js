@@ -9,7 +9,6 @@ import { Container, Row, Col, Jumbotron, Carousel } from "react-bootstrap";
 
 /**
  * If you want to add images, put them in ../img/
- * Make sure they are jpg's.
  * 
  * If you want to add text, put it in ./index.md
  * 
@@ -23,6 +22,12 @@ import { Container, Row, Col, Jumbotron, Carousel } from "react-bootstrap";
  * ```
  * 
  * Read ./example.md for details
+ * Do not forget file extensions
+ * 
+ * If you want to add an image on its own, use !(alt text)[image]
+ * NOTE: the alt text can be used to set the dimensions of the image. The format is as follows:
+ * alt text, width, height
+ * Ex: !(A robot, 300, 300)[robot.png] -> results in a 300x300 robot.png with the alt text "A robot"
  * 
  * To view the webpage, cd in the homepage folder and use "npm run dev"
  * (Make sure NPM is installed)
@@ -31,15 +36,21 @@ import { Container, Row, Col, Jumbotron, Carousel } from "react-bootstrap";
  * The github page will update on its own.
  */
 
-import imagesDir from "../img/*.jpg";
 
 // import markdown from "./index.md";
 const markdown = readFileSync(__dirname + "/index.md", "utf-8");
 
 const components = {
+    // fix bug where images were treated a paragraphs
+    p: (props) => {
+        const element = props.children[0];
+        const {node, ...pProps} = props;
+        return (element.type.name === 'img') ? { ...element } : <p {...pProps} />;
+    },
+
     a: (props) => {
         const value = props.children[0];
-        // don't open in a new tab (for relative links)
+        // begin with '#' to not open in a new tab (for relative links)
         if(value.charAt(0) == '#') {
             props.children[0] = props.children[0].slice(1, value.length);
             return <a href={props.href}>{props.children}</a>
@@ -47,6 +58,20 @@ const components = {
         return <a href={props.href} target="_blank" rel="noreferrer nofollow noopener">{props.children}</a>
         // return <a>a</a>
     },
+
+    img: ({ src, alt }) => {
+        // use alt for width and height
+        // alt, width, height
+        
+        const [a, w, h] = alt.split(/\,\s?/);
+        return (
+            <div>
+                <img src={src} alt={a} width={w || 300} height={h || 300}/>
+                <br/>
+            </div>
+        );
+    },
+
     // type: (props) => {}
     code: (props) => {
         // className already declared????
@@ -78,7 +103,8 @@ const components = {
                         .map(s => s.replace("\"", "")); // remove quotes
             
                     return {
-                        src: imagesDir[p[0]] || "",
+                        // src: imagesDir[p[0]] || "",
+                        src: p[0] || "",
                         width: p[1] || 128,
                         height: p[2] || 128,
                         alt: p[3] || "image",
