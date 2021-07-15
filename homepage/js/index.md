@@ -20,7 +20,7 @@ rcjnew3, 300, 300, New robot 3
 ```
 ```gallery 
 mirror3d, 300, 300, mirror
-mirrorside, 300, 300, mirror 2
+mirrorside, 300, 300, mirror reee
 ```
 
 ## Spongebot
