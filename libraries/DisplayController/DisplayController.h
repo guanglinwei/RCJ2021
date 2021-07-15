@@ -107,6 +107,13 @@ class DisplayController
          * @see DisplayState
          */
         void switchToMenuWindow(char **labels, int count);
+        
+        /**
+         * Set the label for a menu window
+         * @param index index of menu window
+         * @param label string for label
+         */ 
+        void setMenuLabel(int index, char *label);
 
         
         /**

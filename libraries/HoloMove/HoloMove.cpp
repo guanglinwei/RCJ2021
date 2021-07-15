@@ -69,12 +69,19 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
     _rb->ForwardBackwardM2(0x81, (uint8_t) map(rearLeftOutput, -255, 255, 0, 127));
     _rb->ForwardBackwardM2(0x80, (uint8_t) map(frontLeftOutput, -255, 255, 0, 127));
 
-    _ser.print(frontRightOutput); _ser.print(" | "); _ser.print(rearRightOutput); _ser.print(" | ");
-    _ser.print(rearLeftOutput); _ser.print(" | "); _ser.println(frontLeftOutput);
+    // _ser.print(frontRightOutput); _ser.print(" | "); _ser.print(rearRightOutput); _ser.print(" | ");
+    // _ser.print(rearLeftOutput); _ser.print(" | "); _ser.println(frontLeftOutput);
     // _ser.println("_");
     // _ser.print(t1); _ser.print(" | "); _ser.print(t2); _ser.print(" | ");
     // _ser.print(t3); _ser.print(" | "); _ser.println(t4);
 
+}
+
+void HoloMove::setSpeeds(float a, float b, float c, float d) {
+    _rb->ForwardBackwardM1(0x80, (uint8_t) map(a, -255, 255, 0, 127));
+    _rb->ForwardBackwardM1(0x81, (uint8_t) map(-b, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x81, (uint8_t) map(c, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x80, (uint8_t) map(d, -255, 255, 0, 127));
 }
 
 void HoloMove::stop() {

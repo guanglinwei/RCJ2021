@@ -32,16 +32,27 @@ int StateMachine::GetState()
     return State;
 }
 
+int StateMachine::GetPreviousState() {
+    return PreviousState;
+}
+
 void StateMachine::SetState(int state)
 {
+    int prev = State;
     State = state;
     if(PreviousState != -1){
         if(Ends[PreviousState])
             Ends[PreviousState]();
     }
-    if(Begins[PreviousState])
-        Begins[PreviousState]();
-    currentLoop = Loops[State];
+    if(Begins[state])
+        Begins[state]();
+
+    PreviousState = prev;
+    currentLoop = Loops[state];
+}
+
+void StateMachine::Start(int initialState) {
+    SetState(initialState);
 }
 
 void StateMachine::StateLoop()

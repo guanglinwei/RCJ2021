@@ -10,6 +10,7 @@ int mapY = 0;
 
 void setup() {
   Serial.begin(9600); 
+  Serial.println("a");
   
   pinMode(VRx, INPUT);
   pinMode(VRy, INPUT);

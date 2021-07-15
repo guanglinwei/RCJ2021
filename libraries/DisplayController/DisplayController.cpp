@@ -338,6 +338,12 @@ void DisplayController::switchToMenuWindow(char **labels, int count) {
     switchToMenuWindow();
 }
 
+void DisplayController::setMenuLabel(int index, char *label) {
+    if(index >= menuLabelCount) {
+        menuWindows[index].data = label;
+    }
+}
+
 
 // Log
 
