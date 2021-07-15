@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['hadnewjoystickinput_40',['hadNewJoystickInput',['../class_display_controller.html#a984e52149169ae3e489b0bdb4a7d4e67',1,'DisplayController']]],
-  ['handlejoystickaxis_41',['handleJoystickAxis',['../class_display_controller.html#aa901d62cdb9f0f62119ef7079ec2e4e3',1,'DisplayController']]],
-  ['handlejoystickinpututil_42',['handleJoystickInputUtil',['../class_display_controller.html#a124f2fa23a8945258f26890857c8f475',1,'DisplayController']]],
-  ['holomove_43',['HoloMove',['../class_holo_move.html#ac46dba9fc5da5df9a11ba59dba8e9090',1,'HoloMove']]]
+  ['detected_534',['detected',['../class_adafruit___i2_c_device.html#ac7492b543fe4c0bb0d94a7bf1915cb2a',1,'Adafruit_I2CDevice']]],
+  ['displaycontroller_535',['DisplayController',['../class_display_controller.html#a4f3e6bb4eaeb37a481d43a8bbbda0e0b',1,'DisplayController']]]
 ];

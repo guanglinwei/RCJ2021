@@ -71,22 +71,219 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0b15bda781023f6d96b5ccf514846bf8"><td class="memItemLeft" align="right" valign="top"><a id="a0b15bda781023f6d96b5ccf514846bf8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>StateMachine</b> (int max)</td></tr>
+<tr class="memitem:a2fb07002510ea9141019559750acfab8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a2fb07002510ea9141019559750acfab8">StateMachine</a> ()</td></tr>
+<tr class="separator:a2fb07002510ea9141019559750acfab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b15bda781023f6d96b5ccf514846bf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a0b15bda781023f6d96b5ccf514846bf8">StateMachine</a> (int max)</td></tr>
 <tr class="separator:a0b15bda781023f6d96b5ccf514846bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24483f97fcb6a02d33d668ca8547bf56"><td class="memItemLeft" align="right" valign="top"><a id="a24483f97fcb6a02d33d668ca8547bf56"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>StateLoop</b> ()</td></tr>
+<tr class="memitem:a24483f97fcb6a02d33d668ca8547bf56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a24483f97fcb6a02d33d668ca8547bf56">StateLoop</a> ()</td></tr>
 <tr class="separator:a24483f97fcb6a02d33d668ca8547bf56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a440f7a16258bbb7f22f815626f66424e"><td class="memItemLeft" align="right" valign="top"><a id="a440f7a16258bbb7f22f815626f66424e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetState</b> ()</td></tr>
+<tr class="memitem:a440f7a16258bbb7f22f815626f66424e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a440f7a16258bbb7f22f815626f66424e">GetState</a> ()</td></tr>
 <tr class="separator:a440f7a16258bbb7f22f815626f66424e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe8b62de656474040299a21ba5795b19"><td class="memItemLeft" align="right" valign="top"><a id="afe8b62de656474040299a21ba5795b19"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetState</b> (int s)</td></tr>
-<tr class="separator:afe8b62de656474040299a21ba5795b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51a8751d1d02bbc2c431cc5b21dc7a9d"><td class="memItemLeft" align="right" valign="top"><a id="a51a8751d1d02bbc2c431cc5b21dc7a9d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetCallbacks</b> (int state, Action begin=nullptr, Action loop=nullptr, Action end=nullptr)</td></tr>
+<tr class="memitem:a672b604d021cfbb70d2de1948e2b3b33"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a672b604d021cfbb70d2de1948e2b3b33">GetPreviousState</a> ()</td></tr>
+<tr class="separator:a672b604d021cfbb70d2de1948e2b3b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb61ef6c55f2da46214737186fcbd677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#afb61ef6c55f2da46214737186fcbd677">SetState</a> (int state)</td></tr>
+<tr class="separator:afb61ef6c55f2da46214737186fcbd677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51a8751d1d02bbc2c431cc5b21dc7a9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a51a8751d1d02bbc2c431cc5b21dc7a9d">SetCallbacks</a> (int state, Action begin=nullptr, Action loop=nullptr, Action end=nullptr)</td></tr>
 <tr class="separator:a51a8751d1d02bbc2c431cc5b21dc7a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89076d02a1e83b09c445113081131d23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_state_machine.html#a89076d02a1e83b09c445113081131d23">Start</a> (int initialState=0)</td></tr>
+<tr class="separator:a89076d02a1e83b09c445113081131d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2fb07002510ea9141019559750acfab8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fb07002510ea9141019559750acfab8">&#9670;&nbsp;</a></span>StateMachine() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StateMachine::StateMachine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Default constructor. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_state_machine.html">StateMachine</a> </dd></dl>
+
+</div>
+</div>
+<a id="a0b15bda781023f6d96b5ccf514846bf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b15bda781023f6d96b5ccf514846bf8">&#9670;&nbsp;</a></span>StateMachine() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StateMachine::StateMachine </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor for <a class="el" href="class_state_machine.html">StateMachine</a> with maximum states. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">max</td><td>max number of states. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a672b604d021cfbb70d2de1948e2b3b33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a672b604d021cfbb70d2de1948e2b3b33">&#9670;&nbsp;</a></span>GetPreviousState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int StateMachine::GetPreviousState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the previous state. </p><dl class="section return"><dt>Returns</dt><dd>the previous state. </dd></dl>
+
+</div>
+</div>
+<a id="a440f7a16258bbb7f22f815626f66424e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a440f7a16258bbb7f22f815626f66424e">&#9670;&nbsp;</a></span>GetState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int StateMachine::GetState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the current state. </p><dl class="section return"><dt>Returns</dt><dd>int representing the state. </dd></dl>
+
+</div>
+</div>
+<a id="a51a8751d1d02bbc2c431cc5b21dc7a9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51a8751d1d02bbc2c431cc5b21dc7a9d">&#9670;&nbsp;</a></span>SetCallbacks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateMachine::SetCallbacks </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>begin</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>loop</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Action&#160;</td>
+          <td class="paramname"><em>end</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the following for a given state: begin, loop, and end. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>the state. </td></tr>
+    <tr><td class="paramname">begin</td><td>the function called when switching from another state to this one. Called before loop. </td></tr>
+    <tr><td class="paramname">loop</td><td>the function called on StateLoop. </td></tr>
+    <tr><td class="paramname">end</td><td>the function called when exiting this state. Called before begin on the new state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_state_machine.html#a24483f97fcb6a02d33d668ca8547bf56">StateLoop</a> </dd></dl>
+
+</div>
+</div>
+<a id="afb61ef6c55f2da46214737186fcbd677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb61ef6c55f2da46214737186fcbd677">&#9670;&nbsp;</a></span>SetState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateMachine::SetState </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the current state. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>the state to be set to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a89076d02a1e83b09c445113081131d23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89076d02a1e83b09c445113081131d23">&#9670;&nbsp;</a></span>Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateMachine::Start </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>initialState</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start the <a class="el" href="class_state_machine.html">StateMachine</a>. Called after SetCallbacks. Calls begin for the initial state. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">initialState</td><td>the initial state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a24483f97fcb6a02d33d668ca8547bf56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24483f97fcb6a02d33d668ca8547bf56">&#9670;&nbsp;</a></span>StateLoop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StateMachine::StateLoop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call the Loop function for the current state. Meant to called once every update. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>libraries/StateMachine/<a class="el" href="_state_machine_8h_source.html">StateMachine.h</a></li>
 <li>libraries/StateMachine/StateMachine.cpp</li>

@@ -1,6 +1,28 @@
 var searchData=
 [
-  ['dark_5fgray_5',['DARK_GRAY',['../group__colors.html#gaf4a5c295098e1f0d1500cf1b97d7d5ae',1,'DisplayController']]],
-  ['defaultcolor_6',['defaultColor',['../group__colors.html#gad175ac696188503c31472ed8f8a30ea9',1,'DisplayController']]],
-  ['displaycontroller_7',['DisplayController',['../class_display_controller.html',1,'DisplayController'],['../class_display_controller.html#a4f3e6bb4eaeb37a481d43a8bbbda0e0b',1,'DisplayController::DisplayController()']]]
+  ['c_134',['c',['../structsensors__color__t.html#a4d76803c2e83303f611cf2a7910eaf17',1,'sensors_color_t']]],
+  ['checkcurrenttestfail_135',['checkCurrentTestFail',['../_arduino_unit_8h.html#a9bd5f98b6eab4ae2117a78af227bb420',1,'ArduinoUnit.h']]],
+  ['checkcurrenttestnotdone_136',['checkCurrentTestNotDone',['../_arduino_unit_8h.html#ab7f8d1ffff8b707297157f68c9d42526',1,'ArduinoUnit.h']]],
+  ['checkcurrenttestnotfail_137',['checkCurrentTestNotFail',['../_arduino_unit_8h.html#ac894d714511d44e8ef9dfd7a588721a6',1,'ArduinoUnit.h']]],
+  ['checkcurrenttestnotpass_138',['checkCurrentTestNotPass',['../_arduino_unit_8h.html#a0c3984709211158314cce7b52aedb0f9',1,'ArduinoUnit.h']]],
+  ['checkcurrenttestnotskip_139',['checkCurrentTestNotSkip',['../_arduino_unit_8h.html#a7f8925421a56f228cee41c9941484bda',1,'ArduinoUnit.h']]],
+  ['checkcurrenttestpass_140',['checkCurrentTestPass',['../_arduino_unit_8h.html#a3d20e2edf462585d5439d0e65eb0e3f7',1,'ArduinoUnit.h']]],
+  ['checkcurrenttestskip_141',['checkCurrentTestSkip',['../_arduino_unit_8h.html#aaba7de65cc6e100833a4e4200367165d',1,'ArduinoUnit.h']]],
+  ['checktestfail_142',['checkTestFail',['../_arduino_unit_8h.html#aa3996acf00f54070d06c7df2cf0e0d6b',1,'ArduinoUnit.h']]],
+  ['checktestnotdone_143',['checkTestNotDone',['../_arduino_unit_8h.html#aec1a7820643e6e2949915ac62a73239c',1,'ArduinoUnit.h']]],
+  ['checktestnotfail_144',['checkTestNotFail',['../_arduino_unit_8h.html#a7c739c64bbd3408674c88ec2eb815947',1,'ArduinoUnit.h']]],
+  ['checktestnotpass_145',['checkTestNotPass',['../_arduino_unit_8h.html#aca7d59a28d1387ca2e32feee45568ada',1,'ArduinoUnit.h']]],
+  ['checktestnotskip_146',['checkTestNotSkip',['../_arduino_unit_8h.html#ac68183f44430293594fb5425544f5da5',1,'ArduinoUnit.h']]],
+  ['checktestpass_147',['checkTestPass',['../_arduino_unit_8h.html#a5b2c79b1cb2a807e6acd6074c1921305',1,'ArduinoUnit.h']]],
+  ['checktestskip_148',['checkTestSkip',['../_arduino_unit_8h.html#a084f35bf7746d6e804336bba4f1fb7bf',1,'ArduinoUnit.h']]],
+  ['ci_20_2d_20continuous_20integration_149',['CI - Continuous Integration',['../md_libraries__arduino_unit_ci.html',1,'']]],
+  ['cleardisplay_150',['clearDisplay',['../class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3',1,'DisplayController']]],
+  ['color_151',['color',['../structsensors__event__t.html#a56b4d05fbf47013727ec1a0a94db91e6',1,'sensors_event_t']]],
+  ['compare_152',['Compare',['../struct_compare.html',1,'']]],
+  ['compare_3c_20arduinounitstring_2c_20arduinounitstring_20_3e_153',['Compare&lt; ArduinoUnitString, ArduinoUnitString &gt;',['../struct_compare_3_01_arduino_unit_string_00_01_arduino_unit_string_01_4.html',1,'']]],
+  ['config_154',['Config',['../classconfig_1_1_config.html',1,'config']]],
+  ['cppiostream_155',['CppIOStream',['../struct_cpp_i_o_stream.html',1,'']]],
+  ['cppstreamprint_156',['CppStreamPrint',['../struct_cpp_stream_print.html',1,'']]],
+  ['createwindows_157',['createWindows',['../class_display_controller.html#a25a30956fd87d742889b5b5f319bd3bd',1,'DisplayController']]],
+  ['current_158',['current',['../class_test.html#ab33c60d07c2338204a0bafe40f995177',1,'Test::current()'],['../structsensors__event__t.html#ad34303af57d6bce18c34862a887fc005',1,'sensors_event_t::current()']]]
 ];

@@ -100,6 +100,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a696ab29813b02affa2165e06cc3ce2be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73304b558a0c1f45dec0aa3f1639fb84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_controller.html#a73304b558a0c1f45dec0aa3f1639fb84">switchToMenuWindow</a> (char **labels, int count)</td></tr>
 <tr class="separator:a73304b558a0c1f45dec0aa3f1639fb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990cb6807ce0c36872f2c01392532ca0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_controller.html#a990cb6807ce0c36872f2c01392532ca0">setMenuLabel</a> (int index, char *label)</td></tr>
+<tr class="separator:a990cb6807ce0c36872f2c01392532ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50ad122b0b4c04c87579fd7e4e182888"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">switchToLogWindow</a> ()</td></tr>
 <tr class="separator:a50ad122b0b4c04c87579fd7e4e182888"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f02809023709c70115377a2834b0c64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_display_controller.html#a2f02809023709c70115377a2834b0c64">switchToLogWindow</a> (char **dataLabels, int count)</td></tr>
@@ -486,7 +488,7 @@ enum <a class="el" href="class_display_controller.html#a50e44d48baf8881cd6e4446c
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Print some text in the currently selected window. </p><dl class="params"><dt>Parameters</dt><dd>
+<p><a class="el" href="class_print.html">Print</a> some text in the currently selected window. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">text</td><td>the text to print. </td></tr>
     <tr><td class="paramname">x</td><td>the x-coordinate to print at. </td></tr>
@@ -528,7 +530,7 @@ enum <a class="el" href="class_display_controller.html#a50e44d48baf8881cd6e4446c
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Print some text in a certain window. </p><dl class="params"><dt>Parameters</dt><dd>
+<p><a class="el" href="class_print.html">Print</a> some text in a certain window. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wind</td><td>a pointer to the window to print in. </td></tr>
     <tr><td class="paramname">text</td><td>the text to print. </td></tr>
@@ -576,12 +578,47 @@ enum <a class="el" href="class_display_controller.html#a50e44d48baf8881cd6e4446c
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Print some text in a certain window at a position. </p><dl class="params"><dt>Parameters</dt><dd>
+<p><a class="el" href="class_print.html">Print</a> some text in a certain window at a position. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wind</td><td>a pointer to the window to print in. </td></tr>
     <tr><td class="paramname">text</td><td>the text to print. </td></tr>
     <tr><td class="paramname">x</td><td>the x-coordinate to print at. </td></tr>
     <tr><td class="paramname">y</td><td>the y-coordinate to print at. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a990cb6807ce0c36872f2c01392532ca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a990cb6807ce0c36872f2c01392532ca0">&#9670;&nbsp;</a></span>setMenuLabel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DisplayController::setMenuLabel </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>label</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the label for a menu window </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>index of menu window </td></tr>
+    <tr><td class="paramname">label</td><td>string for label </td></tr>
   </table>
   </dd>
 </dl>
@@ -680,7 +717,7 @@ enum <a class="el" href="class_display_controller.html#a50e44d48baf8881cd6e4446c
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Switch the display state to Log. </p><dl class="section see"><dt>See also</dt><dd>DisplayState </dd></dl>
+<p>Switch the display state to <a class="el" href="struct_log.html">Log</a>. </p><dl class="section see"><dt>See also</dt><dd>DisplayState </dd></dl>
 
 </div>
 </div>
@@ -709,7 +746,7 @@ enum <a class="el" href="class_display_controller.html#a50e44d48baf8881cd6e4446c
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Switch the display state to Log and labels each of the data. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Switch the display state to <a class="el" href="struct_log.html">Log</a> and labels each of the data. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dataLabels</td><td>the text labels as a pointer to a char pointer. </td></tr>
     <tr><td class="paramname">count</td><td>the number of labels. </td></tr>

@@ -127,137 +127,140 @@ $(function() {
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a696ab29813b02affa2165e06cc3ce2be">switchToMenuWindow</a>();</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a696ab29813b02affa2165e06cc3ce2be">switchToMenuWindow</a>(<span class="keywordtype">char</span> **labels, <span class="keywordtype">int</span> count);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">switchToLogWindow</a>();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a990cb6807ce0c36872f2c01392532ca0">setMenuLabel</a>(<span class="keywordtype">int</span> index, <span class="keywordtype">char</span> *label);</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">switchToLogWindow</a>(<span class="keywordtype">char</span> **dataLabels, <span class="keywordtype">int</span> count);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#af266616e0ddb553730bdd16a31aea48b">updateLogValue</a>(<span class="keywordtype">int</span> index, <span class="keywordtype">char</span> *value);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">switchToLogWindow</a>();</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">switchToLogWindow</a>(<span class="keywordtype">char</span> **dataLabels, <span class="keywordtype">int</span> count);</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#abccf84322803b2882fbbce817eaf2325">switchToCustomWindow</a>(); </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#abccf84322803b2882fbbce817eaf2325">switchToCustomWindow</a>(Action loop); </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#af266616e0ddb553730bdd16a31aea48b">updateLogValue</a>(<span class="keywordtype">int</span> index, <span class="keywordtype">char</span> *value);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#abccf84322803b2882fbbce817eaf2325">switchToCustomWindow</a>(); </div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a4c759b2a0c45a3a4e13b8c7bfe105b95">printInWindow</a>(wind_info_t *wind, <span class="keywordtype">char</span> *text, <span class="keywordtype">int</span> reset = 0);</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#aad038dbc04c43282b8ffb809dbf3099e">printInWindowAtPosition</a>(wind_info_t *wind, <span class="keywordtype">char</span> *text, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a1900a4967b6abe829b8e4396c41c2940">printInCurrentWindowAtPosition</a>(<span class="keywordtype">char</span> *text, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        </div>
-<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">  174</a></span>&#160;        <span class="keyword">enum</span> <a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> {</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            IN_CLICK,</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            IN_UP,</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            IN_RIGHT,</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            IN_DOWN,</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            IN_LEFT,</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            IN_NONE</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        } joystickInput;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#a9c3c7ae8d670ee7d432aa9d5a039b1f6">onJoystickInput</a>(<a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> inputType);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#a984e52149169ae3e489b0bdb4a7d4e67">hadNewJoystickInput</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#aa901d62cdb9f0f62119ef7079ec2e4e3">handleJoystickAxis</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#a124f2fa23a8945258f26890857c8f475">handleJoystickInputUtil</a>(<a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> inputType);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#abccf84322803b2882fbbce817eaf2325">switchToCustomWindow</a>(Action loop); </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a4c759b2a0c45a3a4e13b8c7bfe105b95">printInWindow</a>(wind_info_t *wind, <span class="keywordtype">char</span> *text, <span class="keywordtype">int</span> reset = 0);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#aad038dbc04c43282b8ffb809dbf3099e">printInWindowAtPosition</a>(wind_info_t *wind, <span class="keywordtype">char</span> *text, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a1900a4967b6abe829b8e4396c41c2940">printInCurrentWindowAtPosition</a>(<span class="keywordtype">char</span> *text, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        </div>
+<div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">  181</a></span>&#160;        <span class="keyword">enum</span> <a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            IN_CLICK,</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            IN_UP,</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            IN_RIGHT,</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            IN_DOWN,</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            IN_LEFT,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            IN_NONE</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        } joystickInput;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#a9c3c7ae8d670ee7d432aa9d5a039b1f6">onJoystickInput</a>(<a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> inputType);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#a984e52149169ae3e489b0bdb4a7d4e67">hadNewJoystickInput</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#aa901d62cdb9f0f62119ef7079ec2e4e3">handleJoystickAxis</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#adc0749b003610f506df8ee96cb94045e">updateDisplay</a>();</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3">clearDisplay</a>();</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        HardwareSerial *_serial;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="comment">// ILI9163C_color_18_t **screenMem;</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <span class="keyword">struct </span>Window {</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            wind_info_t wind;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            Action onClick = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            <span class="keywordtype">char</span> *data = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        };</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <span class="keyword">struct </span>DataWindow {</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            wind_info_t wind;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            <span class="keywordtype">int</span> isDirty;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            <span class="comment">// int updatable;</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="class_display_controller.html#a124f2fa23a8945258f26890857c8f475">handleJoystickInputUtil</a>(<a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> inputType);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#adc0749b003610f506df8ee96cb94045e">updateDisplay</a>();</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3">clearDisplay</a>();</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        HardwareSerial *_serial;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="comment">// ILI9163C_color_18_t **screenMem;</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keyword">struct </span>Window {</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            wind_info_t wind;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            Action onClick = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            <span class="keywordtype">char</span> *data = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        };</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keyword">struct </span>Point {</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            <span class="keywordtype">int</span> x;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            <span class="keywordtype">int</span> y;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            Point() : x(0), y(0) {}</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            Point(<span class="keywordtype">int</span> _x, <span class="keywordtype">int</span> _y) : x(_x), y(_y) {}</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        };</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        <span class="keyword">enum</span> DisplayState { </div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            Menu, </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            Log, </div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            Custom </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        } displayState;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        Window *menuWindows;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        <span class="keywordtype">int</span> menuLabelCount;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="comment">// log window</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        <span class="comment">// &quot;dataLabel&quot;   |  dataWindow</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        <span class="comment">// &quot;Compass&quot;     |  123deg</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        DataWindow *dataWindows;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <span class="keywordtype">char</span> **dataLabels;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <span class="keywordtype">int</span> dataLabelCount;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        wind_info_t labelsWindow;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordtype">int</span> dataSeparatorX = XMAX / 2;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        Window *hotbarWindows;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keywordtype">int</span> MAX_MENU_WINDOWS = 9;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordtype">int</span> MAX_DATA_WINDOWS = 4;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordtype">int</span> MAX_HOTBAR_WINDOWS = 4;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <span class="keywordtype">int</span> currentWindowCount;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="comment">// number of cols/rows of windows</span></div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keywordtype">int</span> menuCols;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="keywordtype">int</span> menuRows;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        Action customLoopOnUpdateDisplay;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keyword">struct </span>DataWindow {</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            wind_info_t wind;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            <span class="keywordtype">int</span> isDirty;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            <span class="comment">// int updatable;</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            <span class="keywordtype">char</span> *data = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        };</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        <span class="keyword">struct </span>Point {</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;            <span class="keywordtype">int</span> x;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            <span class="keywordtype">int</span> y;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            Point() : x(0), y(0) {}</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            Point(<span class="keywordtype">int</span> _x, <span class="keywordtype">int</span> _y) : x(_x), y(_y) {}</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;            </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        };</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        <span class="keyword">enum</span> DisplayState { </div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            Menu, </div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            <a class="code" href="struct_log.html">Log</a>, </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            Custom </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        } displayState;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        Window *menuWindows;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keywordtype">int</span> menuLabelCount;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="comment">// log window</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="comment">// &quot;dataLabel&quot;   |  dataWindow</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="comment">// &quot;Compass&quot;     |  123deg</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        DataWindow *dataWindows;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keywordtype">char</span> **dataLabels;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordtype">int</span> dataLabelCount;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        wind_info_t labelsWindow;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordtype">int</span> dataSeparatorX = XMAX / 2;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        Window *hotbarWindows;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="keywordtype">int</span> MAX_MENU_WINDOWS = 9;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordtype">int</span> MAX_DATA_WINDOWS = 4;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keywordtype">int</span> MAX_HOTBAR_WINDOWS = 4;</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="comment">// selected menu window</span></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keywordtype">int</span> currentSelectedWindow;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keywordtype">int</span> lastSelectedWindow;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordtype">int</span> justSwitchedWindow;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="keywordtype">int</span> isWithinBounds(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, wind_info_t wind);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMAX = 128;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> YMAX = 160;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> lastJoystickInput = IN_NONE;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;};</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordtype">int</span> currentWindowCount;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="comment">// number of cols/rows of windows</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keywordtype">int</span> menuCols;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keywordtype">int</span> menuRows;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        Action customLoopOnUpdateDisplay;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="comment">// selected menu window</span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keywordtype">int</span> currentSelectedWindow;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordtype">int</span> lastSelectedWindow;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordtype">int</span> justSwitchedWindow;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordtype">int</span> isWithinBounds(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, wind_info_t wind);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMAX = 128;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> YMAX = 160;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <a class="code" href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">JoystickInputType</a> lastJoystickInput = IN_NONE;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;};</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_display_controller_html"><div class="ttname"><a href="class_display_controller.html">DisplayController</a></div><div class="ttdef"><b>Definition:</b> DisplayController.h:23</div></div>
 <div class="ttc" id="aclass_display_controller_html_a124f2fa23a8945258f26890857c8f475"><div class="ttname"><a href="class_display_controller.html#a124f2fa23a8945258f26890857c8f475">DisplayController::handleJoystickInputUtil</a></div><div class="ttdeci">int handleJoystickInputUtil(JoystickInputType inputType)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:203</div></div>
-<div class="ttc" id="aclass_display_controller_html_a1900a4967b6abe829b8e4396c41c2940"><div class="ttname"><a href="class_display_controller.html#a1900a4967b6abe829b8e4396c41c2940">DisplayController::printInCurrentWindowAtPosition</a></div><div class="ttdeci">void printInCurrentWindowAtPosition(char *text, int x, int y)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:401</div></div>
+<div class="ttc" id="aclass_display_controller_html_a1900a4967b6abe829b8e4396c41c2940"><div class="ttname"><a href="class_display_controller.html#a1900a4967b6abe829b8e4396c41c2940">DisplayController::printInCurrentWindowAtPosition</a></div><div class="ttdeci">void printInCurrentWindowAtPosition(char *text, int x, int y)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:407</div></div>
 <div class="ttc" id="aclass_display_controller_html_a25a30956fd87d742889b5b5f319bd3bd"><div class="ttname"><a href="class_display_controller.html#a25a30956fd87d742889b5b5f319bd3bd">DisplayController::createWindows</a></div><div class="ttdeci">DisplayController &amp; createWindows(int cols, int rows)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:114</div></div>
-<div class="ttc" id="aclass_display_controller_html_a4c759b2a0c45a3a4e13b8c7bfe105b95"><div class="ttname"><a href="class_display_controller.html#a4c759b2a0c45a3a4e13b8c7bfe105b95">DisplayController::printInWindow</a></div><div class="ttdeci">void printInWindow(wind_info_t *wind, char *text, int reset=0)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:384</div></div>
+<div class="ttc" id="aclass_display_controller_html_a4c759b2a0c45a3a4e13b8c7bfe105b95"><div class="ttname"><a href="class_display_controller.html#a4c759b2a0c45a3a4e13b8c7bfe105b95">DisplayController::printInWindow</a></div><div class="ttdeci">void printInWindow(wind_info_t *wind, char *text, int reset=0)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:390</div></div>
 <div class="ttc" id="aclass_display_controller_html_a4f3e6bb4eaeb37a481d43a8bbbda0e0b"><div class="ttname"><a href="class_display_controller.html#a4f3e6bb4eaeb37a481d43a8bbbda0e0b">DisplayController::DisplayController</a></div><div class="ttdeci">DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &amp;serial)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:7</div></div>
-<div class="ttc" id="aclass_display_controller_html_a50ad122b0b4c04c87579fd7e4e182888"><div class="ttname"><a href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">DisplayController::switchToLogWindow</a></div><div class="ttdeci">void switchToLogWindow()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:344</div></div>
-<div class="ttc" id="aclass_display_controller_html_a50e44d48baf8881cd6e4446c96fa7363"><div class="ttname"><a href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">DisplayController::JoystickInputType</a></div><div class="ttdeci">JoystickInputType</div><div class="ttdef"><b>Definition:</b> DisplayController.h:174</div></div>
+<div class="ttc" id="aclass_display_controller_html_a50ad122b0b4c04c87579fd7e4e182888"><div class="ttname"><a href="class_display_controller.html#a50ad122b0b4c04c87579fd7e4e182888">DisplayController::switchToLogWindow</a></div><div class="ttdeci">void switchToLogWindow()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:350</div></div>
+<div class="ttc" id="aclass_display_controller_html_a50e44d48baf8881cd6e4446c96fa7363"><div class="ttname"><a href="class_display_controller.html#a50e44d48baf8881cd6e4446c96fa7363">DisplayController::JoystickInputType</a></div><div class="ttdeci">JoystickInputType</div><div class="ttdef"><b>Definition:</b> DisplayController.h:181</div></div>
 <div class="ttc" id="aclass_display_controller_html_a696ab29813b02affa2165e06cc3ce2be"><div class="ttname"><a href="class_display_controller.html#a696ab29813b02affa2165e06cc3ce2be">DisplayController::switchToMenuWindow</a></div><div class="ttdeci">void switchToMenuWindow()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:324</div></div>
-<div class="ttc" id="aclass_display_controller_html_a8d736019fe990188b627eb36b31f9bd3"><div class="ttname"><a href="class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3">DisplayController::clearDisplay</a></div><div class="ttdeci">void clearDisplay()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:540</div></div>
+<div class="ttc" id="aclass_display_controller_html_a8d736019fe990188b627eb36b31f9bd3"><div class="ttname"><a href="class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3">DisplayController::clearDisplay</a></div><div class="ttdeci">void clearDisplay()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:546</div></div>
 <div class="ttc" id="aclass_display_controller_html_a984e52149169ae3e489b0bdb4a7d4e67"><div class="ttname"><a href="class_display_controller.html#a984e52149169ae3e489b0bdb4a7d4e67">DisplayController::hadNewJoystickInput</a></div><div class="ttdeci">int hadNewJoystickInput(int x, int y)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:158</div></div>
+<div class="ttc" id="aclass_display_controller_html_a990cb6807ce0c36872f2c01392532ca0"><div class="ttname"><a href="class_display_controller.html#a990cb6807ce0c36872f2c01392532ca0">DisplayController::setMenuLabel</a></div><div class="ttdeci">void setMenuLabel(int index, char *label)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:341</div></div>
 <div class="ttc" id="aclass_display_controller_html_a9c3c7ae8d670ee7d432aa9d5a039b1f6"><div class="ttname"><a href="class_display_controller.html#a9c3c7ae8d670ee7d432aa9d5a039b1f6">DisplayController::onJoystickInput</a></div><div class="ttdeci">int onJoystickInput(JoystickInputType inputType)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:211</div></div>
 <div class="ttc" id="aclass_display_controller_html_aa1bed34e984d0d9a1f48751f83f518a0"><div class="ttname"><a href="class_display_controller.html#aa1bed34e984d0d9a1f48751f83f518a0">DisplayController::begin</a></div><div class="ttdeci">void begin(uint8_t DC_PIN, uint8_t CS_PIN, uint8_t PWM_PIN, SPIClass SPI_PORT, uint32_t SPI_SPEED)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:91</div></div>
 <div class="ttc" id="aclass_display_controller_html_aa901d62cdb9f0f62119ef7079ec2e4e3"><div class="ttname"><a href="class_display_controller.html#aa901d62cdb9f0f62119ef7079ec2e4e3">DisplayController::handleJoystickAxis</a></div><div class="ttdeci">int handleJoystickAxis(int x, int y)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:179</div></div>
-<div class="ttc" id="aclass_display_controller_html_aad038dbc04c43282b8ffb809dbf3099e"><div class="ttname"><a href="class_display_controller.html#aad038dbc04c43282b8ffb809dbf3099e">DisplayController::printInWindowAtPosition</a></div><div class="ttdeci">void printInWindowAtPosition(wind_info_t *wind, char *text, int x, int y)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:394</div></div>
-<div class="ttc" id="aclass_display_controller_html_abccf84322803b2882fbbce817eaf2325"><div class="ttname"><a href="class_display_controller.html#abccf84322803b2882fbbce817eaf2325">DisplayController::switchToCustomWindow</a></div><div class="ttdeci">void switchToCustomWindow()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:363</div></div>
+<div class="ttc" id="aclass_display_controller_html_aad038dbc04c43282b8ffb809dbf3099e"><div class="ttname"><a href="class_display_controller.html#aad038dbc04c43282b8ffb809dbf3099e">DisplayController::printInWindowAtPosition</a></div><div class="ttdeci">void printInWindowAtPosition(wind_info_t *wind, char *text, int x, int y)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:400</div></div>
+<div class="ttc" id="aclass_display_controller_html_abccf84322803b2882fbbce817eaf2325"><div class="ttname"><a href="class_display_controller.html#abccf84322803b2882fbbce817eaf2325">DisplayController::switchToCustomWindow</a></div><div class="ttdeci">void switchToCustomWindow()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:369</div></div>
 <div class="ttc" id="aclass_display_controller_html_ad919fde3b56b1cd2cf85f6fa7ad6fa9f"><div class="ttname"><a href="class_display_controller.html#ad919fde3b56b1cd2cf85f6fa7ad6fa9f">DisplayController::setOnClickForWindow</a></div><div class="ttdeci">DisplayController &amp; setOnClickForWindow(int index, Action onClick)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:147</div></div>
-<div class="ttc" id="aclass_display_controller_html_adc0749b003610f506df8ee96cb94045e"><div class="ttname"><a href="class_display_controller.html#adc0749b003610f506df8ee96cb94045e">DisplayController::updateDisplay</a></div><div class="ttdeci">void updateDisplay()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:407</div></div>
-<div class="ttc" id="aclass_display_controller_html_af266616e0ddb553730bdd16a31aea48b"><div class="ttname"><a href="class_display_controller.html#af266616e0ddb553730bdd16a31aea48b">DisplayController::updateLogValue</a></div><div class="ttdeci">void updateLogValue(int index, char *value)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:358</div></div>
+<div class="ttc" id="aclass_display_controller_html_adc0749b003610f506df8ee96cb94045e"><div class="ttname"><a href="class_display_controller.html#adc0749b003610f506df8ee96cb94045e">DisplayController::updateDisplay</a></div><div class="ttdeci">void updateDisplay()</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:413</div></div>
+<div class="ttc" id="aclass_display_controller_html_af266616e0ddb553730bdd16a31aea48b"><div class="ttname"><a href="class_display_controller.html#af266616e0ddb553730bdd16a31aea48b">DisplayController::updateLogValue</a></div><div class="ttdeci">void updateLogValue(int index, char *value)</div><div class="ttdef"><b>Definition:</b> DisplayController.cpp:364</div></div>
 <div class="ttc" id="aclass_display_controller_html_aff57d1a4d64eaf9a8f153ea1bc5efb91"><div class="ttname"><a href="class_display_controller.html#aff57d1a4d64eaf9a8f153ea1bc5efb91">DisplayController::myTFT</a></div><div class="ttdeci">KWH018ST01_4WSPI myTFT</div><div class="ttdef"><b>Definition:</b> DisplayController.h:39</div></div>
 <div class="ttc" id="agroup__colors_html_ga277701ee4215d7d79489e12004d09ca3"><div class="ttname"><a href="group__colors.html#ga277701ee4215d7d79489e12004d09ca3">DisplayController::GREEN</a></div><div class="ttdeci">ILI9163C_color_18_t GREEN</div><div class="ttdoc">0, 255, 0</div><div class="ttdef"><b>Definition:</b> DisplayController.h:54</div></div>
 <div class="ttc" id="agroup__colors_html_ga37ce525685f2b0f27a0dc20ce6b3f9c3"><div class="ttname"><a href="group__colors.html#ga37ce525685f2b0f27a0dc20ce6b3f9c3">DisplayController::BLACK</a></div><div class="ttdeci">ILI9163C_color_18_t BLACK</div><div class="ttdoc">0, 0, 0</div><div class="ttdef"><b>Definition:</b> DisplayController.h:60</div></div>
@@ -269,6 +272,7 @@ $(function() {
 <div class="ttc" id="agroup__colors_html_gad175ac696188503c31472ed8f8a30ea9"><div class="ttname"><a href="group__colors.html#gad175ac696188503c31472ed8f8a30ea9">DisplayController::defaultColor</a></div><div class="ttdeci">ILI9163C_color_18_t defaultColor</div><div class="ttdoc">0, 0, 0</div><div class="ttdef"><b>Definition:</b> DisplayController.h:48</div></div>
 <div class="ttc" id="agroup__colors_html_gad8f5dbd98668f863cfb75dc26a4f078e"><div class="ttname"><a href="group__colors.html#gad8f5dbd98668f863cfb75dc26a4f078e">DisplayController::RED</a></div><div class="ttdeci">ILI9163C_color_18_t RED</div><div class="ttdoc">255, 0, 0</div><div class="ttdef"><b>Definition:</b> DisplayController.h:51</div></div>
 <div class="ttc" id="agroup__colors_html_gaf4a5c295098e1f0d1500cf1b97d7d5ae"><div class="ttname"><a href="group__colors.html#gaf4a5c295098e1f0d1500cf1b97d7d5ae">DisplayController::DARK_GRAY</a></div><div class="ttdeci">ILI9163C_color_18_t DARK_GRAY</div><div class="ttdoc">64, 64, 64</div><div class="ttdef"><b>Definition:</b> DisplayController.h:75</div></div>
+<div class="ttc" id="astruct_log_html"><div class="ttname"><a href="struct_log.html">Log</a></div><div class="ttdef"><b>Definition:</b> testWiden.cpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
