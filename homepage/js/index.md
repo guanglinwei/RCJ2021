@@ -1,5 +1,5 @@
 # Spongebot Robocup Junior Soccer 2021
- 
+*HR* 
 *LINEBREAK*
 
 
@@ -22,7 +22,9 @@ rcjnew3.jpg, 300, 300, New robot 3
 mirror3d.jpg, 300, 300, mirror
 mirrorside.jpg, 300, 300, mirror 2
 ```
-![test,300,300](FieldRender.JPG)
+![test](FieldRender.JPG)
+
+*HR*
 
 ## Spongebot
 [Spongebot](https://www.livingstonrobotics.org/teams/fll/spongebot/) is a robotics team that started in the [First Lego League](https://www.firstlegoleague.org/) and now participates in Robocup Junior Soccer.

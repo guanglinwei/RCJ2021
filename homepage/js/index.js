@@ -41,11 +41,11 @@ import { Container, Row, Col, Jumbotron, Carousel } from "react-bootstrap";
 const markdown = readFileSync(__dirname + "/index.md", "utf-8");
 
 const components = {
-    // fix bug where images were treated a paragraphs
+    // fix bug with div's in p's
     p: (props) => {
         const element = props.children[0];
         const {node, ...pProps} = props;
-        return (element.type.name === 'img') ? { ...element } : <p {...pProps} />;
+        return (element.type.name === 'img' || element.type.name === 'em') ? { ...element } : <p {...pProps} />;
     },
 
     a: (props) => {
@@ -62,11 +62,11 @@ const components = {
     img: ({ src, alt }) => {
         // use alt for width and height
         // alt, width, height
-        
         const [a, w, h] = alt.split(/\,\s?/);
+
         return (
             <div>
-                <img src={src} alt={a} width={w || 300} height={h || 300}/>
+                <img src={src} alt={a} width={w} height={h} className="img-fluid px-3 text-center"/>
                 <br/>
             </div>
         );
@@ -122,12 +122,12 @@ const components = {
                             const inner = [];
                             for(let j = 0; j < tbW; j++) {
                                 if(i * tbW + j >= images.length) break;
-                                inner.push(<Col key={j} className="align-items-center d-flex"><img className="img-fluid" {...(images[i * tbW + j])}/></Col>)
+                                inner.push(<Col key={j} className="align-items-center d-flex"><img className="img-fluid my-2" {...(images[i * tbW + j])}/></Col>)
                             }
                             contents.push(<Row key={i}>{inner}</Row>);
                         }
                         return (
-                            <Container fluid className="text-center">
+                            <Container className="text-center">
                                 {contents}
                             </Container>
                         );
@@ -138,8 +138,8 @@ const components = {
                 }
             }
             return (
-                <Container fluid className="text-center">
-                    <Jumbotron fluid>
+                <Container className="text-center">
+                    <Jumbotron>
                         <Carousel>
                             {images.map((imgProps, i) => {
                             return (
@@ -167,7 +167,8 @@ const components = {
     em: ({ node }) => {
         const value = node.children[0].value;
         // console.log(value);
-        if(value.includes("LINEBREAK")) return <br/>
+        if(value.includes("LINEBREAK")) return <br/>;
+        if(value.includes("HR")) return <hr/>;
 
         return (
         // <div>
@@ -183,7 +184,7 @@ const components = {
 
 const Homepage = (
     <main>
-        <Container className="text-center">
+        <Container fluid className="text-center my-3">
             <ReactMarkdown remarkPlugins={[gfm, breaks]} children={markdown} components={components}/>
         </Container>
     </main>
