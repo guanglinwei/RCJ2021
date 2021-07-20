@@ -8,7 +8,8 @@ joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_coun
 clock = pygame.time.Clock()
 print(len(joysticks), "joysticks total")
 
-addr = "08:AE:D6:07:AA:6A"
+# addr = "08:AE:D6:07:AA:6A" #phone
+addr = "B0:6F:E0:87:1D:59" #tablet
 port = 1
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 # sock = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)

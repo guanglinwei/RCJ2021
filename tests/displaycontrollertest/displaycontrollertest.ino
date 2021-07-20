@@ -87,7 +87,7 @@ int allyGoalX, allyGoalY, enemyGoalX, enemyGoalY = 0;
 int isAllyGoalYellow = 0;
 float ang = 0.0; // angle towards ball. up is 0, increases CCW
 int ballSeen = 0;
-int speed = 100;
+int speed = 120;
 
 // light sensors
 Adafruit_VEML7700 vemls[4];
@@ -174,11 +174,13 @@ char istr[4];
 
 void switchAllyGoal() {
     isAllyGoalYellow = !isAllyGoalYellow;
-    
+    stateMachine.SetState(State::Default);
 }
 
 void allowRobotMove() {
+    Serial.println("chase");
     robotCanMove = 1;
+    stateMachine.SetState(State::Chase);
 }
 
 // approach an angle from behind it
@@ -209,6 +211,9 @@ void getDataFromCamera()
                 ballSeen = 1;
                 ballX = pixy.ccc.blocks[i].m_x - HALF_CAM_W;
                 ballY = pixy.ccc.blocks[i].m_y - HALF_CAM_H;
+
+                // TEST??
+                ballY *= -1;
 
                 // if the blob is not on the mirror, ignore it
                 if(abs(ballX) - 12 > HALF_CAM_H || ballX * ballX + ballY * ballY - 12 > HALF_CAM_H * HALF_CAM_H) {
@@ -362,11 +367,14 @@ void moveAndTurnToHeading(float direction, float speed, float heading, float all
         // hm.move(direction, speed, turnDirectionToAngle(currentHeading, heading) * rotation);
         MOVEDIR = direction;
         MOVESPEED = speed;
+        
+
+        // TODO: FIX THIS
         MOVEROT = turnDirectionToAngle(currentHeading, heading) * rotation;
     }
 }
 
-void moveAndTurnToPoint(float direction, float speed, int x, int y, float allowance = 10, float rotation = 60) {
+void moveAndTurnToPoint(float direction, float speed, int x, int y, float allowance = 10, float rotation = 10) {
     float _a = getAngle(x, y);
     if(isAngleWithinInterval(0, _a, allowance)) {
         // hm.move(direction, speed);
@@ -403,12 +411,18 @@ void dribbleOff() {
 }
 
 void chaseBallLoop() {
+    getDataFromCamera();
     float ballAngle = getAngle(ballX, ballY);
+    Serial.println(ballAngle);
+    Serial.println(ballX);
+    Serial.println(ballY);
+    Serial.println("");
     // if close to ball
     if(sqrDist(0, 0, ballX, ballY) < 100) {
         // if already facing the ball, dribble or change state
-        if(isAngleWithinInterval(0, ballAngle, 20) && proximity.readProximity() < 2000) {
-            stateMachine.SetState(State::Score);
+        // if(isAngleWithinInterval(0, ballAngle, 20) && proximity.readProximity() < 2000) {
+        if(isAngleWithinInterval(0, ballAngle, 20)) {
+            // stateMachine.SetState(State::Score);
             return;
         }
         // else turn towards it
@@ -510,7 +524,7 @@ void goalieLoop() {
 //     return s;
 // }
 
-// test(Angles_s) {
+// test(Angles) {
 //     int err = 1;
 //     assertNear(getAngle(0, 1), 0, err);
 //     assertNear(getAngle(-1, 1), 45, err);
@@ -549,10 +563,11 @@ void goalieLoop() {
 void setupTests() {
     Test::exclude("*_s");
     forwardHeading = readCompassHeading();
+    hm.stop();
 }
 void runTests() {
     // Test::run();
-    Serial.println(readCompassHeading());
+    // Serial.println(readCompassHeading());
     // Serial.println(readCompassHeading() - forwardHeading);
     delay(300);
 }
@@ -589,8 +604,8 @@ void setup() {
     pinMode(JOY_SW_PIN, INPUT_PULLUP);
 
     // dribbler and proximity sensors
-    ESC.attach(PROXIMITY_PIN, PROXIMITY_MIN_PULSE, PROXIMITY_MAX_PULSE);
-    ESC.write(0);
+    // ESC.attach(PROXIMITY_PIN, PROXIMITY_MIN_PULSE, PROXIMITY_MAX_PULSE);
+    // ESC.write(0);
 
     // for (uint8_t t=0; t<8; t++) {
     //   tcaselect(t);
@@ -649,10 +664,10 @@ void setup() {
     }
 
     // kicker
-    pinMode(KICKRELAY, OUTPUT);
-    pinMode(CHARGERELAY, OUTPUT);
-    digitalWrite(KICKRELAY, LOW);
-    digitalWrite(CHARGERELAY, HIGH);
+    // pinMode(KICKRELAY, OUTPUT);
+    // pinMode(CHARGERELAY, OUTPUT);
+    // digitalWrite(KICKRELAY, LOW);
+    // digitalWrite(CHARGERELAY, HIGH);
     
 
     // StateMachine
@@ -674,24 +689,43 @@ void setup() {
     myDisplay.setOnClickForWindow(3, &switchToCameraViewer);
     // myTFT.line(1, 1, 9, 9, 3);
 
-    stateMachine.Start();
+    stateMachine.Start(State::Default);
+
+    hm.stop();
     
 }
 
 
 void loop() {
     // _t.handle();
-
+    MOVESPEED = 0;
+    MOVEROT = 0;
+    MOVEDIR = 0;
+    // hm.setSpeeds(100, 100, 100, 100);
+    // return;
     // test async
     // _a.update();
-    return;
+    // return;
+    // float _d = 0;
+    // hm.setSpeeds(0, 0, 0, 0);
+    // while(1) {
+    //     if(myDisplay.hadNewJoystickInput(analogRead(A0), analogRead(A1))) delay(50000);
+    //     hm.move(_d, 100, 0);
+    //     char _a[0];
+    //     sprintf(_a, "%f", _d);
+    //     myDisplay.setMenuLabel(0, _a);
+    //     myDisplay.updateDisplay();
+    //     _d += 45;
+    //     delay(10000);
+    // }
+    // return;
 
     // get sensor data
-    if(1) {
-        Serial.println(vemls[0].readLux());
-        delay(500);
-        return;
-    }
+    // if(1) {
+    //     Serial.println(vemls[0].readLux());
+    //     delay(500);
+    //     return;
+    // }
     stateMachine.StateLoop();
     if(1) {
         hm.move(MOVEDIR, MOVESPEED, MOVEROT);
@@ -711,9 +745,12 @@ void loop() {
     int rawJoyX = analogRead(A0);
     int rawJoyY = analogRead(A1);
     int p = digitalRead(JOY_SW_PIN);
+    // Serial.println(p);
     
     int hadNewJ = myDisplay.hadNewJoystickInput(rawJoyX, rawJoyY);
+    // if(hadNewJ) stateMachine.SetState(State::Default);
     if(p == 0) {
+        Serial.println("press");
         myDisplay.handleJoystickInputUtil(DisplayController::JoystickInputType::IN_CLICK);
     }
     else {
@@ -737,5 +774,5 @@ void loop() {
     //     Serial.println(ang);
     //     hm.move(ang, 100);
     // }
-    delay(300);
+    delay(50);
 }

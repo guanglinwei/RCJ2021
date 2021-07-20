@@ -202,8 +202,9 @@ int DisplayController::handleJoystickAxis(int x, int y) {
 
 int DisplayController::handleJoystickInputUtil(JoystickInputType inputType) {
     // if(lastJoystickInput != IN_NONE) return 0;
+    _serial->print(lastJoystickInput); _serial->print(" was last, just pressed "); _serial->println(inputType);
     if(inputType == lastJoystickInput) return 0;
-    
+    _serial->println("new input");
     lastJoystickInput = inputType;
     return onJoystickInput(inputType);
 }
