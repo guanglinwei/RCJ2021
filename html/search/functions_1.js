@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['cleardisplay_46',['clearDisplay',['../class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3',1,'DisplayController']]],
-  ['createwindows_47',['createWindows',['../class_display_controller.html#a25a30956fd87d742889b5b5f319bd3bd',1,'DisplayController']]]
+  ['clearcustomwindow_48',['clearCustomWindow',['../class_display_controller.html#a3743f4084f78cffdaffe435fef00d837',1,'DisplayController']]],
+  ['cleardisplay_49',['clearDisplay',['../class_display_controller.html#a8d736019fe990188b627eb36b31f9bd3',1,'DisplayController']]],
+  ['createwindows_50',['createWindows',['../class_display_controller.html#a25a30956fd87d742889b5b5f319bd3bd',1,'DisplayController']]]
 ];
