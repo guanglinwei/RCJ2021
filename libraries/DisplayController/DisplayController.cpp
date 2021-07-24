@@ -340,7 +340,7 @@ void DisplayController::switchToMenuWindow(char **labels, int count) {
 }
 
 void DisplayController::setMenuLabel(int index, char *label) {
-    if(index >= menuLabelCount) {
+    if(index < menuLabelCount) {
         menuWindows[index].data = label;
     }
 }

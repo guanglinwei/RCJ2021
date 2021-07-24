@@ -30,6 +30,10 @@
 #define PI 3.1415926535
 
 #define JOY_SW_PIN 2
+// #define JOY_PIN_X A13
+// #define JOY_PIN_Y A12
+#define JOY_PIN_X A0
+#define JOY_PIN_Y A1
 
 #define KICKRELAY 12
 #define CHARGERELAY 11
@@ -263,10 +267,11 @@ void getDataFromCamera()
 //     return map(from, 0, )
 // }
 
+int displayBallX = 0;
+int displayBallY = 0;
 void cameraViewerLoop() {
-    Serial.println("camera viewer loop");
     getDataFromCamera();
-
+    Serial.print("x: "); Serial.print(ballX); Serial.print(", y: "); Serial.println(ballY);
     int r = 50;
 
     // erase the last position of the ball
@@ -274,9 +279,9 @@ void cameraViewerLoop() {
     // int displayLastBallY = map(lastBallX, HALF_CAM_W - HALF_CAM_H, HALF_CAM_W + HALF_CAM_H, 54-54, 54+54);
     
     // test 
-    int displayLastBallX = map(lastBallY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
-    int displayLastBallY = map(lastBallX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
-    myDisplay.myTFT.pixel(displayLastBallX, displayLastBallY, (color_t)&myDisplay.defaultColor);
+    // int displayLastBallX = map(lastBallY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
+    // int displayLastBallY = map(lastBallX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
+    myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.defaultColor);
 
     // draw the ball as an orange pixel if it is seen
     // otherwise draw a light gray pixel at where it last was
@@ -284,8 +289,8 @@ void cameraViewerLoop() {
     // int displayBallY = map(ballX, HALF_CAM_W - HALF_CAM_H, HALF_CAM_W + HALF_CAM_H, 54-r, 54+r);
 
     // test
-    int displayBallX = map(ballY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
-    int displayBallY = map(ballX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
+    displayBallX = map(-ballY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
+    displayBallY = map(ballX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
 
     if(ballSeen) {
         myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.ORANGE);
@@ -354,7 +359,7 @@ int rotateToPoint(float speed, int x, int y, float allowance) {
     return 1;
 }
 // move in a direction and turn to face a certain direction
-void moveAndTurnToHeading(float direction, float speed, float heading, float allowance = 10, float rotation = 60) {
+void moveAndTurnToHeading(float direction, float speed, float heading, float allowance = 15, float rotation = 20) {
     // int allowance = 10;
     // int rotation = 60;
     // if close enough to correct direction
@@ -374,7 +379,7 @@ void moveAndTurnToHeading(float direction, float speed, float heading, float all
     }
 }
 
-void moveAndTurnToPoint(float direction, float speed, int x, int y, float allowance = 10, float rotation = 10) {
+void moveAndTurnToPoint(float direction, float speed, int x, int y, float allowance = 15, float rotation = 0) {
     float _a = getAngle(x, y);
     if(isAngleWithinInterval(0, _a, allowance)) {
         // hm.move(direction, speed);
@@ -389,7 +394,7 @@ void moveAndTurnToPoint(float direction, float speed, int x, int y, float allowa
     }
 }
 
-void moveToAndFace(float speed, int x, int y, float allowance = 10, float rotation = 60) {
+void moveToAndFace(float speed, int x, int y, float allowance = 15, float rotation = 0) {
     moveAndTurnToPoint(getAngle(x, y), speed, x, y, allowance, rotation);
 }
 
@@ -413,15 +418,17 @@ void dribbleOff() {
 void chaseBallLoop() {
     getDataFromCamera();
     float ballAngle = getAngle(ballX, ballY);
-    Serial.println(ballAngle);
-    Serial.println(ballX);
-    Serial.println(ballY);
-    Serial.println("");
+    // Serial.println(ballAngle);
+    // Serial.println(ballX);
+    // Serial.println(ballY);
+    // Serial.println("");
+    Serial.println(sqrDist(0, 0, ballX, ballY));
     // if close to ball
     if(sqrDist(0, 0, ballX, ballY) < 100) {
         // if already facing the ball, dribble or change state
         // if(isAngleWithinInterval(0, ballAngle, 20) && proximity.readProximity() < 2000) {
         if(isAngleWithinInterval(0, ballAngle, 20)) {
+            //TEST
             // stateMachine.SetState(State::Score);
             return;
         }
@@ -442,7 +449,7 @@ void moveBallToEnemyGoal() {
     else {
         // if close to enemy goal, shoot
         if(sqrDist(0, 0, enemyGoalX, enemyGoalY) < 600) {
-            
+            Serial.println("shoot");
         }
         // else move to enemy goal
         else {
@@ -599,8 +606,8 @@ void setup() {
     // _a.list();
 
     // joystick 
-    pinMode(A0, INPUT);
-    pinMode(A1, INPUT);
+    pinMode(JOY_PIN_X, INPUT);
+    pinMode(JOY_PIN_Y, INPUT);
     pinMode(JOY_SW_PIN, INPUT_PULLUP);
 
     // dribbler and proximity sensors
@@ -707,13 +714,13 @@ void loop() {
     // _a.update();
     // return;
     // float _d = 0;
-    // hm.setSpeeds(0, 0, 0, 0);
     // while(1) {
-    //     if(myDisplay.hadNewJoystickInput(analogRead(A0), analogRead(A1))) delay(50000);
+    //     // if(myDisplay.hadNewJoystickInput(analogRead(A0), analogRead(A1))) delay(50000);
     //     hm.move(_d, 100, 0);
-    //     char _a[0];
-    //     sprintf(_a, "%f", _d);
+    //     char _a[50];
+    //     sprintf(_a, "ang: %f", _d);
     //     myDisplay.setMenuLabel(0, _a);
+    //     myDisplay.switchToMenuWindow();
     //     myDisplay.updateDisplay();
     //     _d += 45;
     //     delay(10000);
@@ -742,8 +749,8 @@ void loop() {
 
 
     // Menu test
-    int rawJoyX = analogRead(A0);
-    int rawJoyY = analogRead(A1);
+    int rawJoyX = analogRead(JOY_PIN_X);
+    int rawJoyY = analogRead(JOY_PIN_Y);
     int p = digitalRead(JOY_SW_PIN);
     // Serial.println(p);
     

@@ -60,7 +60,9 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         uint8_t t4 = (uint8_t) map(frontLeftOutput, -255, 255, 0, 127);
 
         float _min = 5;
-        
+
+        // gw
+
         if(abs(frontRightOutput) <= _min) {
             _rb->ForwardM1(0x80, 0);
         }
@@ -69,7 +71,7 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         }
 
         if(abs(rearRightOutput) <= _min) {
-            _rb->ForwardM1(0x80, 0);
+            _rb->ForwardM1(0x81, 0);
         }
         else {
             _rb->ForwardBackwardM1(0x81, t2);
@@ -88,6 +90,44 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         else { 
             _rb->ForwardBackwardM2(0x80, t4);
         }
+
+        // peter
+        
+        // if(abs(frontRightOutput) <= _min) {
+        //     // _rb->ForwardM1(0x80, 0);
+        //     _rb->ForwardM2(0x80, 0);
+        // }
+        // else { 
+        //     // _rb->ForwardBackwardM1(0x80, t1);
+        //     _rb->ForwardBackwardM2(0x80, t1);
+        // }
+
+        // if(abs(rearRightOutput) <= _min) {
+        //     // _rb->ForwardM1(0x81, 0);
+        //     _rb->ForwardM1(0x81, 0);
+        // }
+        // else {
+        //     // _rb->ForwardBackwardM1(0x81, t2);
+        //     _rb->ForwardBackwardM1(0x81, -t2);
+        // }
+
+        // if(abs(rearLeftOutput) <= _min) {
+        //     // _rb->ForwardM2(0x81, 0);
+        //     _rb->ForwardM2(0x81, 0);
+        // }
+        // else { 
+        //     // _rb->ForwardBackwardM2(0x81, t3);
+        //     _rb->ForwardBackwardM2(0x81, t3);
+        // }
+
+        // if(abs(frontLeftOutput) <= _min) {
+        //     // _rb->ForwardM2(0x80, 0);
+        //     _rb->ForwardM1(0x80, 0);
+        // }
+        // else { 
+        //     // _rb->ForwardBackwardM2(0x80, t4);
+        //     _rb->ForwardBackwardM1(0x80, -t4);
+        // }
 
         _ser.print(frontRightOutput); _ser.print(" | "); _ser.print(rearRightOutput); _ser.print(" | ");
         _ser.print(rearLeftOutput); _ser.print(" | "); _ser.println(frontLeftOutput);
