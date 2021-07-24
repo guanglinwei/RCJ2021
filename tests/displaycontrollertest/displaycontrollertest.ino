@@ -86,6 +86,8 @@ float MOVEROT = 0;
 
 // camera viewer
 int ballX, ballY, lastBallX, lastBallY = 0;
+int storedBallX, storedBallY;
+int ballWasTooFar = 0;
 // int bGoalX, bGoalY, yGoalX, yGoalY = 0;
 int allyGoalX, allyGoalY, enemyGoalX, enemyGoalY = 0;
 int isAllyGoalYellow = 0;
@@ -193,19 +195,19 @@ float calculateTangentialAngle(float angle, float diff) {
     return angle - diff;
 }
 
+
 void getDataFromCamera()
 {
     // lastBallX = ballX < 0 ? lastBallX : ballX;
     // lastBallY = ballY < 0 ? lastBallY : ballY;
-    lastBallX = ballX;
-    lastBallY = ballY;
+
+    // Serial.print("change: "); Serial.println(sqrDist(lastBallX, lastBallY, ballX, ballY));
 
     pixy.ccc.getBlocks();
 
     if(!pixy.ccc.numBlocks) {
         ballSeen = 0;
         Serial.println("none\n");
-        return;
     }
 
     for(int i = 0; i < pixy.ccc.numBlocks; i++) {
@@ -213,11 +215,42 @@ void getDataFromCamera()
             // ball
             case 1:
                 ballSeen = 1;
-                ballX = pixy.ccc.blocks[i].m_x - HALF_CAM_W;
-                ballY = pixy.ccc.blocks[i].m_y - HALF_CAM_H;
+                int _max = 92;
+                int _max2 = 60;
 
-                // TEST??
-                ballY *= -1;
+                int _x = pixy.ccc.blocks[i].m_x - HALF_CAM_W;
+                int _y = -1 * (pixy.ccc.blocks[i].m_y - HALF_CAM_H);
+
+                
+                // if the new ball coordinates are too far from the last position, the ignore it
+                int swapped = ballWasTooFar && sqrDist(_x, _y, storedBallX, storedBallY) < _max2 * _max2;
+                if(sqrDist(lastBallX, lastBallY, _x, _y) > _max * _max && !swapped) {
+                    ballWasTooFar = 1;
+                }
+                else {
+                    ballWasTooFar = 0;
+                    if(swapped) {
+                        lastBallX = storedBallX;
+                        ballX = _x;
+                        lastBallY = storedBallY;
+                        ballY = _y;
+                    }
+                    else {
+                        lastBallX = ballX;
+                        lastBallY = ballY;
+                        ballX = _x;
+                        ballY = _y;
+                    }
+                }
+
+                storedBallX = _x;
+                storedBallY = _y;
+
+                ang = getAngle(ballX, ballY);
+                ang += 180;
+                if(ang > 360) {
+                    ang -= 360;
+                }
 
                 // if the blob is not on the mirror, ignore it
                 if(abs(ballX) - 12 > HALF_CAM_H || ballX * ballX + ballY * ballY - 12 > HALF_CAM_H * HALF_CAM_H) {
@@ -226,12 +259,7 @@ void getDataFromCamera()
                     return;
                 }
                 // Serial.print(ballX); Serial.print(" | "); Serial.println(ballY);
-
-                ang = getAngle(ballX, ballY);
-                ang += 180;
-                if(ang > 360) {
-                    ang -= 360;
-                }
+  
                 return;
         
             // yellow goal
@@ -270,9 +298,10 @@ void getDataFromCamera()
 int displayBallX = 0;
 int displayBallY = 0;
 void cameraViewerLoop() {
-    getDataFromCamera();
-    Serial.print("x: "); Serial.print(ballX); Serial.print(", y: "); Serial.println(ballY);
+    // getDataFromCamera();
+    // Serial.print("x: "); Serial.print(ballX); Serial.print(", y: "); Serial.println(ballY);
     int r = 50;
+    int ballRadius = 3;
 
     // erase the last position of the ball
     // int displayLastBallX = map(lastBallY, 0, CAM_H, 64-54, 64+54);
@@ -281,7 +310,10 @@ void cameraViewerLoop() {
     // test 
     // int displayLastBallX = map(lastBallY, -HALF_CAM_H, HALF_CAM_H, 64-r, 64+r);
     // int displayLastBallY = map(lastBallX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
-    myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.defaultColor);
+    // myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.defaultColor);
+    myDisplay.clearCustomWindow();
+    myDisplay.myTFT.pCurrentWindow = myDisplay.getPCustomWindow();
+    myDisplay.myTFT.circle(64, 54, 54, false, (color_t)&myDisplay.DARK_GRAY);
 
     // draw the ball as an orange pixel if it is seen
     // otherwise draw a light gray pixel at where it last was
@@ -293,19 +325,17 @@ void cameraViewerLoop() {
     displayBallY = map(ballX, -HALF_CAM_H, HALF_CAM_H, 54-r, 54+r);
 
     if(ballSeen) {
-        myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.ORANGE);
+        myDisplay.myTFT.circle(displayBallX, displayBallY, ballRadius, true, (color_t)&myDisplay.ORANGE);
     }
     else {
-        myDisplay.myTFT.pixel(displayBallX, displayBallY, (color_t)&myDisplay.LIGHT_GRAY);
+        myDisplay.myTFT.circle(displayBallX, displayBallY, ballRadius, true, (color_t)&myDisplay.LIGHT_GRAY);
     }
 }
 
 void switchToCameraViewer() {
     allowRobotMove();
     myDisplay.clearDisplay();
-    Serial.println("switch to camera view");
     myDisplay.switchToCustomWindow(&cameraViewerLoop);
-    myDisplay.myTFT.circle(64, 54, 54, false, (color_t)&myDisplay.DARK_GRAY);
 }
 
 // Color sensors
@@ -418,17 +448,18 @@ void dribbleOff() {
 void chaseBallLoop() {
     getDataFromCamera();
     float ballAngle = getAngle(ballX, ballY);
-    // Serial.println(ballAngle);
-    // Serial.println(ballX);
-    // Serial.println(ballY);
-    // Serial.println("");
-    Serial.println(sqrDist(0, 0, ballX, ballY));
+    Serial.print("Dist: "); Serial.println(sqrDist(0, 0, ballX, ballY));
+    Serial.print("ang: "); Serial.println(ballAngle);
+    Serial.print("x: "); Serial.print(ballX); Serial.print(", y: "); Serial.println(ballY);
+    Serial.println("");
+
     // if close to ball
-    if(sqrDist(0, 0, ballX, ballY) < 100) {
+    if(sqrDist(0, 0, ballX, ballY) < 650) {
         // if already facing the ball, dribble or change state
         // if(isAngleWithinInterval(0, ballAngle, 20) && proximity.readProximity() < 2000) {
-        if(isAngleWithinInterval(0, ballAngle, 20)) {
+        if(isAngleWithinInterval(0, ballAngle, 28)) {
             //TEST
+            Serial.println("ball is in front");
             // stateMachine.SetState(State::Score);
             return;
         }

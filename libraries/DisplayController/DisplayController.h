@@ -147,6 +147,15 @@ class DisplayController
          */
         void switchToCustomWindow(Action loop); 
 
+        /**
+         * Return a pointer to the custom window.
+         */ 
+        wind_info_t *getPCustomWindow();
+
+        /**
+         * Clear the custom window.
+         */
+        void clearCustomWindow();
 
         /**
          * Print some text in a certain window.
@@ -273,6 +282,7 @@ class DisplayController
         int dataSeparatorX = XMAX / 2;
 
         Window *hotbarWindows;
+        wind_info_t customWindow;
 
         int MAX_MENU_WINDOWS = 9;
         int MAX_DATA_WINDOWS = 4;

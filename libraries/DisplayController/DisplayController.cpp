@@ -76,6 +76,12 @@ DisplayController::DisplayController(KWH018ST01_4WSPI tft, HardwareSerial &seria
         hotbarWindows[i] = wind;
     }
 
+    myTFT.setWindowDefaults(&customWindow);
+    customWindow.xMin = 0;
+    customWindow.xMax = XMAX - 1;
+    customWindow.yMin = 0;
+    customWindow.yMax = 129;
+
     myTFT.setWindowDefaults(&labelsWindow);
     labelsWindow.xMin = 0;
     labelsWindow.xMax = dataSeparatorX;
@@ -383,6 +389,15 @@ void DisplayController::switchToCustomWindow(Action loop) {
     customLoopOnUpdateDisplay = loop;
     lastSelectedWindow = 0;
     currentSelectedWindow = 0;
+}
+
+wind_info_t *DisplayController::getPCustomWindow() {
+    return &customWindow;
+}
+
+void DisplayController::clearCustomWindow() {
+    myTFT.pCurrentWindow = &customWindow;
+    myTFT.fillWindow((color_t)&defaultColor);
 }
 
 

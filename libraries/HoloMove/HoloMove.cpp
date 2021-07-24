@@ -13,9 +13,9 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
     float _m = 15;
     direction += _m/2;
     direction -= fmod(direction, _m);
-    if(speed > 0) {
-        _ser.print("move: "); _ser.print(direction); _ser.print(" dir: "); _ser.println(rotation);
-    }
+    // if(speed > 0) {
+    //     _ser.print("move: "); _ser.print(direction); _ser.print(" dir: "); _ser.println(rotation);
+    // }
 
     float radians = 71 * direction / 4068;
 
@@ -26,18 +26,18 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
     // Please refer to README.txt for a full explanation of the formulas used.
     if (speed > 0)
     {
-        _ser.println("calculating outputs");
+        // _ser.println("calculating outputs");
         frontRightOutput = (-speed * cos((PI / 4) - radians)) + rotation;
-        _ser.println("no problem");
+        // _ser.println("no problem");
         frontLeftOutput = (speed * cos((PI / 4) + radians)) + rotation;
         rearLeftOutput = (speed * cos((PI / 4) - radians)) + rotation;
         rearRightOutput = (-speed * cos((PI / 4) + radians)) + rotation;
 
         float values[4] = { frontRightOutput, rearRightOutput, rearLeftOutput, frontLeftOutput };
-        _ser.println("aa");
+        // _ser.println("aa");
         float maxValue = 0;
         for (int z = 0; z < 4; z++) {
-            _ser.print(z); _ser.print(" : "); _ser.println(values[z]);
+            // _ser.print(z); _ser.print(" : "); _ser.println(values[z]);
             if (abs(values[z]) > maxValue) maxValue = abs(values[z]);
         }
 
@@ -53,7 +53,7 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         // *bl = rearLeftOutput;
         // *fl = frontLeftOutput;
 
-        _ser.println("sending motors");
+        // _ser.println("sending motors");
         uint8_t t1 = (uint8_t) map(frontRightOutput, -255, 255, 0, 127);
         uint8_t t2 = (uint8_t) map(rearRightOutput, -255, 255, 0, 127);
         uint8_t t3 = (uint8_t) map(rearLeftOutput, -255, 255, 0, 127);
@@ -129,11 +129,11 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         //     _rb->ForwardBackwardM1(0x80, -t4);
         // }
 
-        _ser.print(frontRightOutput); _ser.print(" | "); _ser.print(rearRightOutput); _ser.print(" | ");
-        _ser.print(rearLeftOutput); _ser.print(" | "); _ser.println(frontLeftOutput);
-        _ser.println("_");
-        _ser.print(t1); _ser.print(" | "); _ser.print(t2); _ser.print(" | ");
-        _ser.print(t3); _ser.print(" | "); _ser.println(t4);
+        // _ser.print(frontRightOutput); _ser.print(" | "); _ser.print(rearRightOutput); _ser.print(" | ");
+        // _ser.print(rearLeftOutput); _ser.print(" | "); _ser.println(frontLeftOutput);
+        // _ser.println("_");
+        // _ser.print(t1); _ser.print(" | "); _ser.print(t2); _ser.print(" | ");
+        // _ser.print(t3); _ser.print(" | "); _ser.println(t4);
     }
 
     else {
