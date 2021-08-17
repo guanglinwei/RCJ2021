@@ -1,5 +1,5 @@
-import bluetooth
-# import socket
+# import bluetooth
+import socket
 import pygame
 
 pygame.init()
@@ -8,13 +8,10 @@ joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_coun
 clock = pygame.time.Clock()
 print(len(joysticks), "joysticks total")
 
-# addr = "08:AE:D6:07:AA:6A" #phone
-addr = "B0:6F:E0:87:1D:59" #tablet
+addr = "00:14:03:05:0D:3E" # gw
 port = 1
-sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-# sock = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
+sock = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
 print("connecting...")
-# sock.connect((addr, bluetooth.PORT_ANY))
 sock.connect((addr, port))
 print("connected")
 
@@ -22,11 +19,11 @@ while len(joysticks) > 0:
     clock.tick(2)
     pygame.event.get()
     x_axis, y_axis, lt, rt = [joysticks[0].get_axis(i) for i in [0, 1, 2, 5]]
-    print(x_axis, y_axis, lt, rt)
+    x_button = joysticks[0].get_button(2)
 
-    print(joysticks[0].get_button(0))
-
-    sock.sendall(",".join([x_axis, y_axis, lt, rt]))
+    sock.sendall(bytes([255]))
+    sock.sendall(bytes([int(v * 100 + 100) for v in [x_axis, y_axis, lt, rt]] + [x_button]))
+    # sock.sendall(",".join([str(s) for s in [x_axis, y_axis, lt, rt]]))
 
 
     #     # for j in joysticks:
