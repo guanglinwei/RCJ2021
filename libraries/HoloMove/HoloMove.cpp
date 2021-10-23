@@ -27,18 +27,18 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
     if (speed > 0)
     {
         // _ser.println("calculating outputs");
-        frontRightOutput = (-speed * cos((PI / 4) - radians)) + rotation;
+        frontRightOutput = (-speed * cos((PI / 4) - radians));
         // _ser.println("no problem");
-        frontLeftOutput = (speed * cos((PI / 4) + radians)) + rotation;
-        rearLeftOutput = (speed * cos((PI / 4) - radians)) + rotation;
-        rearRightOutput = (-speed * cos((PI / 4) + radians)) + rotation;
+        frontLeftOutput = (speed * cos((PI / 4) + radians));
+        rearLeftOutput = (speed * cos((PI / 4) - radians));
+        rearRightOutput = (-speed * cos((PI / 4) + radians));
 
         float values[4] = { frontRightOutput, rearRightOutput, rearLeftOutput, frontLeftOutput };
         // _ser.println("aa");
         float maxValue = 0;
         for (int z = 0; z < 4; z++) {
             // _ser.print(z); _ser.print(" : "); _ser.println(values[z]);
-            if (abs(values[z]) > maxValue) maxValue = abs(values[z]);
+            if (abs(values[z]) + rotation > maxValue) maxValue = abs(values[z]) + rotation;
         }
 
         frontLeftOutput *=  -speed / maxValue;
@@ -54,10 +54,10 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         // *fl = frontLeftOutput;
 
         // _ser.println("sending motors");
-        uint8_t t1 = (uint8_t) map(frontRightOutput, -255, 255, 0, 127);
-        uint8_t t2 = (uint8_t) map(rearRightOutput, -255, 255, 0, 127);
-        uint8_t t3 = (uint8_t) map(rearLeftOutput, -255, 255, 0, 127);
-        uint8_t t4 = (uint8_t) map(frontLeftOutput, -255, 255, 0, 127);
+        uint8_t t1 = (uint8_t) map(frontRightOutput + rotation, -255, 255, 0, 127);
+        uint8_t t2 = (uint8_t) map(rearRightOutput + rotation, -255, 255, 0, 127);
+        uint8_t t3 = (uint8_t) map(rearLeftOutput + rotation, -255, 255, 0, 127);
+        uint8_t t4 = (uint8_t) map(frontLeftOutput + rotation, -255, 255, 0, 127);
 
         float _min = 5;
 

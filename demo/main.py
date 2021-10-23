@@ -16,7 +16,7 @@ sock.connect((addr, port))
 print("connected")
 
 while len(joysticks) > 0:
-    clock.tick(2)
+    clock.tick(8)
     pygame.event.get()
     x_axis, y_axis, lt, rt = [joysticks[0].get_axis(i) for i in [0, 1, 2, 5]]
     x_button = joysticks[0].get_button(2)

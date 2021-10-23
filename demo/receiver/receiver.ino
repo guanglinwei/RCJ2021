@@ -3,6 +3,9 @@
 
 #define XCENTER 108
 #define YCENTER 100
+#define KICKRELAY 12
+#define CHARGERELAY 11
+#define ULONG_MAX 0xffffffffUL
 
 RoboClaw roboclaw(&Serial2, 10000);
 HoloMove hm(&roboclaw, Serial);
@@ -15,6 +18,11 @@ int hasNewData = 0;
 
 int xJustPressed = 0;
 int xIsPressed = 0;
+int xCooldown = 1000;
+unsigned long xCooldownFinishMillis = 0;
+
+int yJustPressed = 0;
+int yIsPressed = 0;
 
 void setup() {
   Serial1.begin(9600);
@@ -24,25 +32,95 @@ void setup() {
   Serial.println("ok");
   data = new int[totalData];
   hm.stop();
+
+  pinMode(KICKRELAY, OUTPUT);
+  pinMode(CHARGERELAY, OUTPUT);
+  digitalWrite(KICKRELAY, LOW);
+  digitalWrite(CHARGERELAY, HIGH);
 }
 
 float getAngle(int x, int y)
 {
-    // 0, 0 is center
-    // return fmod(fmod(-atan2(x - HALF_CAM_W, y - HALF_CAM_H) * RAD_TO_DEG, 360) + 360 , 360);
     return fmod(fmod(-atan2(x, y) * RAD_TO_DEG, 360) + 360 , 360);
 }
 
-int roundm(int x, int m) {
-  float r = x;
-  r += m/2;
-  r -= fmod(r, m);
-  return (int)r;
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
 }
 
+int roundm(int x, int m) {
+  float r = abs(x);
+  r += 1.0 * m/2;
+  r -= fmod(r, m);
+  return (int)r * sgn(x);
+}
+
+
+// kicker
+// void charge() {
+//   kickOff();
+//   chargeOn();
+//   delay(700);
+//   chargeOff();
+// }
+// void kick() {
+//   chargeOff();
+//   kickOn();
+//   delay(400);
+//   kickOff();
+//   charge();
+// }
+
+void chargeOn() {
+  digitalWrite(CHARGERELAY, LOW);
+}
+void chargeOff() {
+  digitalWrite(CHARGERELAY, HIGH);
+}
+void kickOn() {
+  digitalWrite(KICKRELAY, LOW);
+}
+void kickOff() {
+  digitalWrite(KICKRELAY, HIGH);
+}
+
+unsigned long kick1FinishMillis = 0;
+unsigned long kick2FinishMillis = 0;
+int kicking = 0;
+
+void kick() {
+  if(kicking) return;
+  Serial.println("kicking");
+  kicking = 1;
+  chargeOff();
+  kickOn();
+  kick1FinishMillis = millis() + 400;
+  kick2FinishMillis = kick1FinishMillis + 700;
+}
+
+void handleTimedEvents() {
+  if(kicking) {
+    Serial.println("handle");
+    if(millis() > kick1FinishMillis) {
+      kickOff(); kickOff();
+      chargeOn();
+      kick1FinishMillis = ULONG_MAX;
+      Serial.println("1");
+    }
+    if(millis() > kick2FinishMillis) {
+      chargeOff();
+      kick2FinishMillis = ULONG_MAX;
+      kicking = 0;
+      Serial.println("2");
+    }
+  }
+}
+
+
 void loop() {
+  handleTimedEvents();
+
   if(count >= totalData) {
-    Serial.println("a");
     readingInput = 0;
     hasNewData = 1;
     count = 0;
@@ -54,18 +132,18 @@ void loop() {
     // 0: lstick x, 1: lstick y
     // 2: lt, 3 rt
     // 4: x button
-    int _x = roundm(data[0] - XCENTER, 25);
-    int _y = roundm(YCENTER - data[1], 25);
+    int _x = roundm(data[0] - XCENTER, 50);
+    int _y = roundm(YCENTER - data[1], 50);
     float ang = getAngle(_x, _y);
     float mag = sqrt(_x * _x + _y * _y);
-    float speed = roundm(mag, 22);
+    float speed = roundm(mag, 50);
 
     int rot = data[2] - data[3];
 
     // Serial.print("Moving at ang: "); Serial.print(ang); Serial.print(", speed: "); Serial.println(speed);
 
     int _minrot = 15;
-    if(speed > 24) hm.move(ang, speed, (rot < _minrot) ? 0 : (rot / 2));
+    if(speed > 24) hm.move(ang, speed, (abs(rot) < _minrot) ? 0 : (rot / 2));
     else {
       if(abs(rot) < _minrot) hm.stop();
       else hm.setSpeeds(rot, rot, rot, rot);
@@ -74,9 +152,11 @@ void loop() {
     xJustPressed = (!xIsPressed && data[4]) ? 1 : 0;
     xIsPressed = data[4];
 
-    if(xJustPressed) {
+    if(xJustPressed && millis() > xCooldownFinishMillis) {
+      xCooldownFinishMillis = millis() + xCooldown;
       // kick
       Serial.println("kick");
+      kick();
     }
   }
 
@@ -113,6 +193,7 @@ void loop() {
         count++;
       }
     }
-    Serial.println(Serial1.read());
+    // Serial.println(Serial1.read());
+    Serial1.read();
   }
 }
