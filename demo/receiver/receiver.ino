@@ -140,13 +140,16 @@ void loop() {
 
     int rot = data[2] - data[3];
 
-    // Serial.print("Moving at ang: "); Serial.print(ang); Serial.print(", speed: "); Serial.println(speed);
+    Serial.print("Moving at ang: "); Serial.print(ang); Serial.print(", speed: "); Serial.print(speed); Serial.print(", rot: "); Serial.println(rot); 
 
     int _minrot = 15;
-    if(speed > 24) hm.move(ang, speed, (abs(rot) < _minrot) ? 0 : (rot / 2));
+    if(speed > 24) hm.move(ang, speed, (abs(rot) < _minrot) ? 0 : (rot / 2.5));
     else {
       if(abs(rot) < _minrot) hm.stop();
-      else hm.setSpeeds(rot, rot, rot, rot);
+      else {
+        rot /= 2;
+        hm.setSpeeds(rot, rot, rot, rot);
+      }
     }
 
     xJustPressed = (!xIsPressed && data[4]) ? 1 : 0;
@@ -193,7 +196,7 @@ void loop() {
         count++;
       }
     }
-    // Serial.println(Serial1.read());
+    //Serial.println(Serial1.read());
     Serial1.read();
   }
 }

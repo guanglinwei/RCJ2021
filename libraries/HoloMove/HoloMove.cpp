@@ -35,10 +35,11 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
 
         float values[4] = { frontRightOutput, rearRightOutput, rearLeftOutput, frontLeftOutput };
         // _ser.println("aa");
-        float maxValue = 0;
+        float maxValue = speed;
         for (int z = 0; z < 4; z++) {
             // _ser.print(z); _ser.print(" : "); _ser.println(values[z]);
-            if (abs(values[z]) + rotation > maxValue) maxValue = abs(values[z]) + rotation;
+            // if (abs(values[z]) + rotation > maxValue) maxValue = abs(values[z]) + rotation;
+            if (abs(values[z]) + abs(rotation) > maxValue) maxValue = abs(values[z]) + abs(rotation);
         }
 
         frontLeftOutput *=  -speed / maxValue;
@@ -54,15 +55,19 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         // *fl = frontLeftOutput;
 
         // _ser.println("sending motors");
+        bool peter = true;
+
+        //rotation *= speed / maxValue;
+
         uint8_t t1 = (uint8_t) map(frontRightOutput + rotation, -255, 255, 0, 127);
-        uint8_t t2 = (uint8_t) map(rearRightOutput + rotation, -255, 255, 0, 127);
+        uint8_t t2 = (uint8_t) map((rearRightOutput + rotation) * (peter ? -1 : 1), -255, 255, 0, 127);
         uint8_t t3 = (uint8_t) map(rearLeftOutput + rotation, -255, 255, 0, 127);
-        uint8_t t4 = (uint8_t) map(frontLeftOutput + rotation, -255, 255, 0, 127);
+        uint8_t t4 = (uint8_t) map((frontLeftOutput + rotation) * (peter ? -1 : 1), -255, 255, 0, 127);
 
         float _min = 5;
 
         // gw
-
+/*
         if(abs(frontRightOutput) <= _min) {
             _rb->ForwardM1(0x80, 0);
         }
@@ -90,44 +95,45 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
         else { 
             _rb->ForwardBackwardM2(0x80, t4);
         }
+        */
 
         // peter
         
-        // if(abs(frontRightOutput) <= _min) {
-        //     // _rb->ForwardM1(0x80, 0);
-        //     _rb->ForwardM2(0x80, 0);
-        // }
-        // else { 
-        //     // _rb->ForwardBackwardM1(0x80, t1);
-        //     _rb->ForwardBackwardM2(0x80, t1);
-        // }
+        if(abs(frontRightOutput) <= _min) {
+            // _rb->ForwardM1(0x80, 0);
+            _rb->ForwardM2(0x80, 0);
+        }
+        else { 
+            // _rb->ForwardBackwardM1(0x80, t1);
+            _rb->ForwardBackwardM2(0x80, t1);
+        }
 
-        // if(abs(rearRightOutput) <= _min) {
-        //     // _rb->ForwardM1(0x81, 0);
-        //     _rb->ForwardM1(0x81, 0);
-        // }
-        // else {
-        //     // _rb->ForwardBackwardM1(0x81, t2);
-        //     _rb->ForwardBackwardM1(0x81, -t2);
-        // }
+        if(abs(rearRightOutput) <= _min) {
+            // _rb->ForwardM1(0x81, 0);
+            _rb->ForwardM1(0x81, 0);
+        }
+        else {
+            // _rb->ForwardBackwardM1(0x81, t2);
+            _rb->ForwardBackwardM1(0x81, t2);
+        }
 
-        // if(abs(rearLeftOutput) <= _min) {
-        //     // _rb->ForwardM2(0x81, 0);
-        //     _rb->ForwardM2(0x81, 0);
-        // }
-        // else { 
-        //     // _rb->ForwardBackwardM2(0x81, t3);
-        //     _rb->ForwardBackwardM2(0x81, t3);
-        // }
+        if(abs(rearLeftOutput) <= _min) {
+            // _rb->ForwardM2(0x81, 0);
+            _rb->ForwardM2(0x81, 0);
+        }
+        else { 
+            // _rb->ForwardBackwardM2(0x81, t3);
+            _rb->ForwardBackwardM2(0x81, t3);
+        }
 
-        // if(abs(frontLeftOutput) <= _min) {
-        //     // _rb->ForwardM2(0x80, 0);
-        //     _rb->ForwardM1(0x80, 0);
-        // }
-        // else { 
-        //     // _rb->ForwardBackwardM2(0x80, t4);
-        //     _rb->ForwardBackwardM1(0x80, -t4);
-        // }
+        if(abs(frontLeftOutput) <= _min) {
+            // _rb->ForwardM2(0x80, 0);
+            _rb->ForwardM1(0x80, 0);
+        }
+        else { 
+            // _rb->ForwardBackwardM2(0x80, t4);
+            _rb->ForwardBackwardM1(0x80, t4);
+        }
 
         // _ser.print(frontRightOutput); _ser.print(" | "); _ser.print(rearRightOutput); _ser.print(" | ");
         // _ser.print(rearLeftOutput); _ser.print(" | "); _ser.println(frontLeftOutput);
@@ -146,8 +152,17 @@ void HoloMove::move(float direction, float speed, float rotation, float *fl, flo
 }
 
 void HoloMove::setSpeeds(float a, float b, float c, float d) {
+    // gw
+    /*
     _rb->ForwardBackwardM1(0x80, (uint8_t) map(a, -255, 255, 0, 127));
     _rb->ForwardBackwardM1(0x81, (uint8_t) map(b, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x81, (uint8_t) map(c, -255, 255, 0, 127));
+    _rb->ForwardBackwardM2(0x80, (uint8_t) map(d, -255, 255, 0, 127));
+    */
+
+   // peter
+    _rb->ForwardBackwardM1(0x80, (uint8_t) map(-a, -255, 255, 0, 127));
+    _rb->ForwardBackwardM1(0x81, (uint8_t) map(-b, -255, 255, 0, 127));
     _rb->ForwardBackwardM2(0x81, (uint8_t) map(c, -255, 255, 0, 127));
     _rb->ForwardBackwardM2(0x80, (uint8_t) map(d, -255, 255, 0, 127));
 }
